@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ApiPG</name>
+    </assembly>
+    <members>
+        <member name="M:ApiPG.Controllers.AuthController.Login(ApiPG.DTOs.LoginDto)">
+            <summary>
+            Iniciar sesión con email y contraseña
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AuthController.Register(ApiPG.DTOs.RegisterDto)">
+            <summary>
+            Registrar un nuevo usuario
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AuthController.GetProfile">
+            <summary>
+            Obtener perfil del usuario autenticado
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AuthController.VerifyToken">
+            <summary>
+            Verificar si el token JWT es válido
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RolesController.GetRoles">
+            <summary>
+            Obtiene todos los roles activos
+            </summary>
+            <returns>Lista de roles</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.RolesController.GetRole(System.Int32)">
+            <summary>
+            Obtiene un rol por su ID
+            </summary>
+            <param name="id">ID del rol</param>
+            <returns>El rol encontrado</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.RolesController.CreateRole(ApiPG.DTOs.CreateRoleDto)">
+            <summary>
+            Crea un nuevo rol
+            </summary>
+            <param name="createRoleDto">Datos del rol a crear</param>
+            <returns>El rol creado</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.RolesController.UpdateRole(System.Int32,ApiPG.DTOs.UpdateRoleDto)">
+            <summary>
+            Actualiza un rol existente
+            </summary>
+            <param name="id">ID del rol a actualizar</param>
+            <param name="updateRoleDto">Datos del rol a actualizar</param>
+            <returns>El rol actualizado</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.RolesController.DeleteRole(System.Int32)">
+            <summary>
+            Elimina un rol (soft delete)
+            </summary>
+            <param name="id">ID del rol a eliminar</param>
+            <returns>Confirmación de eliminación</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.RolesController.CheckRoleExists(System.String)">
+            <summary>
+            Verifica si un rol existe por nombre
+            </summary>
+            <param name="name">Nombre del rol</param>
+            <returns>Resultado de la verificación</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.RolesController.CheckRoleHasUsers(System.Int32)">
+            <summary>
+            Verifica si un rol tiene usuarios asignados
+            </summary>
+            <param name="id">ID del rol</param>
+            <returns>Resultado de la verificación</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.UsersController.GetUsers">
+            <summary>
+            Obtiene todos los usuarios activos
+            </summary>
+            <returns>Lista de usuarios</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.UsersController.GetUser(System.Int32)">
+            <summary>
+            Obtiene un usuario por su ID
+            </summary>
+            <param name="id">ID del usuario</param>
+            <returns>El usuario encontrado</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.UsersController.GetUserByUsername(System.String)">
+            <summary>
+            Obtiene un usuario por su nombre de usuario
+            </summary>
+            <param name="username">Nombre de usuario</param>
+            <returns>El usuario encontrado</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.UsersController.CreateUser(ApiPG.DTOs.CreateUserDto)">
+            <summary>
+            Crea un nuevo usuario
+            </summary>
+            <param name="createUserDto">Datos del usuario a crear</param>
+            <returns>El usuario creado</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.UsersController.UpdateUser(System.Int32,ApiPG.DTOs.UpdateUserDto)">
+            <summary>
+            Actualiza un usuario existente
+            </summary>
+            <param name="id">ID del usuario a actualizar</param>
+            <param name="updateUserDto">Datos del usuario a actualizar</param>
+            <returns>El usuario actualizado</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.UsersController.DeleteUser(System.Int32)">
+            <summary>
+            Elimina un usuario (soft delete)
+            </summary>
+            <param name="id">ID del usuario a eliminar</param>
+            <returns>Confirmación de eliminación</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.UsersController.CheckUserExists(System.String,System.String)">
+            <summary>
+            Verifica si un usuario existe por username o email
+            </summary>
+            <param name="username">Nombre de usuario</param>
+            <param name="email">Email</param>
+            <returns>Resultado de la verificación</returns>
+        </member>
+        <member name="T:ApiPG.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.FixSeedData">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.FixSeedData.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.FixSeedData.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.FixSeedData.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.RenameUserToParticipanteAndAddCoordinador">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.RenameUserToParticipanteAndAddCoordinador.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.RenameUserToParticipanteAndAddCoordinador.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.RenameUserToParticipanteAndAddCoordinador.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
