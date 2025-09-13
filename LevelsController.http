@@ -1,0 +1,66 @@
+### API de Levels - Pruebas de endpoints
+
+@baseUrl = https://localhost:7014/api
+@accessToken = {{auth_response.response.body.token}}
+
+### 1. Obtener todos los niveles
+GET {{baseUrl}}/Levels
+Authorization: Bearer {{accessToken}}
+
+### 2. Obtener un nivel por ID
+GET {{baseUrl}}/Levels/1
+Authorization: Bearer {{accessToken}}
+
+### 3. Crear un nuevo nivel
+POST {{baseUrl}}/Levels
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    "name": "Nivel Principiante",
+    "description": "Nivel básico para nuevos participantes",
+    "tutorId": 1
+}
+
+### 4. Actualizar un nivel
+PUT {{baseUrl}}/Levels/1
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    "name": "Nivel Principiante Actualizado",
+    "description": "Descripción actualizada del nivel básico",
+    "tutorId": 2
+}
+
+### 5. Asignar tutor a un nivel
+PUT {{baseUrl}}/Levels/1/assign-tutor
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    "tutorId": 3
+}
+
+### 6. Obtener participantes de un nivel
+GET {{baseUrl}}/Levels/1/participants
+Authorization: Bearer {{accessToken}}
+
+### 7. Asignar participante a un nivel
+POST {{baseUrl}}/Levels/1/participants/2
+Authorization: Bearer {{accessToken}}
+
+### 8. Remover participante de un nivel
+DELETE {{baseUrl}}/Levels/1/participants/2
+Authorization: Bearer {{accessToken}}
+
+### 9. Obtener niveles de un tutor específico
+GET {{baseUrl}}/Levels/by-tutor/1
+Authorization: Bearer {{accessToken}}
+
+### 10. Eliminar un nivel (soft delete)
+DELETE {{baseUrl}}/Levels/1
+Authorization: Bearer {{accessToken}}
+
+# Nota: Para usar estos endpoints, primero debes autenticarte usando el endpoint de Auth
+# y obtener el token para reemplazar {{accessToken}}

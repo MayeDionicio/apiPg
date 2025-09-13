@@ -89,7 +89,10 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IJwtService, JwtService>();
+// Jwt service must be registered so AuthService can resolve it
+builder.Services.AddSingleton<IJwtService, JwtService>();
+builder.Services.AddScoped<ILevelService, LevelService>();
+builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 
 // Configurar CORS si es necesario
 builder.Services.AddCors(options =>

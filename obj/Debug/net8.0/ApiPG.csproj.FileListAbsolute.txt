@@ -145,3 +145,4 @@ C:\Users\Pahola Dionicio\Desktop\API PG\ApiPG\bin\Debug\net8.0\Microsoft.Identit
 C:\Users\Pahola Dionicio\Desktop\API PG\ApiPG\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\Pahola Dionicio\Desktop\API PG\ApiPG\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Pahola Dionicio\Desktop\API PG\ApiPG\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Pahola Dionicio\Desktop\API PG\ApiPG\obj\Debug\net8.0\ApiPG.sourcelink.json

@@ -24,6 +24,56 @@
             Verificar si el token JWT es válido
             </summary>
         </member>
+        <member name="M:ApiPG.Controllers.LevelsController.GetLevels">
+            <summary>
+            Obtener todos los niveles
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.LevelsController.GetLevel(System.Int32)">
+            <summary>
+            Obtener un nivel por ID
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.LevelsController.CreateLevel(ApiPG.DTOs.CreateLevelDto)">
+            <summary>
+            Crear un nuevo nivel
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.LevelsController.UpdateLevel(System.Int32,ApiPG.DTOs.UpdateLevelDto)">
+            <summary>
+            Actualizar un nivel existente
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.LevelsController.DeleteLevel(System.Int32)">
+            <summary>
+            Eliminar un nivel (soft delete)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.LevelsController.AssignTutor(System.Int32,ApiPG.Controllers.AssignTutorDto)">
+            <summary>
+            Asignar tutor a un nivel
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.LevelsController.GetLevelParticipants(System.Int32)">
+            <summary>
+            Obtener participantes de un nivel específico
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.LevelsController.AssignParticipantToLevel(System.Int32,System.Int32)">
+            <summary>
+            Asignar un participante a un nivel
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.LevelsController.RemoveParticipantFromLevel(System.Int32,System.Int32)">
+            <summary>
+            Remover un participante de un nivel
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.LevelsController.GetLevelsByTutor(System.Int32)">
+            <summary>
+            Obtener niveles asignados a un tutor específico
+            </summary>
+        </member>
         <member name="M:ApiPG.Controllers.RolesController.GetRoles">
             <summary>
             Obtiene todos los roles activos
@@ -157,6 +207,42 @@
             <inheritdoc />
         </member>
         <member name="M:ApiPG.Migrations.RenameUserToParticipanteAndAddCoordinador.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AddLevelAndLevelParticipant">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddLevelAndLevelParticipant.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddLevelAndLevelParticipant.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddLevelAndLevelParticipant.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AddLevelDescription">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddLevelDescription.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddLevelDescription.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddLevelDescription.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AddAttendance">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddAttendance.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddAttendance.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddAttendance.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

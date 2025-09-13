@@ -11,6 +11,9 @@ namespace ApiPG.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+    public DbSet<Level> Levels { get; set; }
+    public DbSet<LevelParticipant> LevelParticipants { get; set; }
+    public DbSet<Attendance> Attendances { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -102,6 +105,61 @@ namespace ApiPG.Data
                     }
                 );
             });
+
+            // Configuración para Level
+            modelBuilder.Entity<Level>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Description).HasMaxLength(500);
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.IsActive).HasDefaultValue(true);
+
+                // Tutor (User) relación opcional
+                entity.HasOne(e => e.Tutor)
+                    .WithMany()
+                    .HasForeignKey(e => e.TutorId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // Configuración para LevelParticipant (many-to-many)
+            modelBuilder.Entity<LevelParticipant>(entity =>
+            {
+                entity.HasKey(e => new { e.LevelId, e.UserId });
+
+                entity.Property(e => e.AssignedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.IsActive).HasDefaultValue(true);
+
+                entity.HasOne(e => e.Level)
+                      .WithMany(l => l.LevelParticipants)
+                      .HasForeignKey(e => e.LevelId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.User)
+                      .WithMany()
+                      .HasForeignKey(e => e.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+        // Configuración para Attendances
+        modelBuilder.Entity<Attendance>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Date).IsRequired();
+            entity.Property(e => e.Present).IsRequired();
+            entity.Property(e => e.Remarks).HasMaxLength(500);
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            entity.HasOne(e => e.Level)
+                .WithMany()
+                .HasForeignKey(e => e.LevelId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(e => e.User)
+                .WithMany()
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
         }
 
         private static string HashPassword(string password)
