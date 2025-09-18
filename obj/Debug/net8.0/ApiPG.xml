@@ -74,6 +74,211 @@
             Obtener niveles asignados a un tutor específico
             </summary>
         </member>
+        <member name="M:ApiPG.Controllers.ResourceAssignmentsController.GetAssignments">
+            <summary>
+            Obtener todas las asignaciones de recursos
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceAssignmentsController.GetAssignment(System.Int32)">
+            <summary>
+            Obtener una asignación por ID
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceAssignmentsController.CreateAssignment(ApiPG.DTOs.CreateResourceAssignmentDto)">
+            <summary>
+            Crear una nueva asignación de recurso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceAssignmentsController.UpdateAssignment(System.Int32,ApiPG.DTOs.UpdateResourceAssignmentDto)">
+            <summary>
+            Actualizar una asignación existente
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceAssignmentsController.CancelAssignment(System.Int32)">
+            <summary>
+            Cancelar una asignación
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceAssignmentsController.ConfirmAssignment(System.Int32,ApiPG.DTOs.ConfirmAssignmentDto)">
+            <summary>
+            Confirmar una asignación (por parte del voluntario)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceAssignmentsController.StartUse(System.Int32)">
+            <summary>
+            Iniciar el uso de un recurso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceAssignmentsController.ReturnResource(System.Int32)">
+            <summary>
+            Devolver un recurso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceAssignmentsController.GetAssignmentsByVolunteer(System.Int32)">
+            <summary>
+            Obtener asignaciones de un voluntario específico
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceAssignmentsController.GetAssignmentsByResource(System.Int32)">
+            <summary>
+            Obtener asignaciones de un recurso específico
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceAssignmentsController.GetPendingAssignments">
+            <summary>
+            Obtener asignaciones pendientes de confirmación
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceAssignmentsController.GetOverdueReturns">
+            <summary>
+            Obtener asignaciones con devolución vencida
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceAssignmentsController.GetActiveAssignments">
+            <summary>
+            Obtener asignaciones activas
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceAssignmentsController.GetMyAssignments">
+            <summary>
+            Obtener mis asignaciones (del usuario autenticado)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceAssignmentsController.GetAssignmentStatistics">
+            <summary>
+            Obtener estadísticas de asignaciones
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourcesController.GetResources(System.Boolean)">
+            <summary>
+            Obtener todos los recursos
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourcesController.GetResource(System.Int32)">
+            <summary>
+            Obtener un recurso por ID
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourcesController.CreateResource(ApiPG.DTOs.CreateResourceDto)">
+            <summary>
+            Crear un nuevo recurso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourcesController.UpdateResource(System.Int32,ApiPG.DTOs.UpdateResourceDto)">
+            <summary>
+            Actualizar un recurso existente
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourcesController.DeleteResource(System.Int32)">
+            <summary>
+            Desactivar un recurso (soft delete)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourcesController.ActivateResource(System.Int32)">
+            <summary>
+            Activar un recurso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourcesController.GetResourcesByCategory(System.String)">
+            <summary>
+            Obtener recursos por categoría
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourcesController.GetAvailableResources">
+            <summary>
+            Obtener recursos disponibles (con cantidad > 0)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourcesController.GetLowStockResources(System.Int32)">
+            <summary>
+            Obtener recursos con stock bajo
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourcesController.UpdateResourceQuantity(System.Int32,ApiPG.Controllers.UpdateQuantityDto)">
+            <summary>
+            Actualizar cantidad de un recurso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourcesController.GetResourceStatistics">
+            <summary>
+            Obtener estadísticas de recursos
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourcesController.GetCategories">
+            <summary>
+            Obtener todas las categorías disponibles
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceUsageLogsController.GetUsageLogs">
+            <summary>
+            Obtener todos los registros de uso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceUsageLogsController.GetUsageLog(System.Int32)">
+            <summary>
+            Obtener un registro de uso por ID
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceUsageLogsController.CreateUsageLog(ApiPG.DTOs.CreateResourceUsageLogDto)">
+            <summary>
+            Crear un nuevo registro de uso/incidente
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceUsageLogsController.ResolveIncident(System.Int32,ApiPG.DTOs.ResolveIncidentDto)">
+            <summary>
+            Resolver un incidente
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceUsageLogsController.GetUsageLogsByAssignment(System.Int32)">
+            <summary>
+            Obtener registros de uso por asignación
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceUsageLogsController.GetUsageLogsByResource(System.Int32)">
+            <summary>
+            Obtener registros de uso por recurso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceUsageLogsController.GetUsageLogsByVolunteer(System.Int32)">
+            <summary>
+            Obtener registros de uso por voluntario
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceUsageLogsController.GetIncidents">
+            <summary>
+            Obtener todos los incidentes
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceUsageLogsController.GetUnresolvedIncidents">
+            <summary>
+            Obtener incidentes sin resolver
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceUsageLogsController.GetUsageLogsByEventType(ApiPG.Models.UsageEventType)">
+            <summary>
+            Obtener registros por tipo de evento
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceUsageLogsController.GetRecentActivities(System.Int32)">
+            <summary>
+            Obtener actividades recientes
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceUsageLogsController.GetUsageStatistics">
+            <summary>
+            Obtener estadísticas de uso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceUsageLogsController.ConfirmUsage(ApiPG.Controllers.ConfirmUsageDto)">
+            <summary>
+            Confirmar uso de recurso (acción común del voluntario)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ResourceUsageLogsController.ReportIncident(ApiPG.Controllers.ReportIncidentDto)">
+            <summary>
+            Reportar incidente rápido
+            </summary>
+        </member>
         <member name="M:ApiPG.Controllers.RolesController.GetRoles">
             <summary>
             Obtiene todos los roles activos
@@ -243,6 +448,30 @@
             <inheritdoc />
         </member>
         <member name="M:ApiPG.Migrations.AddAttendance.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AddResourceManagementSystem">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddResourceManagementSystem.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddResourceManagementSystem.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddResourceManagementSystem.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.UpdateResourceManagementSystem">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.UpdateResourceManagementSystem.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.UpdateResourceManagementSystem.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.UpdateResourceManagementSystem.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

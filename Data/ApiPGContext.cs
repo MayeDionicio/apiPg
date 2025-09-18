@@ -11,9 +11,12 @@ namespace ApiPG.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-    public DbSet<Level> Levels { get; set; }
-    public DbSet<LevelParticipant> LevelParticipants { get; set; }
-    public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<Level> Levels { get; set; }
+        public DbSet<LevelParticipant> LevelParticipants { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<Resource> Resources { get; set; }
+        public DbSet<ResourceAssignment> ResourceAssignments { get; set; }
+        public DbSet<ResourceUsageLog> ResourceUsageLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -159,6 +162,102 @@ namespace ApiPG.Data
                 .WithMany()
                 .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // Configuración para Resource
+        modelBuilder.Entity<Resource>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+            entity.Property(e => e.Description).HasMaxLength(500);
+            entity.Property(e => e.Category).IsRequired().HasMaxLength(50);
+            entity.Property(e => e.Quantity).IsRequired();
+            entity.Property(e => e.AvailableQuantity).IsRequired();
+            entity.Property(e => e.Unit).HasMaxLength(50);
+            entity.Property(e => e.Location).HasMaxLength(200);
+            entity.Property(e => e.EstimatedValue).HasColumnType("decimal(10,2)");
+            entity.Property(e => e.Notes).HasMaxLength(1000);
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+
+            // Índices
+            entity.HasIndex(e => e.Name);
+            entity.HasIndex(e => e.Category);
+            entity.HasIndex(e => e.IsActive);
+        });
+
+        // Configuración para ResourceAssignment
+        modelBuilder.Entity<ResourceAssignment>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.ResourceId).IsRequired();
+            entity.Property(e => e.VolunteerId).IsRequired();
+            entity.Property(e => e.QuantityAssigned).IsRequired();
+            entity.Property(e => e.Status).IsRequired();
+            entity.Property(e => e.AssignedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.InitialNotes).HasMaxLength(1000);
+            entity.Property(e => e.VolunteerNotes).HasMaxLength(1000);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+
+            // Relaciones
+            entity.HasOne(e => e.Resource)
+                .WithMany(r => r.ResourceAssignments)
+                .HasForeignKey(e => e.ResourceId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(e => e.Volunteer)
+                .WithMany()
+                .HasForeignKey(e => e.VolunteerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(e => e.AssignedByUser)
+                .WithMany()
+                .HasForeignKey(e => e.AssignedByUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Índices
+            entity.HasIndex(e => e.ResourceId);
+            entity.HasIndex(e => e.VolunteerId);
+            entity.HasIndex(e => e.Status);
+            entity.HasIndex(e => e.AssignedAt);
+        });
+
+        // Configuración para ResourceUsageLog
+        modelBuilder.Entity<ResourceUsageLog>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.ResourceAssignmentId).IsRequired();
+            entity.Property(e => e.EventType).IsRequired();
+            entity.Property(e => e.Title).IsRequired().HasMaxLength(200);
+            entity.Property(e => e.Description).IsRequired().HasMaxLength(2000);
+            entity.Property(e => e.ActionsTaken).HasMaxLength(1000);
+            entity.Property(e => e.Recommendations).HasMaxLength(1000);
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.ReportedByUserId).IsRequired();
+            entity.Property(e => e.PhotoUrls).HasMaxLength(500);
+            entity.Property(e => e.ResolutionNotes).HasMaxLength(1000);
+
+            // Relaciones
+            entity.HasOne(e => e.ResourceAssignment)
+                .WithMany(ra => ra.UsageLogs)
+                .HasForeignKey(e => e.ResourceAssignmentId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(e => e.ReportedByUser)
+                .WithMany()
+                .HasForeignKey(e => e.ReportedByUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(e => e.ResolvedByUser)
+                .WithMany()
+                .HasForeignKey(e => e.ResolvedByUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Índices
+            entity.HasIndex(e => e.ResourceAssignmentId);
+            entity.HasIndex(e => e.EventType);
+            entity.HasIndex(e => e.CreatedAt);
+            entity.HasIndex(e => e.IsResolved);
         });
         }
 

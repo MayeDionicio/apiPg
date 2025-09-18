@@ -3,6 +3,7 @@ using System;
 using ApiPG.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApiPG.Migrations
 {
     [DbContext(typeof(ApiPGContext))]
-    partial class ApiPGContextModelSnapshot : ModelSnapshot
+    [Migration("20250913170153_AddResourceManagementSystem")]
+    partial class AddResourceManagementSystem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,227 +129,6 @@ namespace ApiPG.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("LevelParticipants");
-                });
-
-            modelBuilder.Entity("ApiPG.Models.Resource", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AvailableQuantity")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<decimal?>("EstimatedValue")
-                        .HasColumnType("decimal(10,2)");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true);
-
-                    b.Property<string>("Location")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Unit")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Category");
-
-                    b.HasIndex("IsActive");
-
-                    b.HasIndex("Name");
-
-                    b.ToTable("Resources");
-                });
-
-            modelBuilder.Entity("ApiPG.Models.ResourceAssignment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("AssignedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<int?>("AssignedByUserId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("ConfirmedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("ExpectedReturnDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("InitialNotes")
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true);
-
-                    b.Property<int>("QuantityAssigned")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ResourceId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("ReturnedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("StartedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("VolunteerId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("VolunteerNotes")
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssignedAt");
-
-                    b.HasIndex("AssignedByUserId");
-
-                    b.HasIndex("ResourceId");
-
-                    b.HasIndex("Status");
-
-                    b.HasIndex("VolunteerId");
-
-                    b.ToTable("ResourceAssignments");
-                });
-
-            modelBuilder.Entity("ApiPG.Models.ResourceUsageLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ActionsTaken")
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.Property<int?>("ConditionAfter")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("ConditionBefore")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
-
-                    b.Property<int>("EventType")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsResolved")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("PhotoUrls")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<int?>("QuantityAffected")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Recommendations")
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.Property<int>("ReportedByUserId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("RequiresFollowUp")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("ResolutionNotes")
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.Property<DateTime?>("ResolvedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("ResolvedByUserId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ResourceAssignmentId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedAt");
-
-                    b.HasIndex("EventType");
-
-                    b.HasIndex("IsResolved");
-
-                    b.HasIndex("ReportedByUserId");
-
-                    b.HasIndex("ResolvedByUserId");
-
-                    b.HasIndex("ResourceAssignmentId");
-
-                    b.ToTable("ResourceUsageLogs");
                 });
 
             modelBuilder.Entity("ApiPG.Models.Role", b =>
@@ -574,58 +356,6 @@ namespace ApiPG.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ApiPG.Models.ResourceAssignment", b =>
-                {
-                    b.HasOne("ApiPG.Models.User", "AssignedByUser")
-                        .WithMany()
-                        .HasForeignKey("AssignedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ApiPG.Models.Resource", "Resource")
-                        .WithMany("ResourceAssignments")
-                        .HasForeignKey("ResourceId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ApiPG.Models.User", "Volunteer")
-                        .WithMany()
-                        .HasForeignKey("VolunteerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("AssignedByUser");
-
-                    b.Navigation("Resource");
-
-                    b.Navigation("Volunteer");
-                });
-
-            modelBuilder.Entity("ApiPG.Models.ResourceUsageLog", b =>
-                {
-                    b.HasOne("ApiPG.Models.User", "ReportedByUser")
-                        .WithMany()
-                        .HasForeignKey("ReportedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ApiPG.Models.User", "ResolvedByUser")
-                        .WithMany()
-                        .HasForeignKey("ResolvedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ApiPG.Models.ResourceAssignment", "ResourceAssignment")
-                        .WithMany("UsageLogs")
-                        .HasForeignKey("ResourceAssignmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ReportedByUser");
-
-                    b.Navigation("ResolvedByUser");
-
-                    b.Navigation("ResourceAssignment");
-                });
-
             modelBuilder.Entity("ApiPG.Models.User", b =>
                 {
                     b.HasOne("ApiPG.Models.Role", "Role")
@@ -640,16 +370,6 @@ namespace ApiPG.Migrations
             modelBuilder.Entity("ApiPG.Models.Level", b =>
                 {
                     b.Navigation("LevelParticipants");
-                });
-
-            modelBuilder.Entity("ApiPG.Models.Resource", b =>
-                {
-                    b.Navigation("ResourceAssignments");
-                });
-
-            modelBuilder.Entity("ApiPG.Models.ResourceAssignment", b =>
-                {
-                    b.Navigation("UsageLogs");
                 });
 
             modelBuilder.Entity("ApiPG.Models.Role", b =>

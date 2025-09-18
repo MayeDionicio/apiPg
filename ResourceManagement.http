@@ -1,0 +1,246 @@
+### Sistema de Gestión de Recursos - Pruebas de endpoints
+
+@baseUrl = https://localhost:7014/api
+@accessToken = {{auth_response.response.body.token}}
+
+### ===== RECURSOS =====
+
+### 1. Obtener todos los recursos
+GET {{baseUrl}}/Resources
+Authorization: Bearer {{accessToken}}
+
+### 2. Obtener recursos activos solamente
+GET {{baseUrl}}/Resources?activeOnly=true
+Authorization: Bearer {{accessToken}}
+
+### 3. Obtener un recurso por ID
+GET {{baseUrl}}/Resources/1
+Authorization: Bearer {{accessToken}}
+
+### 4. Crear un nuevo recurso
+POST {{baseUrl}}/Resources
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    "name": "Témperas Artesco",
+    "description": "Set de témperas de 12 colores para actividades artísticas",
+    "category": "Materiales de Arte",
+    "quantity": 50,
+    "unit": "sets",
+    "location": "Almacén A - Estante 3",
+    "estimatedValue": 15.99,
+    "notes": "Verificar que esté completo antes de asignar"
+}
+
+### 5. Actualizar un recurso
+PUT {{baseUrl}}/Resources/1
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    "name": "Témperas Artesco - Actualizado",
+    "description": "Set actualizado de témperas de 12 colores",
+    "quantity": 45,
+    "location": "Almacén B - Estante 1"
+}
+
+### 6. Obtener recursos por categoría
+GET {{baseUrl}}/Resources/category/Materiales%20de%20Arte
+Authorization: Bearer {{accessToken}}
+
+### 7. Obtener recursos disponibles
+GET {{baseUrl}}/Resources/available
+Authorization: Bearer {{accessToken}}
+
+### 8. Obtener recursos con stock bajo
+GET {{baseUrl}}/Resources/low-stock?threshold=10
+Authorization: Bearer {{accessToken}}
+
+### 9. Actualizar cantidad de un recurso
+PUT {{baseUrl}}/Resources/1/quantity
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    "newQuantity": 60
+}
+
+### 10. Obtener estadísticas de recursos
+GET {{baseUrl}}/Resources/statistics
+Authorization: Bearer {{accessToken}}
+
+### 11. Obtener categorías
+GET {{baseUrl}}/Resources/categories
+Authorization: Bearer {{accessToken}}
+
+### 12. Desactivar un recurso
+DELETE {{baseUrl}}/Resources/1
+Authorization: Bearer {{accessToken}}
+
+### 13. Activar un recurso
+PUT {{baseUrl}}/Resources/1/activate
+Authorization: Bearer {{accessToken}}
+
+### ===== ASIGNACIONES DE RECURSOS =====
+
+### 14. Crear una asignación de recurso
+POST {{baseUrl}}/ResourceAssignments
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    "resourceId": 1,
+    "volunteerId": 2,
+    "quantityAssigned": 5,
+    "expectedReturnDate": "2024-12-31",
+    "initialNotes": "Para actividad de pintura con niños nivel básico"
+}
+
+### 15. Obtener todas las asignaciones
+GET {{baseUrl}}/ResourceAssignments
+Authorization: Bearer {{accessToken}}
+
+### 16. Obtener una asignación por ID
+GET {{baseUrl}}/ResourceAssignments/1
+Authorization: Bearer {{accessToken}}
+
+### 17. Confirmar asignación (como voluntario)
+PUT {{baseUrl}}/ResourceAssignments/1/confirm
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    "volunteerNotes": "Materiales recibidos en buen estado. Listos para usar."
+}
+
+### 18. Iniciar uso del recurso
+PUT {{baseUrl}}/ResourceAssignments/1/start-use
+Authorization: Bearer {{accessToken}}
+
+### 19. Devolver recurso
+PUT {{baseUrl}}/ResourceAssignments/1/return
+Authorization: Bearer {{accessToken}}
+
+### 20. Obtener mis asignaciones
+GET {{baseUrl}}/ResourceAssignments/my-assignments
+Authorization: Bearer {{accessToken}}
+
+### 21. Obtener asignaciones por voluntario
+GET {{baseUrl}}/ResourceAssignments/volunteer/2
+Authorization: Bearer {{accessToken}}
+
+### 22. Obtener asignaciones por recurso
+GET {{baseUrl}}/ResourceAssignments/resource/1
+Authorization: Bearer {{accessToken}}
+
+### 23. Obtener asignaciones pendientes
+GET {{baseUrl}}/ResourceAssignments/pending
+Authorization: Bearer {{accessToken}}
+
+### 24. Obtener asignaciones vencidas
+GET {{baseUrl}}/ResourceAssignments/overdue
+Authorization: Bearer {{accessToken}}
+
+### 25. Obtener asignaciones activas
+GET {{baseUrl}}/ResourceAssignments/active
+Authorization: Bearer {{accessToken}}
+
+### 26. Obtener estadísticas de asignaciones
+GET {{baseUrl}}/ResourceAssignments/statistics
+Authorization: Bearer {{accessToken}}
+
+### ===== REGISTROS DE USO E INCIDENTES =====
+
+### 27. Confirmar uso del recurso
+POST {{baseUrl}}/ResourceUsageLogs/confirm-usage
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    "resourceAssignmentId": 1,
+    "description": "Uso confirmado - Actividad de pintura realizada exitosamente",
+    "conditionBefore": "Good",
+    "conditionAfter": "Good",
+    "actionsTaken": "Se utilizaron 3 sets de témperas para la actividad"
+}
+
+### 28. Reportar un incidente
+POST {{baseUrl}}/ResourceUsageLogs/report-incident
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    "resourceAssignmentId": 1,
+    "title": "Falta de color rojo en un set",
+    "description": "Se detectó que uno de los sets asignados no tenía el tubo de color rojo",
+    "conditionBefore": "Good",
+    "conditionAfter": "Fair",
+    "quantityAffected": 1,
+    "actionsTaken": "Se utilizó otro set completo para la actividad",
+    "recommendations": "Verificar completitud de sets antes de futuros préstamos"
+}
+
+### 29. Crear registro de uso personalizado
+POST {{baseUrl}}/ResourceUsageLogs
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    "resourceAssignmentId": 1,
+    "eventType": "StateObservation",
+    "title": "Observación del estado del material",
+    "description": "Revisión del estado de las témperas antes de la devolución",
+    "conditionBefore": "Good",
+    "conditionAfter": "Good",
+    "actionsTaken": "Limpieza de tubos y verificación de tapas",
+    "requiresFollowUp": false
+}
+
+### 30. Resolver un incidente
+PUT {{baseUrl}}/ResourceUsageLogs/1/resolve
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    "resolutionNotes": "Se reemplazó el tubo faltante y se verificó la completitud del set"
+}
+
+### 31. Obtener todos los registros de uso
+GET {{baseUrl}}/ResourceUsageLogs
+Authorization: Bearer {{accessToken}}
+
+### 32. Obtener registros por asignación
+GET {{baseUrl}}/ResourceUsageLogs/assignment/1
+Authorization: Bearer {{accessToken}}
+
+### 33. Obtener registros por recurso
+GET {{baseUrl}}/ResourceUsageLogs/resource/1
+Authorization: Bearer {{accessToken}}
+
+### 34. Obtener registros por voluntario
+GET {{baseUrl}}/ResourceUsageLogs/volunteer/2
+Authorization: Bearer {{accessToken}}
+
+### 35. Obtener todos los incidentes
+GET {{baseUrl}}/ResourceUsageLogs/incidents
+Authorization: Bearer {{accessToken}}
+
+### 36. Obtener incidentes sin resolver
+GET {{baseUrl}}/ResourceUsageLogs/incidents/unresolved
+Authorization: Bearer {{accessToken}}
+
+### 37. Obtener actividades recientes
+GET {{baseUrl}}/ResourceUsageLogs/recent?take=10
+Authorization: Bearer {{accessToken}}
+
+### 38. Obtener estadísticas de uso
+GET {{baseUrl}}/ResourceUsageLogs/statistics
+Authorization: Bearer {{accessToken}}
+
+### 39. Obtener registros por tipo de evento
+GET {{baseUrl}}/ResourceUsageLogs/event-type/IncidentReport
+Authorization: Bearer {{accessToken}}
+
+# Nota: Para usar estos endpoints, primero debes autenticarte usando el endpoint de Auth
+# y obtener el token para reemplazar {{accessToken}}

@@ -94,6 +94,11 @@ builder.Services.AddSingleton<IJwtService, JwtService>();
 builder.Services.AddScoped<ILevelService, LevelService>();
 builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 
+// Registrar servicios de recursos
+builder.Services.AddScoped<IResourceService, ResourceService>();
+builder.Services.AddScoped<IResourceAssignmentService, ResourceAssignmentService>();
+builder.Services.AddScoped<IResourceUsageLogService, ResourceUsageLogService>();
+
 // Configurar CORS si es necesario
 builder.Services.AddCors(options =>
 {
