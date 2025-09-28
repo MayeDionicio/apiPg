@@ -146,3 +146,4 @@ C:\Users\Pahola Dionicio\Desktop\API PG\ApiPG\obj\Debug\net8.0\ApiPG.xml
 C:\Users\Pahola Dionicio\Desktop\API PG\ApiPG\obj\Debug\net8.0\ApiPG.pdb
 C:\Users\Pahola Dionicio\Desktop\API PG\ApiPG\obj\Debug\net8.0\ApiPG.genruntimeconfig.cache
 C:\Users\Pahola Dionicio\Desktop\API PG\ApiPG\obj\Debug\net8.0\ref\ApiPG.dll
+C:\Users\Pahola Dionicio\Desktop\API PG\ApiPG\bin\Debug\net8.0\test-step1.json

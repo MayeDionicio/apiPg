@@ -17,6 +17,7 @@ namespace ApiPG.Data
         public DbSet<Resource> Resources { get; set; }
         public DbSet<ResourceAssignment> ResourceAssignments { get; set; }
         public DbSet<ResourceUsageLog> ResourceUsageLogs { get; set; }
+        public DbSet<Devocional> Devocionales { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -105,6 +106,17 @@ namespace ApiPG.Data
                         PasswordHash = HashPassword("user123"),
                         RoleId = 3,
                         CreatedAt = new DateTime(2024, 1, 20, 0, 0, 0, DateTimeKind.Utc)
+                    },
+                    new User
+                    {
+                        Id = 4,
+                        FirstName = "Carlos",
+                        LastName = "Coordinador",
+                        Email = "coordinador@apipg.com",
+                        Username = "coordinador",
+                        PasswordHash = HashPassword("coord123"),
+                        RoleId = 5,
+                        CreatedAt = new DateTime(2024, 1, 25, 0, 0, 0, DateTimeKind.Utc)
                     }
                 );
             });
@@ -258,6 +270,49 @@ namespace ApiPG.Data
             entity.HasIndex(e => e.EventType);
             entity.HasIndex(e => e.CreatedAt);
             entity.HasIndex(e => e.IsResolved);
+        });
+
+        // Configuración para Devocional
+        modelBuilder.Entity<Devocional>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Titulo).IsRequired().HasMaxLength(200);
+            entity.Property(e => e.Pasaje).HasMaxLength(200);
+            entity.Property(e => e.VoluntarioAsignado).HasMaxLength(100);
+            entity.Property(e => e.TextoClave).HasMaxLength(1000);
+            entity.Property(e => e.Objetivo).HasMaxLength(1000);
+            entity.Property(e => e.Idea).HasMaxLength(1000);
+            entity.Property(e => e.Aplicacion).HasMaxLength(2000);
+            entity.Property(e => e.Reto).HasMaxLength(1000);
+            entity.Property(e => e.Oracion).HasMaxLength(1000);
+            entity.Property(e => e.Recursos).HasMaxLength(2000);
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.Estado).HasDefaultValue(DevocionalEstado.Borrador);
+
+            // Relaciones
+            entity.HasOne(e => e.CreatedByUser)
+                .WithMany()
+                .HasForeignKey(e => e.CreatedByUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(e => e.UpdatedByUser)
+                .WithMany()
+                .HasForeignKey(e => e.UpdatedByUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(e => e.VoluntarioAsignadoUser)
+                .WithMany()
+                .HasForeignKey(e => e.VoluntarioAsignadoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Índices
+            entity.HasIndex(e => e.Titulo);
+            entity.HasIndex(e => e.FechaProgramada);
+            entity.HasIndex(e => e.Estado);
+            entity.HasIndex(e => e.VoluntarioAsignadoId);
+            entity.HasIndex(e => e.CreatedAt);
+            entity.HasIndex(e => e.IsActive);
         });
         }
 

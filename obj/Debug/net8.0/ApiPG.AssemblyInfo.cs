@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ApiPG")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7392d6472b349c7d2be7d96e30cdc6ca133161d9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2f550ab1e80980e4045547f4661ddf324a38d09d")]
 [assembly: System.Reflection.AssemblyProductAttribute("ApiPG")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ApiPG")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

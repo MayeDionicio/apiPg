@@ -99,6 +99,9 @@ builder.Services.AddScoped<IResourceService, ResourceService>();
 builder.Services.AddScoped<IResourceAssignmentService, ResourceAssignmentService>();
 builder.Services.AddScoped<IResourceUsageLogService, ResourceUsageLogService>();
 
+// Registrar servicio de devocionales
+builder.Services.AddScoped<IDevocionalService, DevocionalService>();
+
 // Configurar CORS si es necesario
 builder.Services.AddCors(options =>
 {

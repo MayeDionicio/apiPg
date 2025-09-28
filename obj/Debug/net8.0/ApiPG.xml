@@ -24,6 +24,151 @@
             Verificar si el token JWT es válido
             </summary>
         </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetDevocionales">
+            <summary>
+            Obtener todos los devocionales
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetDevocional(System.Int32)">
+            <summary>
+            Obtener un devocional por ID
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.CreateDevocional(ApiPG.DTOs.CreateDevocionalDto)">
+            <summary>
+            Crear un nuevo devocional completo
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.UpdateDevocional(System.Int32,ApiPG.DTOs.UpdateDevocionalDto)">
+            <summary>
+            Actualizar un devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.DeleteDevocional(System.Int32)">
+            <summary>
+            Desactivar un devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.ActivateDevocional(System.Int32)">
+            <summary>
+            Activar un devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.SaveStep1(ApiPG.DTOs.DevocionalStep1Dto)">
+            <summary>
+            Guardar paso 1: Información básica
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.SaveStep2(System.Int32,ApiPG.DTOs.DevocionalStep2Dto)">
+            <summary>
+            Guardar paso 2: Texto bíblico
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.SaveStep3(System.Int32,ApiPG.DTOs.DevocionalStep3Dto)">
+            <summary>
+            Guardar paso 3: Contenido
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.SaveDraft(ApiPG.DTOs.SaveDraftDto)">
+            <summary>
+            Guardar como borrador
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.FinalizeDevocional(System.Int32)">
+            <summary>
+            Finalizar devocional (cambiar a Programado)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetByEstado(ApiPG.Models.DevocionalEstado)">
+            <summary>
+            Obtener devocionales por estado
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetByVoluntario(System.Int32)">
+            <summary>
+            Obtener devocionales por voluntario
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetByFecha(System.DateTime)">
+            <summary>
+            Obtener devocionales por fecha específica
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetByRangoFecha(System.DateTime,System.DateTime)">
+            <summary>
+            Obtener devocionales en rango de fechas
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetBorradores">
+            <summary>
+            Obtener borradores
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetProgramados">
+            <summary>
+            Obtener devocionales programados
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetProximos(System.Int32)">
+            <summary>
+            Obtener próximos devocionales
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetRecientes(System.Int32)">
+            <summary>
+            Obtener devocionales recientes
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetMisDevocionales">
+            <summary>
+            Obtener mis devocionales (creados por el usuario actual)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.CambiarEstado(System.Int32,ApiPG.Models.DevocionalEstado)">
+            <summary>
+            Cambiar estado de un devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.ProgramarDevocional(System.Int32)">
+            <summary>
+            Programar devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.IniciarDevocional(System.Int32)">
+            <summary>
+            Iniciar devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.CompletarDevocional(System.Int32)">
+            <summary>
+            Completar devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.CancelarDevocional(System.Int32)">
+            <summary>
+            Cancelar devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetPreview(System.Int32)">
+            <summary>
+            Obtener preview de un devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetVoluntariosDisponibles">
+            <summary>
+            Obtener lista de voluntarios disponibles
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetEstadisticas">
+            <summary>
+            Obtener estadísticas de devocionales
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.Search(System.String)">
+            <summary>
+            Buscar devocionales
+            </summary>
+        </member>
         <member name="M:ApiPG.Controllers.LevelsController.GetLevels">
             <summary>
             Obtener todos los niveles
@@ -472,6 +617,18 @@
             <inheritdoc />
         </member>
         <member name="M:ApiPG.Migrations.UpdateResourceManagementSystem.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.CreateDevocionales">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.CreateDevocionales.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.CreateDevocionales.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.CreateDevocionales.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>
