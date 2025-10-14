@@ -1,0 +1,27 @@
+### Autenticación - Obtener token
+POST http://localhost:5000/api/Auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@apipg.com",
+  "password": "admin123"
+}
+
+### Variables para usar en otras peticiones
+@token = {{login.response.body.token}}
+
+### Paso 1: Crear devocional - Información básica
+POST http://localhost:5000/api/Devocional/wizard/step1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "titulo": "Devocional de Prueba",
+  "fechaProgramada": "2024-12-20",
+  "voluntarioAsignado": "Juan Pérez",
+  "voluntarioAsignadoId": 1
+}
+
+### Verificar si hay usuarios en la base de datos
+GET http://localhost:5000/api/Users
+Authorization: Bearer {{token}}

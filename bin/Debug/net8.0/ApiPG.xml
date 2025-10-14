@@ -1,0 +1,635 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ApiPG</name>
+    </assembly>
+    <members>
+        <member name="M:ApiPG.Controllers.AsignacionesRecursosController.GetAssignments">
+            <summary>
+            Obtener todas las asignaciones de recursos
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AsignacionesRecursosController.GetAssignment(System.Int32)">
+            <summary>
+            Obtener una asignación por ID
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AsignacionesRecursosController.CreateAssignment(ApiPG.DTOs.CrearAsignacionDeRecursoDto)">
+            <summary>
+            Crear una nueva asignación de recurso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AsignacionesRecursosController.UpdateAssignment(System.Int32,ApiPG.DTOs.ActualizarAsignacionDeRecursoDto)">
+            <summary>
+            Actualizar una asignación existente
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AsignacionesRecursosController.CancelAssignment(System.Int32)">
+            <summary>
+            Cancelar una asignación
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AsignacionesRecursosController.ConfirmAssignment(System.Int32,ApiPG.DTOs.ConfirmarAsignacionDto)">
+            <summary>
+            Confirmar una asignación (por parte del voluntario)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AsignacionesRecursosController.StartUse(System.Int32)">
+            <summary>
+            Iniciar el uso de un recurso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AsignacionesRecursosController.ReturnResource(System.Int32)">
+            <summary>
+            Devolver un recurso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AsignacionesRecursosController.GetAssignmentsByVolunteer(System.Int32)">
+            <summary>
+            Obtener asignaciones de un voluntario específico
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AsignacionesRecursosController.GetAssignmentsByResource(System.Int32)">
+            <summary>
+            Obtener asignaciones de un recurso específico
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AsignacionesRecursosController.GetPendingAssignments">
+            <summary>
+            Obtener asignaciones pendientes de confirmación
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AsignacionesRecursosController.GetOverdueReturns">
+            <summary>
+            Obtener asignaciones con devolución vencida
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AsignacionesRecursosController.GetActiveAssignments">
+            <summary>
+            Obtener asignaciones activas
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AsignacionesRecursosController.GetMyAssignments">
+            <summary>
+            Obtener mis asignaciones (del usuario autenticado)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AsignacionesRecursosController.GetAssignmentStatistics">
+            <summary>
+            Obtener estadísticas de asignaciones
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AutenticacionController.Login(ApiPG.DTOs.IniciarSesionDto)">
+            <summary>
+            Iniciar sesión con email y contraseña
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AutenticacionController.Register(ApiPG.DTOs.RegistrarDto)">
+            <summary>
+            Registrar un nuevo usuario
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AutenticacionController.GetProfile">
+            <summary>
+            Obtener perfil del usuario autenticado
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.AutenticacionController.VerifyToken">
+            <summary>
+            Verificar si el token JWT es válido
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetDevocionales">
+            <summary>
+            Obtener todos los devocionales
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetDevocional(System.Int32)">
+            <summary>
+            Obtener un devocional por ID
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.CreateDevocional(ApiPG.DTOs.CrearDevocionalDto)">
+            <summary>
+            Crear un nuevo devocional completo
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.UpdateDevocional(System.Int32,ApiPG.DTOs.ActualizarDevocionalDto)">
+            <summary>
+            Actualizar un devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.DeleteDevocional(System.Int32)">
+            <summary>
+            Desactivar un devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.ActivateDevocional(System.Int32)">
+            <summary>
+            Activar un devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.SaveStep1(ApiPG.DTOs.DevocionalPaso1Dto)">
+            <summary>
+            Guardar paso 1: Información básica
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.SaveStep2(System.Int32,ApiPG.DTOs.DevocionalPaso2Dto)">
+            <summary>
+            Guardar paso 2: Texto bíblico
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.SaveStep3(System.Int32,ApiPG.DTOs.DevocionalPaso3Dto)">
+            <summary>
+            Guardar paso 3: Contenido
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.SaveDraft(ApiPG.DTOs.GuardarBorradorDto)">
+            <summary>
+            Guardar como borrador
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.FinalizeDevocional(System.Int32)">
+            <summary>
+            Finalizar devocional (cambiar a Programado)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetByEstado(ApiPG.Models.DevocionalEstado)">
+            <summary>
+            Obtener devocionales por estado
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetByVoluntario(System.Int32)">
+            <summary>
+            Obtener devocionales por voluntario
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetByFecha(System.DateTime)">
+            <summary>
+            Obtener devocionales por fecha específica
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetByRangoFecha(System.DateTime,System.DateTime)">
+            <summary>
+            Obtener devocionales en rango de fechas
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetBorradores">
+            <summary>
+            Obtener borradores
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetProgramados">
+            <summary>
+            Obtener devocionales programados
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetProximos(System.Int32)">
+            <summary>
+            Obtener próximos devocionales
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetRecientes(System.Int32)">
+            <summary>
+            Obtener devocionales recientes
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetMisDevocionales">
+            <summary>
+            Obtener mis devocionales (creados por el usuario actual)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.CambiarEstado(System.Int32,ApiPG.Models.DevocionalEstado)">
+            <summary>
+            Cambiar estado de un devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.ProgramarDevocional(System.Int32)">
+            <summary>
+            Programar devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.IniciarDevocional(System.Int32)">
+            <summary>
+            Iniciar devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.CompletarDevocional(System.Int32)">
+            <summary>
+            Completar devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.CancelarDevocional(System.Int32)">
+            <summary>
+            Cancelar devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetPreview(System.Int32)">
+            <summary>
+            Obtener preview de un devocional
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetVoluntariosDisponibles">
+            <summary>
+            Obtener lista de voluntarios disponibles
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.GetEstadisticas">
+            <summary>
+            Obtener estadísticas de devocionales
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.DevocionalController.Search(System.String)">
+            <summary>
+            Buscar devocionales
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.NivelesController.GetLevels">
+            <summary>
+            Obtener todos los niveles
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.NivelesController.GetLevel(System.Int32)">
+            <summary>
+            Obtener un nivel por ID
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.NivelesController.CreateLevel(ApiPG.DTOs.CrearNivelDto)">
+            <summary>
+            Crear un nuevo nivel
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.NivelesController.UpdateLevel(System.Int32,ApiPG.DTOs.ActualizarNivelDto)">
+            <summary>
+            Actualizar un nivel existente
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.NivelesController.DeleteLevel(System.Int32)">
+            <summary>
+            Eliminar un nivel (soft delete)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.NivelesController.AssignTutor(System.Int32,ApiPG.Controllers.AsignarVoluntarioDto)">
+            <summary>
+            Asignar voluntario a un nivel
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.NivelesController.GetLevelParticipants(System.Int32)">
+            <summary>
+            Obtener participantes de un nivel específico
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.NivelesController.AssignParticipantToLevel(System.Int32,System.Int32)">
+            <summary>
+            Asignar un participante a un nivel
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.NivelesController.RemoveParticipantFromLevel(System.Int32,System.Int32)">
+            <summary>
+            Remover un participante de un nivel
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.NivelesController.GetLevelsByTutor(System.Int32)">
+            <summary>
+            Obtener niveles asignados a un voluntario específico
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RecursosController.GetResources(System.Boolean)">
+            <summary>
+            Obtener todos los recursos
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RecursosController.GetResource(System.Int32)">
+            <summary>
+            Obtener un recurso por ID
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RecursosController.CreateResource(ApiPG.DTOs.CrearRecursoDto)">
+            <summary>
+            Crear un nuevo recurso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RecursosController.UpdateResource(System.Int32,ApiPG.DTOs.ActualizarRecursoDto)">
+            <summary>
+            Actualizar un recurso existente
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RecursosController.DeleteResource(System.Int32)">
+            <summary>
+            Desactivar un recurso (soft delete)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RecursosController.ActivateResource(System.Int32)">
+            <summary>
+            Activar un recurso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RecursosController.GetResourcesByCategory(System.String)">
+            <summary>
+            Obtener recursos por categoría
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RecursosController.GetAvailableResources">
+            <summary>
+            Obtener recursos disponibles (con cantidad > 0)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RecursosController.GetLowStockResources(System.Int32)">
+            <summary>
+            Obtener recursos con stock bajo
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RecursosController.UpdateResourceQuantity(System.Int32,ApiPG.Controllers.ActualizarCantidadDto)">
+            <summary>
+            Actualizar cantidad de un recurso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RecursosController.GetResourceStatistics">
+            <summary>
+            Obtener estadísticas de recursos
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RecursosController.GetCategories">
+            <summary>
+            Obtener todas las categorías disponibles
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RegistroUsoRecursosController.GetUsageLogs">
+            <summary>
+            Obtener todos los registros de uso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RegistroUsoRecursosController.GetUsageLog(System.Int32)">
+            <summary>
+            Obtener un registro de uso por ID
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RegistroUsoRecursosController.CreateUsageLog(ApiPG.DTOs.CrearRegistroDeUsoDeRecursoDto)">
+            <summary>
+            Crear un nuevo registro de uso/incidente
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RegistroUsoRecursosController.ResolveIncident(System.Int32,ApiPG.DTOs.ResolverIncidenteDto)">
+            <summary>
+            Resolver un incidente
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RegistroUsoRecursosController.GetUsageLogsByAssignment(System.Int32)">
+            <summary>
+            Obtener registros de uso por asignación
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RegistroUsoRecursosController.GetUsageLogsByResource(System.Int32)">
+            <summary>
+            Obtener registros de uso por recurso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RegistroUsoRecursosController.GetUsageLogsByVolunteer(System.Int32)">
+            <summary>
+            Obtener registros de uso por voluntario
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RegistroUsoRecursosController.GetIncidents">
+            <summary>
+            Obtener todos los incidentes
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RegistroUsoRecursosController.GetUnresolvedIncidents">
+            <summary>
+            Obtener incidentes sin resolver
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RegistroUsoRecursosController.GetUsageLogsByEventType(ApiPG.Models.TipoDeEventoDeUso)">
+            <summary>
+            Obtener registros por tipo de evento
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RegistroUsoRecursosController.GetRecentActivities(System.Int32)">
+            <summary>
+            Obtener actividades recientes
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RegistroUsoRecursosController.GetUsageStatistics">
+            <summary>
+            Obtener estadísticas de uso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RegistroUsoRecursosController.ConfirmUsage(ApiPG.Controllers.ConfirmarUsoDto)">
+            <summary>
+            Confirmar uso de recurso (acción común del voluntario)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RegistroUsoRecursosController.ReportIncident(ApiPG.Controllers.ReportIncidentDto)">
+            <summary>
+            Reportar incidente rápido
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.RolesController.GetRoles">
+            <summary>
+            Obtiene todos los roles activos
+            </summary>
+            <returns>Lista de roles</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.RolesController.GetRole(System.Int32)">
+            <summary>
+            Obtiene un rol por su ID
+            </summary>
+            <param name="id">ID del rol</param>
+            <returns>El rol encontrado</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.RolesController.CreateRole(ApiPG.DTOs.CrearRolDto)">
+            <summary>
+            Crea un nuevo rol
+            </summary>
+            <param name="createRoleDto">Datos del rol a crear</param>
+            <returns>El rol creado</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.RolesController.UpdateRole(System.Int32,ApiPG.DTOs.ActualizarRolDto)">
+            <summary>
+            Actualiza un rol existente
+            </summary>
+            <param name="id">ID del rol a actualizar</param>
+            <param name="updateRoleDto">Datos del rol a actualizar</param>
+            <returns>El rol actualizado</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.RolesController.DeleteRole(System.Int32)">
+            <summary>
+            Elimina un rol (soft delete)
+            </summary>
+            <param name="id">ID del rol a eliminar</param>
+            <returns>Confirmación de eliminación</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.RolesController.CheckRoleExists(System.String)">
+            <summary>
+            Verifica si un rol existe por nombre
+            </summary>
+            <param name="name">Nombre del rol</param>
+            <returns>Resultado de la verificación</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.RolesController.CheckRoleHasUsers(System.Int32)">
+            <summary>
+            Verifica si un rol tiene usuarios asignados
+            </summary>
+            <param name="id">ID del rol</param>
+            <returns>Resultado de la verificación</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.UsuariosController.GetUsers">
+            <summary>
+            Obtiene todos los usuarios activos
+            </summary>
+            <returns>Lista de usuarios</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.UsuariosController.GetUser(System.Int32)">
+            <summary>
+            Obtiene un usuario por su ID
+            </summary>
+            <param name="id">ID del usuario</param>
+            <returns>El usuario encontrado</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.UsuariosController.GetUserByUsername(System.String)">
+            <summary>
+            Obtiene un usuario por su nombre de usuario
+            </summary>
+            <param name="nombreUsuario">Nombre de usuario</param>
+            <returns>El usuario encontrado</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.UsuariosController.CreateUser(ApiPG.DTOs.CrearUsuarioDto)">
+            <summary>
+            Crea un nuevo usuario
+            </summary>
+            <param name="createUserDto">Datos del usuario a crear</param>
+            <returns>El usuario creado</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.UsuariosController.UpdateUser(System.Int32,ApiPG.DTOs.ActualizarUsuarioDto)">
+            <summary>
+            Actualiza un usuario existente
+            </summary>
+            <param name="id">ID del usuario a actualizar</param>
+            <param name="updateUserDto">Datos del usuario a actualizar</param>
+            <returns>El usuario actualizado</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.UsuariosController.DeleteUser(System.Int32)">
+            <summary>
+            Elimina un usuario (soft delete)
+            </summary>
+            <param name="id">ID del usuario a eliminar</param>
+            <returns>Confirmación de eliminación</returns>
+        </member>
+        <member name="M:ApiPG.Controllers.UsuariosController.CheckUserExists(System.String,System.String)">
+            <summary>
+            Verifica si un usuario existe por username o email
+            </summary>
+            <param name="username">Nombre de usuario</param>
+            <param name="email">Email</param>
+            <returns>Resultado de la verificación</returns>
+        </member>
+        <member name="T:ApiPG.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.FixSeedData">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.FixSeedData.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.FixSeedData.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.FixSeedData.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.RenameUserToParticipanteAndAddCoordinador">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.RenameUserToParticipanteAndAddCoordinador.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.RenameUserToParticipanteAndAddCoordinador.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.RenameUserToParticipanteAndAddCoordinador.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AddLevelAndLevelParticipant">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddLevelAndLevelParticipant.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddLevelAndLevelParticipant.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddLevelAndLevelParticipant.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AddLevelDescription">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddLevelDescription.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddLevelDescription.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddLevelDescription.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AddAttendance">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddAttendance.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddAttendance.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddAttendance.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AddResourceManagementSystem">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddResourceManagementSystem.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddResourceManagementSystem.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddResourceManagementSystem.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.UpdateResourceManagementSystem">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.UpdateResourceManagementSystem.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.UpdateResourceManagementSystem.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.UpdateResourceManagementSystem.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.CreateDevocionales">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.CreateDevocionales.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.CreateDevocionales.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.CreateDevocionales.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
