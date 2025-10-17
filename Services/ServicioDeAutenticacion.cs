@@ -28,7 +28,7 @@ namespace ApiPG.Services
         public async Task<RespuestaInicioSesionDto?> LoginAsync(IniciarSesionDto loginDto)
         {
             // Buscar usuario por email
-            var user = await _context.Users
+            var user = await _context.Usuarios
                 .Include(u => u.Rol)
                 .FirstOrDefaultAsync(u => u.CorreoElectronico == loginDto.Email && u.EstaActivo);
 
@@ -49,11 +49,11 @@ namespace ApiPG.Services
         public async Task<UsuarioDto> RegisterAsync(RegistrarDto registerDto)
         {
             // Validar que el email no existe
-            if (await _context.Users.AnyAsync(u => u.CorreoElectronico == registerDto.Email && u.EstaActivo))
+            if (await _context.Usuarios.AnyAsync(u => u.CorreoElectronico == registerDto.Email && u.EstaActivo))
                 throw new ArgumentException("Email already exists");
 
             // Validar que el username no existe
-            if (await _context.Users.AnyAsync(u => u.NombreDeUsuario == registerDto.NombreDeUsuario && u.EstaActivo))
+            if (await _context.Usuarios.AnyAsync(u => u.NombreDeUsuario == registerDto.NombreDeUsuario && u.EstaActivo))
                 throw new ArgumentException("Username already exists");
 
             // Verificar que el rol existe
@@ -73,7 +73,7 @@ namespace ApiPG.Services
                 EstaActivo = true
             };
 
-            _context.Users.Add(user);
+            _context.Usuarios.Add(user);
             await _context.SaveChangesAsync();
 
             // Cargar el rol para el DTO
@@ -84,7 +84,7 @@ namespace ApiPG.Services
 
         public async Task<UsuarioDto?> GetCurrentUserAsync(int userId)
         {
-            var user = await _context.Users
+            var user = await _context.Usuarios
                 .Include(u => u.Rol)
                 .FirstOrDefaultAsync(u => u.Id == userId && u.EstaActivo);
 

@@ -29,7 +29,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<UsuarioDto>> GetAllUsersAsync()
         {
-            var users = await _context.Users
+            var users = await _context.Usuarios
                 .Where(u => u.EstaActivo)
                 .Include(u => u.Rol)
                 .Select(u => MapToDto(u))
@@ -40,7 +40,7 @@ namespace ApiPG.Services
 
         public async Task<UsuarioDto?> GetUserByIdAsync(int id)
         {
-            var user = await _context.Users
+            var user = await _context.Usuarios
                 .Include(u => u.Rol)
                 .FirstOrDefaultAsync(u => u.Id == id && u.EstaActivo);
 
@@ -49,7 +49,7 @@ namespace ApiPG.Services
 
         public async Task<UsuarioDto?> GetUserByUsernameAsync(string username)
         {
-            var user = await _context.Users
+            var user = await _context.Usuarios
                 .Include(u => u.Rol)
                 .FirstOrDefaultAsync(u => u.NombreDeUsuario == username && u.EstaActivo);
 
@@ -79,7 +79,7 @@ namespace ApiPG.Services
                 EstaActivo = true
             };
 
-            _context.Users.Add(user);
+            _context.Usuarios.Add(user);
             await _context.SaveChangesAsync();
 
             // Cargar el rol para el DTO
@@ -90,7 +90,7 @@ namespace ApiPG.Services
 
         public async Task<UsuarioDto?> UpdateUserAsync(int id, ActualizarUsuarioDto updateUserDto)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Usuarios.FindAsync(id);
             if (user == null) return null;
 
             // Validar que el nuevo username/email no existe (excluyendo el usuario actual)
@@ -144,7 +144,7 @@ namespace ApiPG.Services
 
         public async Task<bool> DeleteUserAsync(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Usuarios.FindAsync(id);
             if (user == null) return false;
 
             user.EstaActivo = false; // Soft delete
@@ -155,7 +155,7 @@ namespace ApiPG.Services
 
         public async Task<bool> UserExistsAsync(string username, string email, int? excludeUserId = null)
         {
-            return await _context.Users
+            return await _context.Usuarios
                 .AnyAsync(u => u.EstaActivo && 
                               (u.NombreDeUsuario == username || u.CorreoElectronico == email) &&
                               (!excludeUserId.HasValue || u.Id != excludeUserId.Value));

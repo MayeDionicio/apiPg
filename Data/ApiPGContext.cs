@@ -9,14 +9,14 @@ namespace ApiPG.Data
         {
         }
 
-        public DbSet<Usuario> Users { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Rol> Roles { get; set; }
-        public DbSet<Nivel> Levels { get; set; }
-        public DbSet<NivelDeParticipante> LevelParticipants { get; set; }
-        public DbSet<Asistencia> Attendances { get; set; }
-        public DbSet<Recurso> Resources { get; set; }
-        public DbSet<AsignacionDeRecurso> ResourceAssignments { get; set; }
-        public DbSet<RegistroDeUsoDeRecurso> ResourceUsageLogs { get; set; }
+        public DbSet<Nivel> Niveles { get; set; }
+        public DbSet<NivelDeParticipante> NivelesDeParticipantes { get; set; }
+        public DbSet<Asistencia> Asistencias { get; set; }
+        public DbSet<Recurso> Recursos { get; set; }
+        public DbSet<AsignacionDeRecurso> AsignacionesDeRecurso { get; set; }
+        public DbSet<RegistroDeUsoDeRecurso> RegistrosDeUsoDeRecurso { get; set; }
         public DbSet<Devocional> Devocionales { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,6 +26,7 @@ namespace ApiPG.Data
             // Configuración para Usuario
             modelBuilder.Entity<Usuario>(entity =>
             {
+                entity.ToTable("Usuarios");
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.PrimerNombre).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.Apellido).IsRequired().HasMaxLength(100);
@@ -49,6 +50,7 @@ namespace ApiPG.Data
             // Configuración para Rol
             modelBuilder.Entity<Rol>(entity =>
             {
+                entity.ToTable("Roles");
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Nombre).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.Descripcion).HasMaxLength(200);
@@ -124,6 +126,7 @@ namespace ApiPG.Data
             // Configuración para Nivel
             modelBuilder.Entity<Nivel>(entity =>
             {
+                entity.ToTable("Niveles");
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Nombre).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.Descripcion).HasMaxLength(500);
@@ -140,6 +143,7 @@ namespace ApiPG.Data
             // Configuración para NivelDeParticipante (many-to-many)
             modelBuilder.Entity<NivelDeParticipante>(entity =>
             {
+                entity.ToTable("NivelesDeParticipantes");
                 entity.HasKey(e => new { e.IdNivel, e.IdUsuario });
 
                 entity.Property(e => e.AsignadoEn).HasDefaultValueSql("CURRENT_TIMESTAMP");
@@ -159,6 +163,7 @@ namespace ApiPG.Data
         // Configuración para Asistencia
         modelBuilder.Entity<Asistencia>(entity =>
         {
+            entity.ToTable("Asistencias");
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Fecha).IsRequired();
             entity.Property(e => e.Presente).IsRequired();
@@ -179,6 +184,7 @@ namespace ApiPG.Data
         // Configuración para Recurso
         modelBuilder.Entity<Recurso>(entity =>
         {
+            entity.ToTable("Recursos");
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Nombre).IsRequired().HasMaxLength(100);
             entity.Property(e => e.Descripcion).HasMaxLength(500);
@@ -201,6 +207,7 @@ namespace ApiPG.Data
         // Configuración para AsignacionDeRecurso
         modelBuilder.Entity<AsignacionDeRecurso>(entity =>
         {
+            entity.ToTable("AsignacionesDeRecurso");
             entity.HasKey(e => e.Id);
             entity.Property(e => e.IdRecurso).IsRequired();
             entity.Property(e => e.IdVoluntario).IsRequired();
@@ -237,6 +244,7 @@ namespace ApiPG.Data
         // Configuración para RegistroDeUsoDeRecurso
         modelBuilder.Entity<RegistroDeUsoDeRecurso>(entity =>
         {
+            entity.ToTable("RegistrosDeUsoDeRecurso");
             entity.HasKey(e => e.Id);
             entity.Property(e => e.IdAsignacionDeRecurso).IsRequired();
             entity.Property(e => e.TipoDeEvento).IsRequired();
@@ -275,6 +283,7 @@ namespace ApiPG.Data
         // Configuración para Devocional
         modelBuilder.Entity<Devocional>(entity =>
         {
+            entity.ToTable("Devocionales");
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Titulo).IsRequired().HasMaxLength(200);
             entity.Property(e => e.Pasaje).HasMaxLength(200);

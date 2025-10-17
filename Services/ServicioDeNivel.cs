@@ -25,7 +25,7 @@ namespace ApiPG.Services
                 EstaActivo = true
             };
 
-            _db.Levels.Add(level);
+            _db.Niveles.Add(level);
             await _db.SaveChangesAsync();
 
             return await GetByIdInternalAsync(level.Id) ?? throw new InvalidOperationException("Failed to load created level");
@@ -33,7 +33,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<NivelDto>> GetAllAsync()
         {
-            var levels = await _db.Levels
+            var levels = await _db.Niveles
                 .Where(l => l.EstaActivo)
                 .Include(l => l.ParticipantesDelNivel)
                 .ThenInclude(lp => lp.Usuario)
@@ -59,7 +59,7 @@ namespace ApiPG.Services
 
         private async Task<NivelDto?> GetByIdInternalAsync(int id)
         {
-            var l = await _db.Levels
+            var l = await _db.Niveles
                 .Include(x => x.ParticipantesDelNivel)
                 .ThenInclude(lp => lp.Usuario)
                 .Include(x => x.Voluntario)
@@ -82,7 +82,7 @@ namespace ApiPG.Services
 
         public async Task<NivelDto?> UpdateAsync(int id, ActualizarNivelDto dto)
         {
-            var l = await _db.Levels.FindAsync(id);
+            var l = await _db.Niveles.FindAsync(id);
             if (l == null) return null;
 
             if (!string.IsNullOrWhiteSpace(dto.Nombre)) l.Nombre = dto.Nombre;
@@ -100,7 +100,7 @@ namespace ApiPG.Services
 
         public async Task<bool> SoftDeleteAsync(int id)
         {
-            var l = await _db.Levels.FindAsync(id);
+            var l = await _db.Niveles.FindAsync(id);
             if (l == null) return false;
             l.EstaActivo = false;
             await _db.SaveChangesAsync();
@@ -110,7 +110,7 @@ namespace ApiPG.Services
         public async Task<bool> AssignParticipantAsync(int levelId, int userId)
         {
             // If there is an existing inactive association, reactivate it; otherwise create a new one
-            var lp = await _db.LevelParticipants.FirstOrDefaultAsync(x => x.IdNivel == levelId && x.IdUsuario == userId);
+            var lp = await _db.NivelesDeParticipantes.FirstOrDefaultAsync(x => x.IdNivel == levelId && x.IdUsuario == userId);
             if (lp != null)
             {
                 if (lp.EstaActivo) return true;
@@ -126,7 +126,7 @@ namespace ApiPG.Services
                     AsignadoEn = DateTime.UtcNow,
                     EstaActivo = true
                 };
-                _db.LevelParticipants.Add(lp);
+                _db.NivelesDeParticipantes.Add(lp);
             }
 
             await _db.SaveChangesAsync();
@@ -135,7 +135,7 @@ namespace ApiPG.Services
 
         public async Task<bool> RemoveParticipantAsync(int levelId, int userId)
         {
-            var lp = await _db.LevelParticipants.FirstOrDefaultAsync(x => x.IdNivel == levelId && x.IdUsuario == userId && x.EstaActivo);
+            var lp = await _db.NivelesDeParticipantes.FirstOrDefaultAsync(x => x.IdNivel == levelId && x.IdUsuario == userId && x.EstaActivo);
             if (lp == null) return false;
             // Soft remove
             lp.EstaActivo = false;
@@ -145,7 +145,7 @@ namespace ApiPG.Services
 
         public async Task<bool> ChangeTutorAsync(int levelId, int? tutorId)
         {
-            var l = await _db.Levels.FindAsync(levelId);
+            var l = await _db.Niveles.FindAsync(levelId);
             if (l == null) return false;
             l.IdVoluntario = tutorId;
             await _db.SaveChangesAsync();
@@ -154,7 +154,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<ParticipanteDeNivelDto>> GetParticipantsAsync(int levelId)
         {
-            var list = await _db.LevelParticipants
+            var list = await _db.NivelesDeParticipantes
                 .Where(lp => lp.IdNivel == levelId && lp.EstaActivo)
                 .Include(lp => lp.Usuario)
                 .Select(lp => new ParticipanteDeNivelDto
@@ -171,7 +171,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<NivelDto>> GetLevelsByTutorAsync(int tutorId)
         {
-            var levels = await _db.Levels
+            var levels = await _db.Niveles
                 .Where(l => l.EstaActivo && l.IdVoluntario == tutorId)
                 .Include(l => l.ParticipantesDelNivel)
                 .ThenInclude(lp => lp.Usuario)

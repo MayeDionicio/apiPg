@@ -16,7 +16,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<RecursoDto>> GetAllAsync()
         {
-            var resources = await _db.Resources
+            var resources = await _db.Recursos
                 .Include(r => r.AsignacionesDeRecurso)
                 .OrderBy(r => r.Nombre)
                 .ToListAsync();
@@ -26,7 +26,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<RecursoDto>> GetActiveAsync()
         {
-            var resources = await _db.Resources
+            var resources = await _db.Recursos
                 .Where(r => r.EstaActivo)
                 .Include(r => r.AsignacionesDeRecurso)
                 .OrderBy(r => r.Nombre)
@@ -37,7 +37,7 @@ namespace ApiPG.Services
 
         public async Task<RecursoDto?> GetByIdAsync(int id)
         {
-            var resource = await _db.Resources
+            var resource = await _db.Recursos
                 .Include(r => r.AsignacionesDeRecurso)
                 .FirstOrDefaultAsync(r => r.Id == id);
 
@@ -61,7 +61,7 @@ namespace ApiPG.Services
                 EstaActivo = true
             };
 
-            _db.Resources.Add(resource);
+            _db.Recursos.Add(resource);
             await _db.SaveChangesAsync();
 
             return await GetByIdAsync(resource.Id) ?? throw new InvalidOperationException("Error al crear el recurso");
@@ -69,7 +69,7 @@ namespace ApiPG.Services
 
         public async Task<RecursoDto?> UpdateAsync(int id, ActualizarRecursoDto dto)
         {
-            var resource = await _db.Resources.FindAsync(id);
+            var resource = await _db.Recursos.FindAsync(id);
             if (resource == null) return null;
 
             if (!string.IsNullOrWhiteSpace(dto.Nombre))
@@ -111,7 +111,7 @@ namespace ApiPG.Services
 
         public async Task<bool> SoftDeleteAsync(int id)
         {
-            var resource = await _db.Resources.FindAsync(id);
+            var resource = await _db.Recursos.FindAsync(id);
             if (resource == null) return false;
 
             resource.EstaActivo = false;
@@ -123,7 +123,7 @@ namespace ApiPG.Services
 
         public async Task<bool> ActivateAsync(int id)
         {
-            var resource = await _db.Resources.FindAsync(id);
+            var resource = await _db.Recursos.FindAsync(id);
             if (resource == null) return false;
 
             resource.EstaActivo = true;
@@ -135,7 +135,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<RecursoDto>> GetByCategoryAsync(string category)
         {
-            var resources = await _db.Resources
+            var resources = await _db.Recursos
                 .Where(r => r.EstaActivo && r.Categoria.ToLower() == category.ToLower())
                 .Include(r => r.AsignacionesDeRecurso)
                 .OrderBy(r => r.Nombre)
@@ -146,7 +146,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<RecursoDto>> GetAvailableAsync()
         {
-            var resources = await _db.Resources
+            var resources = await _db.Recursos
                 .Where(r => r.EstaActivo && r.CantidadDisponible > 0)
                 .Include(r => r.AsignacionesDeRecurso)
                 .OrderBy(r => r.Nombre)
@@ -157,7 +157,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<RecursoDto>> GetLowStockAsync(int threshold = 5)
         {
-            var resources = await _db.Resources
+            var resources = await _db.Recursos
                 .Where(r => r.EstaActivo && r.CantidadDisponible <= threshold)
                 .Include(r => r.AsignacionesDeRecurso)
                 .OrderBy(r => r.CantidadDisponible)
@@ -168,7 +168,7 @@ namespace ApiPG.Services
 
         public async Task<bool> UpdateQuantityAsync(int resourceId, int newQuantity)
         {
-            var resource = await _db.Resources.FindAsync(resourceId);
+            var resource = await _db.Recursos.FindAsync(resourceId);
             if (resource == null) return false;
 
             var quantityDiff = newQuantity - resource.Cantidad;
@@ -182,7 +182,7 @@ namespace ApiPG.Services
 
         public async Task<bool> ReserveQuantityAsync(int resourceId, int quantity)
         {
-            var resource = await _db.Resources.FindAsync(resourceId);
+            var resource = await _db.Recursos.FindAsync(resourceId);
             if (resource == null || resource.CantidadDisponible < quantity) return false;
 
             resource.CantidadDisponible -= quantity;
@@ -194,7 +194,7 @@ namespace ApiPG.Services
 
         public async Task<bool> ReleaseQuantityAsync(int resourceId, int quantity)
         {
-            var resource = await _db.Resources.FindAsync(resourceId);
+            var resource = await _db.Recursos.FindAsync(resourceId);
             if (resource == null) return false;
 
             resource.CantidadDisponible = Math.Min(resource.Cantidad, resource.CantidadDisponible + quantity);
@@ -206,13 +206,13 @@ namespace ApiPG.Services
 
         public async Task<object> GetResourceStatisticsAsync()
         {
-            var totalResources = await _db.Resources.CountAsync(r => r.EstaActivo);
-            var totalAvailable = await _db.Resources.Where(r => r.EstaActivo).SumAsync(r => r.CantidadDisponible);
-            var totalAssigned = await _db.Resources.Where(r => r.EstaActivo).SumAsync(r => r.Cantidad - r.CantidadDisponible);
-            var lowStockCount = await _db.Resources.CountAsync(r => r.EstaActivo && r.CantidadDisponible <= 5);
-            var categoriesCount = await _db.Resources.Where(r => r.EstaActivo).Select(r => r.Categoria).Distinct().CountAsync();
+            var totalResources = await _db.Recursos.CountAsync(r => r.EstaActivo);
+            var totalAvailable = await _db.Recursos.Where(r => r.EstaActivo).SumAsync(r => r.CantidadDisponible);
+            var totalAssigned = await _db.Recursos.Where(r => r.EstaActivo).SumAsync(r => r.Cantidad - r.CantidadDisponible);
+            var lowStockCount = await _db.Recursos.CountAsync(r => r.EstaActivo && r.CantidadDisponible <= 5);
+            var categoriesCount = await _db.Recursos.Where(r => r.EstaActivo).Select(r => r.Categoria).Distinct().CountAsync();
 
-            var categoryStats = await _db.Resources
+            var categoryStats = await _db.Recursos
                 .Where(r => r.EstaActivo)
                 .GroupBy(r => r.Categoria)
                 .Select(g => new
@@ -238,7 +238,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<string>> GetCategoriesAsync()
         {
-            return await _db.Resources
+            return await _db.Recursos
                 .Where(r => r.EstaActivo)
                 .Select(r => r.Categoria)
                 .Distinct()

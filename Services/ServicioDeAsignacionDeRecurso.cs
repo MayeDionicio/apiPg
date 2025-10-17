@@ -18,7 +18,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<AsignacionDeRecursoDto>> GetAllAsync()
         {
-            var assignments = await _db.ResourceAssignments
+            var assignments = await _db.AsignacionesDeRecurso
                 .Include(a => a.Recurso)
                 .Include(a => a.Voluntario)
                 .Include(a => a.AsignadoPor)
@@ -31,7 +31,7 @@ namespace ApiPG.Services
 
         public async Task<AsignacionDeRecursoDto?> GetByIdAsync(int id)
         {
-            var assignment = await _db.ResourceAssignments
+            var assignment = await _db.AsignacionesDeRecurso
                 .Include(a => a.Recurso)
                 .Include(a => a.Voluntario)
                 .Include(a => a.AsignadoPor)
@@ -44,7 +44,7 @@ namespace ApiPG.Services
         public async Task<AsignacionDeRecursoDto> CreateAsync(CrearAsignacionDeRecursoDto dto, int assignedByUserId)
         {
             // Verificar que el recurso existe y tiene cantidad disponible
-            var resource = await _db.Resources.FindAsync(dto.RecursoId);
+            var resource = await _db.Recursos.FindAsync(dto.RecursoId);
             if (resource == null)
                 throw new ArgumentException("El recurso especificado no existe");
 
@@ -55,7 +55,7 @@ namespace ApiPG.Services
                 throw new ArgumentException("No hay suficiente cantidad disponible del recurso");
 
             // Verificar que el voluntario existe
-            var volunteer = await _db.Users.FindAsync(dto.VoluntarioId);
+            var volunteer = await _db.Usuarios.FindAsync(dto.VoluntarioId);
             if (volunteer == null || !volunteer.EstaActivo)
                 throw new ArgumentException("El voluntario especificado no existe o no está activo");
 
@@ -75,7 +75,7 @@ namespace ApiPG.Services
                 EstaActivo = true
             };
 
-            _db.ResourceAssignments.Add(assignment);
+            _db.AsignacionesDeRecurso.Add(assignment);
             await _db.SaveChangesAsync();
 
             return await GetByIdAsync(assignment.Id) ?? throw new InvalidOperationException("Error al crear la asignación");
@@ -83,7 +83,7 @@ namespace ApiPG.Services
 
         public async Task<AsignacionDeRecursoDto?> UpdateAsync(int id, ActualizarAsignacionDeRecursoDto dto)
         {
-            var assignment = await _db.ResourceAssignments.FindAsync(id);
+            var assignment = await _db.AsignacionesDeRecurso.FindAsync(id);
             if (assignment == null) return null;
 
             if (dto.CantidadAsignada.HasValue && dto.CantidadAsignada.Value != assignment.CantidadAsignada)
@@ -123,7 +123,7 @@ namespace ApiPG.Services
 
         public async Task<bool> SoftDeleteAsync(int id)
         {
-            var assignment = await _db.ResourceAssignments.FindAsync(id);
+            var assignment = await _db.AsignacionesDeRecurso.FindAsync(id);
             if (assignment == null) return false;
 
             // Liberar la cantidad reservada si no se ha iniciado el uso
@@ -141,7 +141,7 @@ namespace ApiPG.Services
 
         public async Task<AsignacionDeRecursoDto?> ConfirmAssignmentAsync(int assignmentId, int volunteerId, ConfirmarAsignacionDto dto)
         {
-            var assignment = await _db.ResourceAssignments.FindAsync(assignmentId);
+            var assignment = await _db.AsignacionesDeRecurso.FindAsync(assignmentId);
             if (assignment == null) return null;
 
             if (assignment.IdVoluntario != volunteerId)
@@ -160,7 +160,7 @@ namespace ApiPG.Services
 
         public async Task<AsignacionDeRecursoDto?> StartUseAsync(int assignmentId, int volunteerId)
         {
-            var assignment = await _db.ResourceAssignments.FindAsync(assignmentId);
+            var assignment = await _db.AsignacionesDeRecurso.FindAsync(assignmentId);
             if (assignment == null) return null;
 
             if (assignment.IdVoluntario != volunteerId)
@@ -178,7 +178,7 @@ namespace ApiPG.Services
 
         public async Task<AsignacionDeRecursoDto?> ReturnResourceAsync(int assignmentId, int volunteerId)
         {
-            var assignment = await _db.ResourceAssignments.FindAsync(assignmentId);
+            var assignment = await _db.AsignacionesDeRecurso.FindAsync(assignmentId);
             if (assignment == null) return null;
 
             if (assignment.IdVoluntario != volunteerId)
@@ -199,7 +199,7 @@ namespace ApiPG.Services
 
         public async Task<AsignacionDeRecursoDto?> CancelAssignmentAsync(int assignmentId, int userId)
         {
-            var assignment = await _db.ResourceAssignments.FindAsync(assignmentId);
+            var assignment = await _db.AsignacionesDeRecurso.FindAsync(assignmentId);
             if (assignment == null) return null;
 
             if (assignment.Estado == EstadoDeAsignacion.EnUso)
@@ -222,7 +222,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<AsignacionDeRecursoDto>> GetByVolunteerAsync(int volunteerId)
         {
-            var assignments = await _db.ResourceAssignments
+            var assignments = await _db.AsignacionesDeRecurso
                 .Where(a => a.IdVoluntario == volunteerId && a.EstaActivo)
                 .Include(a => a.Recurso)
                 .Include(a => a.Voluntario)
@@ -236,7 +236,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<AsignacionDeRecursoDto>> GetByResourceAsync(int resourceId)
         {
-            var assignments = await _db.ResourceAssignments
+            var assignments = await _db.AsignacionesDeRecurso
                 .Where(a => a.IdRecurso == resourceId && a.EstaActivo)
                 .Include(a => a.Recurso)
                 .Include(a => a.Voluntario)
@@ -250,7 +250,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<AsignacionDeRecursoDto>> GetPendingAssignmentsAsync()
         {
-            var assignments = await _db.ResourceAssignments
+            var assignments = await _db.AsignacionesDeRecurso
                 .Where(a => a.Estado == EstadoDeAsignacion.Pendiente && a.EstaActivo)
                 .Include(a => a.Recurso)
                 .Include(a => a.Voluntario)
@@ -265,7 +265,7 @@ namespace ApiPG.Services
         public async Task<IEnumerable<AsignacionDeRecursoDto>> GetOverdueReturnsAsync()
         {
             var today = DateTime.UtcNow.Date;
-            var assignments = await _db.ResourceAssignments
+            var assignments = await _db.AsignacionesDeRecurso
                 .Where(a => a.Estado == EstadoDeAsignacion.EnUso && 
                            a.EstaActivo && 
                            a.FechaEsperadaDeDevolucion.HasValue && 
@@ -282,7 +282,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<AsignacionDeRecursoDto>> GetActiveAssignmentsAsync()
         {
-            var assignments = await _db.ResourceAssignments
+            var assignments = await _db.AsignacionesDeRecurso
                 .Where(a => (a.Estado == EstadoDeAsignacion.Pendiente || 
                             a.Estado == EstadoDeAsignacion.Confirmado || 
                             a.Estado == EstadoDeAsignacion.EnUso) && a.EstaActivo)
@@ -298,15 +298,15 @@ namespace ApiPG.Services
 
         public async Task<object> GetAssignmentStatisticsAsync()
         {
-            var totalAssignments = await _db.ResourceAssignments.CountAsync(a => a.EstaActivo);
-            var pendingCount = await _db.ResourceAssignments.CountAsync(a => a.Estado == EstadoDeAsignacion.Pendiente && a.EstaActivo);
-            var confirmedCount = await _db.ResourceAssignments.CountAsync(a => a.Estado == EstadoDeAsignacion.Confirmado && a.EstaActivo);
-            var inUseCount = await _db.ResourceAssignments.CountAsync(a => a.Estado == EstadoDeAsignacion.EnUso && a.EstaActivo);
-            var returnedCount = await _db.ResourceAssignments.CountAsync(a => a.Estado == EstadoDeAsignacion.Devuelto && a.EstaActivo);
-            var cancelledCount = await _db.ResourceAssignments.CountAsync(a => a.Estado == EstadoDeAsignacion.Cancelado && a.EstaActivo);
+            var totalAssignments = await _db.AsignacionesDeRecurso.CountAsync(a => a.EstaActivo);
+            var pendingCount = await _db.AsignacionesDeRecurso.CountAsync(a => a.Estado == EstadoDeAsignacion.Pendiente && a.EstaActivo);
+            var confirmedCount = await _db.AsignacionesDeRecurso.CountAsync(a => a.Estado == EstadoDeAsignacion.Confirmado && a.EstaActivo);
+            var inUseCount = await _db.AsignacionesDeRecurso.CountAsync(a => a.Estado == EstadoDeAsignacion.EnUso && a.EstaActivo);
+            var returnedCount = await _db.AsignacionesDeRecurso.CountAsync(a => a.Estado == EstadoDeAsignacion.Devuelto && a.EstaActivo);
+            var cancelledCount = await _db.AsignacionesDeRecurso.CountAsync(a => a.Estado == EstadoDeAsignacion.Cancelado && a.EstaActivo);
 
             var today = DateTime.UtcNow.Date;
-            var overdueCount = await _db.ResourceAssignments.CountAsync(a => 
+            var overdueCount = await _db.AsignacionesDeRecurso.CountAsync(a => 
                 a.Estado == EstadoDeAsignacion.EnUso && 
                 a.EstaActivo && 
                 a.FechaEsperadaDeDevolucion.HasValue && 

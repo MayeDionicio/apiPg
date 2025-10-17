@@ -16,7 +16,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<RegistroDeUsoDeRecursoDto>> GetAllAsync()
         {
-            var logs = await _db.ResourceUsageLogs
+            var logs = await _db.RegistrosDeUsoDeRecurso
                 .Include(l => l.AsignacionDeRecurso)
                     .ThenInclude(a => a.Recurso)
                 .Include(l => l.AsignacionDeRecurso)
@@ -31,7 +31,7 @@ namespace ApiPG.Services
 
         public async Task<RegistroDeUsoDeRecursoDto?> GetByIdAsync(int id)
         {
-            var log = await _db.ResourceUsageLogs
+            var log = await _db.RegistrosDeUsoDeRecurso
                 .Include(l => l.AsignacionDeRecurso)
                     .ThenInclude(a => a.Recurso)
                 .Include(l => l.AsignacionDeRecurso)
@@ -46,12 +46,12 @@ namespace ApiPG.Services
         public async Task<RegistroDeUsoDeRecursoDto> CreateAsync(CrearRegistroDeUsoDeRecursoDto dto, int reportedByUserId)
         {
             // Verificar que la asignación existe
-            var assignment = await _db.ResourceAssignments.FindAsync(dto.AsignacionDeRecursoId);
+            var assignment = await _db.AsignacionesDeRecurso.FindAsync(dto.AsignacionDeRecursoId);
             if (assignment == null)
                 throw new ArgumentException("La asignación de recurso especificada no existe");
 
             // Verificar que el usuario existe
-            var user = await _db.Users.FindAsync(reportedByUserId);
+            var user = await _db.Usuarios.FindAsync(reportedByUserId);
             if (user == null || !user.EstaActivo)
                 throw new ArgumentException("El usuario especificado no existe o no está activo");
 
@@ -83,7 +83,7 @@ namespace ApiPG.Services
                 log.ResueltoPorIdUsuario = reportedByUserId;
             }
 
-            _db.ResourceUsageLogs.Add(log);
+            _db.RegistrosDeUsoDeRecurso.Add(log);
             await _db.SaveChangesAsync();
 
             return await GetByIdAsync(log.Id) ?? throw new InvalidOperationException("Error al crear el registro de uso");
@@ -91,14 +91,14 @@ namespace ApiPG.Services
 
         public async Task<RegistroDeUsoDeRecursoDto?> ResolveIncidentAsync(int logId, int resolvedByUserId, ResolverIncidenteDto dto)
         {
-            var log = await _db.ResourceUsageLogs.FindAsync(logId);
+            var log = await _db.RegistrosDeUsoDeRecurso.FindAsync(logId);
             if (log == null) return null;
 
             if (log.EstaResuelto)
                 throw new InvalidOperationException("Este incidente ya ha sido resuelto");
 
             // Verificar que el usuario existe
-            var user = await _db.Users.FindAsync(resolvedByUserId);
+            var user = await _db.Usuarios.FindAsync(resolvedByUserId);
             if (user == null || !user.EstaActivo)
                 throw new ArgumentException("El usuario especificado no existe o no está activo");
 
@@ -113,7 +113,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<RegistroDeUsoDeRecursoDto>> GetByAssignmentAsync(int assignmentId)
         {
-            var logs = await _db.ResourceUsageLogs
+            var logs = await _db.RegistrosDeUsoDeRecurso
                 .Where(l => l.IdAsignacionDeRecurso == assignmentId)
                 .Include(l => l.AsignacionDeRecurso)
                     .ThenInclude(a => a.Recurso)
@@ -129,7 +129,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<RegistroDeUsoDeRecursoDto>> GetByResourceAsync(int resourceId)
         {
-            var logs = await _db.ResourceUsageLogs
+            var logs = await _db.RegistrosDeUsoDeRecurso
                 .Where(l => l.AsignacionDeRecurso.IdRecurso == resourceId)
                 .Include(l => l.AsignacionDeRecurso)
                     .ThenInclude(a => a.Recurso)
@@ -145,7 +145,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<RegistroDeUsoDeRecursoDto>> GetByVolunteerAsync(int volunteerId)
         {
-            var logs = await _db.ResourceUsageLogs
+            var logs = await _db.RegistrosDeUsoDeRecurso
                 .Where(l => l.AsignacionDeRecurso.IdVoluntario == volunteerId)
                 .Include(l => l.AsignacionDeRecurso)
                     .ThenInclude(a => a.Recurso)
@@ -168,7 +168,7 @@ namespace ApiPG.Services
                 TipoDeEventoDeUso.ObservacionDeEstado
             };
 
-            var logs = await _db.ResourceUsageLogs
+            var logs = await _db.RegistrosDeUsoDeRecurso
                 .Where(l => incidentTypes.Contains(l.TipoDeEvento))
                 .Include(l => l.AsignacionDeRecurso)
                     .ThenInclude(a => a.Recurso)
@@ -191,7 +191,7 @@ namespace ApiPG.Services
                 TipoDeEventoDeUso.ObservacionDeEstado
             };
 
-            var logs = await _db.ResourceUsageLogs
+            var logs = await _db.RegistrosDeUsoDeRecurso
                 .Where(l => incidentTypes.Contains(l.TipoDeEvento) && !l.EstaResuelto)
                 .Include(l => l.AsignacionDeRecurso)
                     .ThenInclude(a => a.Recurso)
@@ -207,7 +207,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<RegistroDeUsoDeRecursoDto>> GetByEventTypeAsync(TipoDeEventoDeUso eventType)
         {
-            var logs = await _db.ResourceUsageLogs
+            var logs = await _db.RegistrosDeUsoDeRecurso
                 .Where(l => l.TipoDeEvento == eventType)
                 .Include(l => l.AsignacionDeRecurso)
                     .ThenInclude(a => a.Recurso)
@@ -223,19 +223,19 @@ namespace ApiPG.Services
 
         public async Task<object> GetUsageStatisticsAsync()
         {
-            var totalLogs = await _db.ResourceUsageLogs.CountAsync();
-            var incidentsCount = await _db.ResourceUsageLogs.CountAsync(l => 
+            var totalLogs = await _db.RegistrosDeUsoDeRecurso.CountAsync();
+            var incidentsCount = await _db.RegistrosDeUsoDeRecurso.CountAsync(l => 
                 l.TipoDeEvento == TipoDeEventoDeUso.ReporteDeIncidente || 
                 l.TipoDeEvento == TipoDeEventoDeUso.ReporteDeDanio);
-            var unresolvedIncidents = await _db.ResourceUsageLogs.CountAsync(l => 
+            var unresolvedIncidents = await _db.RegistrosDeUsoDeRecurso.CountAsync(l => 
                 (l.TipoDeEvento == TipoDeEventoDeUso.ReporteDeIncidente || 
                  l.TipoDeEvento == TipoDeEventoDeUso.ReporteDeDanio) && !l.EstaResuelto);
-            var confirmationsCount = await _db.ResourceUsageLogs.CountAsync(l => 
+            var confirmationsCount = await _db.RegistrosDeUsoDeRecurso.CountAsync(l => 
                 l.TipoDeEvento == TipoDeEventoDeUso.ConfirmacionDeUso);
-            var completionsCount = await _db.ResourceUsageLogs.CountAsync(l => 
+            var completionsCount = await _db.RegistrosDeUsoDeRecurso.CountAsync(l => 
                 l.TipoDeEvento == TipoDeEventoDeUso.FinalizacionDeUso);
 
-            var eventTypeStats = await _db.ResourceUsageLogs
+            var eventTypeStats = await _db.RegistrosDeUsoDeRecurso
                 .GroupBy(l => l.TipoDeEvento)
                 .Select(g => new
                 {
@@ -247,7 +247,7 @@ namespace ApiPG.Services
                 .ToListAsync();
 
             var last30Days = DateTime.UtcNow.AddDays(-30);
-            var recentActivities = await _db.ResourceUsageLogs
+            var recentActivities = await _db.RegistrosDeUsoDeRecurso
                 .Where(l => l.CreadoEn >= last30Days)
                 .CountAsync();
 
@@ -265,7 +265,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<RegistroDeUsoDeRecursoDto>> GetRecentActivitiesAsync(int take = 20)
         {
-            var logs = await _db.ResourceUsageLogs
+            var logs = await _db.RegistrosDeUsoDeRecurso
                 .Include(l => l.AsignacionDeRecurso)
                     .ThenInclude(a => a.Recurso)
                 .Include(l => l.AsignacionDeRecurso)

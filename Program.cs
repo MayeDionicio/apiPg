@@ -102,14 +102,24 @@ builder.Services.AddScoped<IResourceUsageLogService, ResourceUsageLogService>();
 // Registrar servicio de devocionales
 builder.Services.AddScoped<IDevocionalService, DevocionalService>();
 
-// Configurar CORS si es necesario
+// Configurar CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.WithOrigins(
+                "http://localhost:4200",
+                "http://localhost:3000", 
+                "http://localhost:5173",
+                "http://localhost:8080",
+                "http://127.0.0.1:4200",
+                "http://127.0.0.1:3000",
+                "http://127.0.0.1:5173",
+                "http://127.0.0.1:8080"
+              )
               .AllowAnyMethod()
-              .AllowAnyHeader();
+              .AllowAnyHeader()
+              .AllowCredentials();
     });
 });
 
@@ -127,12 +137,13 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+// IMPORTANTE: CORS debe ir ANTES de otros middlewares
+app.UseCors("AllowAll");
+
 // Middleware personalizado para manejo de errores
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();
-
-app.UseCors("AllowAll");
 
 app.UseAuthentication();
 app.UseAuthorization();

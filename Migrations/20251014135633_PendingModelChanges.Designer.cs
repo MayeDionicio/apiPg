@@ -3,6 +3,7 @@ using System;
 using ApiPG.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApiPG.Migrations
 {
     [DbContext(typeof(ApiPGContext))]
-    partial class ApiPGContextModelSnapshot : ModelSnapshot
+    [Migration("20251014135633_PendingModelChanges")]
+    partial class PendingModelChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,7 +90,7 @@ namespace ApiPG.Migrations
 
                     b.HasIndex("IdVoluntario");
 
-                    b.ToTable("AsignacionesDeRecurso", (string)null);
+                    b.ToTable("ResourceAssignments");
                 });
 
             modelBuilder.Entity("ApiPG.Models.Asistencia", b =>
@@ -131,7 +134,7 @@ namespace ApiPG.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("Asistencias", (string)null);
+                    b.ToTable("Attendances");
                 });
 
             modelBuilder.Entity("ApiPG.Models.Devocional", b =>
@@ -234,7 +237,7 @@ namespace ApiPG.Migrations
 
                     b.HasIndex("VoluntarioAsignadoId");
 
-                    b.ToTable("Devocionales", (string)null);
+                    b.ToTable("Devocionales");
                 });
 
             modelBuilder.Entity("ApiPG.Models.Nivel", b =>
@@ -271,7 +274,7 @@ namespace ApiPG.Migrations
 
                     b.HasIndex("IdVoluntario");
 
-                    b.ToTable("Niveles", (string)null);
+                    b.ToTable("Levels");
                 });
 
             modelBuilder.Entity("ApiPG.Models.NivelDeParticipante", b =>
@@ -296,7 +299,7 @@ namespace ApiPG.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("NivelesDeParticipantes", (string)null);
+                    b.ToTable("LevelParticipants");
                 });
 
             modelBuilder.Entity("ApiPG.Models.Recurso", b =>
@@ -363,7 +366,7 @@ namespace ApiPG.Migrations
 
                     b.HasIndex("Nombre");
 
-                    b.ToTable("Recursos", (string)null);
+                    b.ToTable("Resources");
                 });
 
             modelBuilder.Entity("ApiPG.Models.RegistroDeUsoDeRecurso", b =>
@@ -449,7 +452,7 @@ namespace ApiPG.Migrations
 
                     b.HasIndex("TipoDeEvento");
 
-                    b.ToTable("RegistrosDeUsoDeRecurso", (string)null);
+                    b.ToTable("ResourceUsageLogs");
                 });
 
             modelBuilder.Entity("ApiPG.Models.Rol", b =>
@@ -485,7 +488,7 @@ namespace ApiPG.Migrations
                     b.HasIndex("Nombre")
                         .IsUnique();
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
 
                     b.HasData(
                         new
@@ -588,7 +591,7 @@ namespace ApiPG.Migrations
                     b.HasIndex("NombreDeUsuario")
                         .IsUnique();
 
-                    b.ToTable("Usuarios", (string)null);
+                    b.ToTable("Users");
 
                     b.HasData(
                         new

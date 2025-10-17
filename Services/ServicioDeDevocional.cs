@@ -129,7 +129,7 @@ namespace ApiPG.Services
                     throw new ArgumentException("Usuario no válido");
                 }
 
-                var userExists = await _context.Users.AnyAsync(u => u.Id == userId);
+                var userExists = await _context.Usuarios.AnyAsync(u => u.Id == userId);
                 if (!userExists)
                 {
                     throw new ArgumentException($"Usuario con ID {userId} no existe");
@@ -138,7 +138,7 @@ namespace ApiPG.Services
                 // Validar voluntario si se proporciona
                 if (step1.VoluntarioAsignadoId.HasValue && step1.VoluntarioAsignadoId.Value > 0)
                 {
-                    var voluntarioExists = await _context.Users.AnyAsync(u => u.Id == step1.VoluntarioAsignadoId.Value);
+                    var voluntarioExists = await _context.Usuarios.AnyAsync(u => u.Id == step1.VoluntarioAsignadoId.Value);
                     if (!voluntarioExists)
                     {
                         throw new ArgumentException($"Voluntario con ID {step1.VoluntarioAsignadoId.Value} no existe");
@@ -422,7 +422,7 @@ namespace ApiPG.Services
 
         public async Task<IEnumerable<string>> GetVoluntariosDisponiblesAsync()
         {
-            var voluntarios = await _context.Users
+            var voluntarios = await _context.Usuarios
                 .Where(u => u.EstaActivo && u.Rol.Nombre == "Voluntario")
                 .Select(u => $"{u.PrimerNombre} {u.Apellido}")
                 .ToListAsync();

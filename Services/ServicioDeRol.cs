@@ -113,7 +113,7 @@ namespace ApiPG.Services
 
         public async Task<bool> RoleHasUsersAsync(int roleId)
         {
-            return await _context.Users
+            return await _context.Usuarios
                 .AnyAsync(u => u.IdRol == roleId && u.EstaActivo);
         }
 
