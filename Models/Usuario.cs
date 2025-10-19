@@ -29,11 +29,33 @@ namespace ApiPG.Models
         public int IdRol { get; set; }
         public Rol Rol { get; set; } = null!;
         
+        // Fecha de nacimiento (solo para participantes)
+        public DateTime? FechaDeNacimiento { get; set; }
+        
         public DateTime CreadoEn { get; set; } = DateTime.UtcNow;
         public DateTime? ActualizadoEn { get; set; }
         
         public bool EstaActivo { get; set; } = true;
         
         public string NombreCompleto => $"{PrimerNombre} {Apellido}";
+        
+        // Propiedad calculada para obtener la edad
+        public int? Edad 
+        { 
+            get 
+            {
+                if (!FechaDeNacimiento.HasValue)
+                    return null;
+                    
+                var hoy = DateTime.Today;
+                var edad = hoy.Year - FechaDeNacimiento.Value.Year;
+                
+                // Restar un año si aún no ha cumplido años este año
+                if (FechaDeNacimiento.Value.Date > hoy.AddYears(-edad))
+                    edad--;
+                    
+                return edad;
+            }
+        }
     }
 }

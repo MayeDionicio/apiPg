@@ -27,6 +27,9 @@ namespace ApiPG.DTOs
         
         [Required]
         public int RolId { get; set; }
+        
+        // Fecha de nacimiento (requerida solo para participantes - RolId = 2)
+        public DateTime? FechaDeNacimiento { get; set; }
     }
 
     public class ActualizarUsuarioDto
@@ -50,6 +53,9 @@ namespace ApiPG.DTOs
         public int? RolId { get; set; }
         
         public bool? EstaActivo { get; set; }
+        
+        // Fecha de nacimiento (opcional para actualización)
+        public DateTime? FechaDeNacimiento { get; set; }
     }
 
     public class UsuarioDto
@@ -65,6 +71,8 @@ namespace ApiPG.DTOs
         public DateTime CreadoEn { get; set; }
         public DateTime? ActualizadoEn { get; set; }
         public bool EstaActivo { get; set; }
+        public DateTime? FechaDeNacimiento { get; set; }
+        public int? Edad { get; set; }
     }
 
     public class CrearRolDto

@@ -24,7 +24,7 @@ namespace ApiPG.Services
             _context = context;
             _jwtService = jwtService;
         }
-
+        //Mayerly Dionicio
         public async Task<RespuestaInicioSesionDto?> LoginAsync(IniciarSesionDto loginDto)
         {
             // Buscar usuario por email
@@ -61,6 +61,24 @@ namespace ApiPG.Services
             if (role == null || !role.EstaActivo)
                 throw new ArgumentException("Invalid role");
 
+            // Validar fecha de nacimiento si es participante (RolId = 2)
+            if (registerDto.RolId == 2 && !registerDto.FechaDeNacimiento.HasValue)
+                throw new ArgumentException("Fecha de nacimiento es requerida para participantes");
+
+            // Validar que la fecha de nacimiento sea válida
+            if (registerDto.FechaDeNacimiento.HasValue)
+            {
+                if (registerDto.FechaDeNacimiento.Value > DateTime.Today)
+                    throw new ArgumentException("La fecha de nacimiento no puede ser futura");
+                    
+                var edad = DateTime.Today.Year - registerDto.FechaDeNacimiento.Value.Year;
+                if (registerDto.FechaDeNacimiento.Value.Date > DateTime.Today.AddYears(-edad))
+                    edad--;
+                    
+                if (edad < 0 || edad > 120)
+                    throw new ArgumentException("La fecha de nacimiento no es válida");
+            }
+
             var user = new Usuario
             {
                 PrimerNombre = registerDto.PrimerNombre,
@@ -69,6 +87,7 @@ namespace ApiPG.Services
                 NombreDeUsuario = registerDto.NombreDeUsuario,
                 HashDeContrasena = HashPassword(registerDto.Contrasena),
                 IdRol = registerDto.RolId,
+                FechaDeNacimiento = registerDto.FechaDeNacimiento,
                 CreadoEn = DateTime.UtcNow,
                 EstaActivo = true
             };
@@ -116,6 +135,8 @@ namespace ApiPG.Services
                 NombreDeUsuario = user.NombreDeUsuario,
                 RolId = user.IdRol,
                 NombreRol = user.Rol?.Nombre ?? "Unknown",
+                FechaDeNacimiento = user.FechaDeNacimiento,
+                Edad = user.Edad,
                 CreadoEn = user.CreadoEn,
                 ActualizadoEn = user.ActualizadoEn,
                 EstaActivo = user.EstaActivo

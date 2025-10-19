@@ -45,6 +45,9 @@ namespace ApiPG.DTOs
         
         [Required]
         public int RolId { get; set; } = 2; // Default to User role
+        
+        // Fecha de nacimiento (requerida si es participante)
+        public DateTime? FechaDeNacimiento { get; set; }
     }
 
     public class RespuestaAutenticacionDto

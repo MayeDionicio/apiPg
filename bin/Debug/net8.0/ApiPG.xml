@@ -655,5 +655,17 @@
         <member name="M:ApiPG.Migrations.RenameTablesToSpanish.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:ApiPG.Migrations.AddFechaDeNacimientoToUsuarios">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddFechaDeNacimientoToUsuarios.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddFechaDeNacimientoToUsuarios.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AddFechaDeNacimientoToUsuarios.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

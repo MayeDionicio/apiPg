@@ -67,6 +67,24 @@ namespace ApiPG.Services
             if (await UserExistsAsync(createUserDto.NombreDeUsuario, createUserDto.Email))
                 throw new ArgumentException("Username or email already exists");
 
+            // Validar fecha de nacimiento si es participante (RolId = 2)
+            if (createUserDto.RolId == 2 && !createUserDto.FechaDeNacimiento.HasValue)
+                throw new ArgumentException("Fecha de nacimiento es requerida para participantes");
+
+            // Validar que la fecha de nacimiento sea válida
+            if (createUserDto.FechaDeNacimiento.HasValue)
+            {
+                if (createUserDto.FechaDeNacimiento.Value > DateTime.Today)
+                    throw new ArgumentException("La fecha de nacimiento no puede ser futura");
+                    
+                var edad = DateTime.Today.Year - createUserDto.FechaDeNacimiento.Value.Year;
+                if (createUserDto.FechaDeNacimiento.Value.Date > DateTime.Today.AddYears(-edad))
+                    edad--;
+                    
+                if (edad < 0 || edad > 120)
+                    throw new ArgumentException("La fecha de nacimiento no es válida");
+            }
+
             var user = new Usuario
             {
                 PrimerNombre = createUserDto.PrimerNombre,
@@ -75,6 +93,7 @@ namespace ApiPG.Services
                 NombreDeUsuario = createUserDto.NombreDeUsuario,
                 HashDeContrasena = HashPassword(createUserDto.Contrasena),
                 IdRol = createUserDto.RolId,
+                FechaDeNacimiento = createUserDto.FechaDeNacimiento,
                 CreadoEn = DateTime.UtcNow,
                 EstaActivo = true
             };
@@ -132,6 +151,23 @@ namespace ApiPG.Services
             if (updateUserDto.EstaActivo.HasValue)
                 user.EstaActivo = updateUserDto.EstaActivo.Value;
 
+            // Actualizar fecha de nacimiento si se proporciona
+            if (updateUserDto.FechaDeNacimiento.HasValue)
+            {
+                // Validar que la fecha de nacimiento sea válida
+                if (updateUserDto.FechaDeNacimiento.Value > DateTime.Today)
+                    throw new ArgumentException("La fecha de nacimiento no puede ser futura");
+                    
+                var edad = DateTime.Today.Year - updateUserDto.FechaDeNacimiento.Value.Year;
+                if (updateUserDto.FechaDeNacimiento.Value.Date > DateTime.Today.AddYears(-edad))
+                    edad--;
+                    
+                if (edad < 0 || edad > 120)
+                    throw new ArgumentException("La fecha de nacimiento no es válida");
+                    
+                user.FechaDeNacimiento = updateUserDto.FechaDeNacimiento;
+            }
+
             user.ActualizadoEn = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
@@ -175,7 +211,9 @@ namespace ApiPG.Services
                 NombreRol = user.Rol?.Nombre ?? "Unknown",
                 CreadoEn = user.CreadoEn,
                 ActualizadoEn = user.ActualizadoEn,
-                EstaActivo = user.EstaActivo
+                EstaActivo = user.EstaActivo,
+                FechaDeNacimiento = user.FechaDeNacimiento,
+                Edad = user.Edad
             };
         }
 
