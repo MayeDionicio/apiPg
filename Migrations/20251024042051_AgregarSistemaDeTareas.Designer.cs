@@ -3,6 +3,7 @@ using System;
 using ApiPG.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApiPG.Migrations
 {
     [DbContext(typeof(ApiPGContext))]
-    partial class ApiPGContextModelSnapshot : ModelSnapshot
+    [Migration("20251024042051_AgregarSistemaDeTareas")]
+    partial class AgregarSistemaDeTareas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,109 +24,6 @@ namespace ApiPG.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("ApiPG.Models.Actividad", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("ActualizadoEn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("AreaDeEnfoque")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<DateTime>("CreadoEn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<int>("CreadoPorIdUsuario")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("DescripcionDetallada")
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
-
-                    b.Property<int>("DuracionEstimadaMinutos")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("EstaActivo")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true);
-
-                    b.Property<DateTime>("FechaDelEvento")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("MaterialesNecesarios")
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.Property<string>("Titulo")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AreaDeEnfoque");
-
-                    b.HasIndex("CreadoEn");
-
-                    b.HasIndex("CreadoPorIdUsuario");
-
-                    b.HasIndex("EstaActivo");
-
-                    b.HasIndex("FechaDelEvento");
-
-                    b.HasIndex("Titulo");
-
-                    b.ToTable("Actividades", (string)null);
-                });
-
-            modelBuilder.Entity("ApiPG.Models.AsignacionDeActividad", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ActividadId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("AsignadoEn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<bool>("EstaActivo")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true);
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ActividadId");
-
-                    b.HasIndex("AsignadoEn");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.HasIndex("ActividadId", "UsuarioId")
-                        .IsUnique();
-
-                    b.ToTable("AsignacionesDeActividad", (string)null);
-                });
 
             modelBuilder.Entity("ApiPG.Models.AsignacionDeRecurso", b =>
                 {
@@ -879,36 +779,6 @@ namespace ApiPG.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ApiPG.Models.Actividad", b =>
-                {
-                    b.HasOne("ApiPG.Models.Usuario", "CreadoPor")
-                        .WithMany()
-                        .HasForeignKey("CreadoPorIdUsuario")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CreadoPor");
-                });
-
-            modelBuilder.Entity("ApiPG.Models.AsignacionDeActividad", b =>
-                {
-                    b.HasOne("ApiPG.Models.Actividad", "Actividad")
-                        .WithMany("AsignacionesDeActividad")
-                        .HasForeignKey("ActividadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ApiPG.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Actividad");
-
-                    b.Navigation("Usuario");
-                });
-
             modelBuilder.Entity("ApiPG.Models.AsignacionDeRecurso", b =>
                 {
                     b.HasOne("ApiPG.Models.Usuario", "AsignadoPor")
@@ -1073,11 +943,6 @@ namespace ApiPG.Migrations
                         .IsRequired();
 
                     b.Navigation("Rol");
-                });
-
-            modelBuilder.Entity("ApiPG.Models.Actividad", b =>
-                {
-                    b.Navigation("AsignacionesDeActividad");
                 });
 
             modelBuilder.Entity("ApiPG.Models.AsignacionDeRecurso", b =>

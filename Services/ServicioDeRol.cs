@@ -45,6 +45,7 @@ namespace ApiPG.Services
             return role != null ? MapToDto(role) : null;
         }
 
+        //Mayerly Dionicio
         public async Task<RolDto> CreateRoleAsync(CrearRolDto createRoleDto)
         {
             // Validar que el rol no existe

@@ -1,0 +1,118 @@
+### Actividades API - Ejemplos de Uso
+
+@baseUrl = http://localhost:5273/api
+@token = TU_TOKEN_JWT_AQUI
+
+### 1. Crear una nueva actividad
+POST {{baseUrl}}/actividades
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "titulo": "Lectura grupal de cuentos",
+  "areaDeEnfoque": "Educación",
+  "descripcionDetallada": "Actividad de lectura grupal donde los niños compartirán y discutirán cuentos sobre valores y amistad",
+  "duracionEstimadaMinutos": 60,
+  "materialesNecesarios": "Cuadernos, lápices de colores, tijeras, libros de cuentos",
+  "fechaDelEvento": "2025-11-15T10:00:00Z",
+  "voluntariosIds": [2, 3]
+}
+
+###
+
+### 2. Obtener todas las actividades
+GET {{baseUrl}}/actividades
+Authorization: Bearer {{token}}
+
+###
+
+### 3. Obtener actividad por ID
+GET {{baseUrl}}/actividades/1
+Authorization: Bearer {{token}}
+
+###
+
+### 4. Obtener mis actividades (como coordinador)
+GET {{baseUrl}}/actividades/mis-actividades
+Authorization: Bearer {{token}}
+
+###
+
+### 5. Obtener actividades asignadas (como voluntario)
+GET {{baseUrl}}/actividades/asignadas
+Authorization: Bearer {{token}}
+
+###
+
+### 6. Obtener actividades por rango de fechas
+GET {{baseUrl}}/actividades/por-fecha?fechaInicio=2025-11-01&fechaFin=2025-11-30
+Authorization: Bearer {{token}}
+
+###
+
+### 7. Actualizar una actividad
+PUT {{baseUrl}}/actividades/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "titulo": "Lectura grupal de cuentos - ACTUALIZADO",
+  "descripcionDetallada": "Actividad actualizada con nueva descripción",
+  "duracionEstimadaMinutos": 90,
+  "materialesNecesarios": "Cuadernos, lápices de colores, tijeras, libros de cuentos, cartulinas",
+  "voluntariosIds": [2, 3, 4]
+}
+
+###
+
+### 8. Eliminar una actividad
+DELETE {{baseUrl}}/actividades/1
+Authorization: Bearer {{token}}
+
+###
+
+### 9. Obtener estadísticas generales
+GET {{baseUrl}}/actividades/estadisticas
+Authorization: Bearer {{token}}
+
+###
+
+### 10. Obtener mis estadísticas (como coordinador)
+GET {{baseUrl}}/actividades/mis-estadisticas
+Authorization: Bearer {{token}}
+
+###
+
+### Ejemplo: Actividad de Taller de Arte
+POST {{baseUrl}}/actividades
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "titulo": "Taller de pintura para niños",
+  "areaDeEnfoque": "Arte",
+  "descripcionDetallada": "Taller donde los niños aprenderán técnicas básicas de pintura y crearán su propia obra de arte",
+  "duracionEstimadaMinutos": 120,
+  "materialesNecesarios": "Pinturas acrílicas, pinceles, lienzos, paletas, agua, trapos",
+  "fechaDelEvento": "2025-11-20T14:00:00Z",
+  "voluntariosIds": [2]
+}
+
+###
+
+### Ejemplo: Actividad Deportiva
+POST {{baseUrl}}/actividades
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "titulo": "Juegos deportivos al aire libre",
+  "areaDeEnfoque": "Deportes",
+  "descripcionDetallada": "Actividad deportiva con juegos en equipo para fomentar el trabajo colaborativo y la actividad física",
+  "duracionEstimadaMinutos": 90,
+  "materialesNecesarios": "Balones, conos, cuerdas, silbato",
+  "fechaDelEvento": "2025-11-18T16:00:00Z",
+  "voluntariosIds": [2, 3]
+}
+
+###

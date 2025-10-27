@@ -102,6 +102,12 @@ builder.Services.AddScoped<IResourceUsageLogService, ResourceUsageLogService>();
 // Registrar servicio de devocionales
 builder.Services.AddScoped<IDevocionalService, DevocionalService>();
 
+// Registrar servicio de tareas
+builder.Services.AddScoped<IServicioDeTarea, ServicioDeTarea>();
+
+// Registrar servicio de actividades
+builder.Services.AddScoped<IServicioDeActividad, ServicioDeActividad>();
+
 // Configurar CORS
 builder.Services.AddCors(options =>
 {

@@ -4,6 +4,56 @@
         <name>ApiPG</name>
     </assembly>
     <members>
+        <member name="M:ApiPG.Controllers.ActividadesController.CrearActividad(ApiPG.DTOs.CrearActividadDto)">
+            <summary>
+            Crear una nueva actividad (solo coordinadores)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ActividadesController.ObtenerActividadPorId(System.Int32)">
+            <summary>
+            Obtener una actividad por ID
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ActividadesController.ObtenerTodasLasActividades">
+            <summary>
+            Obtener todas las actividades
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ActividadesController.ObtenerMisActividades">
+            <summary>
+            Obtener actividades creadas por el coordinador actual
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ActividadesController.ObtenerActividadesAsignadas">
+            <summary>
+            Obtener actividades asignadas al voluntario actual
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ActividadesController.ObtenerActividadesPorFecha(System.DateTime,System.DateTime)">
+            <summary>
+            Obtener actividades por rango de fechas
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ActividadesController.ActualizarActividad(System.Int32,ApiPG.DTOs.ActualizarActividadDto)">
+            <summary>
+            Actualizar una actividad
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ActividadesController.EliminarActividad(System.Int32)">
+            <summary>
+            Eliminar una actividad (soft delete)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ActividadesController.ObtenerEstadisticas">
+            <summary>
+            Obtener estadísticas generales de actividades
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ActividadesController.ObtenerMisEstadisticas">
+            <summary>
+            Obtener estadísticas de actividades del coordinador actual
+            </summary>
+        </member>
         <member name="M:ApiPG.Controllers.AsignacionesRecursosController.GetAssignments">
             <summary>
             Obtener todas las asignaciones de recursos
@@ -473,6 +523,66 @@
             <param name="id">ID del rol</param>
             <returns>Resultado de la verificación</returns>
         </member>
+        <member name="M:ApiPG.Controllers.TareasController.CrearTarea(ApiPG.DTOs.CrearTareaDto)">
+            <summary>
+            Crear una nueva tarea (Solo coordinadores)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.TareasController.ObtenerTareaPorId(System.Int32)">
+            <summary>
+            Obtener tarea por ID
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.TareasController.ObtenerTodasLasTareas">
+            <summary>
+            Obtener todas las tareas
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.TareasController.ObtenerMisTareas">
+            <summary>
+            Obtener tareas creadas por el coordinador actual
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.TareasController.ObtenerTareasAsignadas">
+            <summary>
+            Obtener tareas asignadas al voluntario actual
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.TareasController.ActualizarTarea(System.Int32,ApiPG.DTOs.ActualizarTareaDto)">
+            <summary>
+            Actualizar una tarea (Solo coordinador que la creó)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.TareasController.EliminarTarea(System.Int32)">
+            <summary>
+            Eliminar (desactivar) una tarea (Solo coordinador que la creó)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.TareasController.ActualizarEstado(System.Int32,ApiPG.DTOs.ActualizarEstadoTareaDto)">
+            <summary>
+            Actualizar estado de la tarea por el voluntario (Vista, EnProceso, Completada)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.TareasController.RevisarTarea(System.Int32,ApiPG.DTOs.RevisarTareaDto)">
+            <summary>
+            Aprobar o rechazar una tarea (Solo coordinador que la creó)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.TareasController.ObtenerEstadisticas(System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>
+            Obtener estadísticas de tareas
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.TareasController.ObtenerMisEstadisticas">
+            <summary>
+            Obtener estadísticas de mis tareas como coordinador
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.TareasController.ObtenerMisEstadisticasComoVoluntario">
+            <summary>
+            Obtener estadísticas de tareas asignadas como voluntario
+            </summary>
+        </member>
         <member name="M:ApiPG.Controllers.UsuariosController.GetUsers">
             <summary>
             Obtiene todos los usuarios activos
@@ -665,6 +775,30 @@
             <inheritdoc />
         </member>
         <member name="M:ApiPG.Migrations.AddFechaDeNacimientoToUsuarios.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AgregarSistemaDeTareas">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarSistemaDeTareas.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarSistemaDeTareas.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarSistemaDeTareas.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AgregarSistemaDeActividades">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarSistemaDeActividades.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarSistemaDeActividades.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarSistemaDeActividades.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

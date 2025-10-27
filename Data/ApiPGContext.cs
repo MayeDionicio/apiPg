@@ -18,6 +18,10 @@ namespace ApiPG.Data
         public DbSet<AsignacionDeRecurso> AsignacionesDeRecurso { get; set; }
         public DbSet<RegistroDeUsoDeRecurso> RegistrosDeUsoDeRecurso { get; set; }
         public DbSet<Devocional> Devocionales { get; set; }
+        public DbSet<Tarea> Tareas { get; set; }
+        public DbSet<AsignacionDeTarea> AsignacionesDeTarea { get; set; }
+        public DbSet<Actividad> Actividades { get; set; }
+        public DbSet<AsignacionDeActividad> AsignacionesDeActividad { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -323,6 +327,124 @@ namespace ApiPG.Data
             entity.HasIndex(e => e.CreadoEn);
             entity.HasIndex(e => e.EstaActivo);
         });
+
+        // Configuración para Tarea
+        modelBuilder.Entity<Tarea>(entity =>
+        {
+            entity.ToTable("Tareas");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Titulo).IsRequired().HasMaxLength(200);
+            entity.Property(e => e.Descripcion).HasMaxLength(2000);
+            entity.Property(e => e.NotasCoordinador).HasMaxLength(1000);
+            entity.Property(e => e.NotasVoluntario).HasMaxLength(1000);
+            entity.Property(e => e.RazonRechazo).HasMaxLength(500);
+            entity.Property(e => e.CreadoEn).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.EstaActivo).HasDefaultValue(true);
+            entity.Property(e => e.Estado).HasDefaultValue(EstadoTarea.Pendiente);
+
+            // Relación con el coordinador que la crea
+            entity.HasOne(e => e.CreadoPor)
+                .WithMany()
+                .HasForeignKey(e => e.CreadoPorIdUsuario)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Índices
+            entity.HasIndex(e => e.Titulo);
+            entity.HasIndex(e => e.Estado);
+            entity.HasIndex(e => e.CreadoPorIdUsuario);
+            entity.HasIndex(e => e.FechaInicio);
+            entity.HasIndex(e => e.FechaFin);
+            entity.HasIndex(e => e.CreadoEn);
+            entity.HasIndex(e => e.EstaActivo);
+        });
+
+        // Configuración para AsignacionDeTarea
+        modelBuilder.Entity<AsignacionDeTarea>(entity =>
+        {
+            entity.ToTable("AsignacionesDeTarea");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.AsignadoEn).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.EstaActivo).HasDefaultValue(true);
+            entity.Property(e => e.EstadoVoluntario).HasDefaultValue(EstadoTarea.Pendiente);
+
+            // Relación con Tarea
+            entity.HasOne(e => e.Tarea)
+                .WithMany(t => t.AsignacionesDeTarea)
+                .HasForeignKey(e => e.TareaId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Relación con Usuario (voluntario)
+            entity.HasOne(e => e.Usuario)
+                .WithMany()
+                .HasForeignKey(e => e.UsuarioId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Índices
+            entity.HasIndex(e => e.TareaId);
+            entity.HasIndex(e => e.UsuarioId);
+            entity.HasIndex(e => e.EstadoVoluntario);
+            entity.HasIndex(e => e.AsignadoEn);
+
+            // Restricción única: un voluntario no puede estar asignado dos veces a la misma tarea
+            entity.HasIndex(e => new { e.TareaId, e.UsuarioId }).IsUnique();
+        });
+
+            // Configuración para Actividad
+            modelBuilder.Entity<Actividad>(entity =>
+            {
+                entity.ToTable("Actividades");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Titulo).IsRequired().HasMaxLength(200);
+                entity.Property(e => e.AreaDeEnfoque).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.DescripcionDetallada).HasMaxLength(2000);
+                entity.Property(e => e.MaterialesNecesarios).HasMaxLength(1000);
+                entity.Property(e => e.FechaDelEvento).IsRequired();
+                entity.Property(e => e.CreadoEn).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.EstaActivo).HasDefaultValue(true);
+
+                // Relación con Usuario (coordinador creador)
+                entity.HasOne(e => e.CreadoPor)
+                    .WithMany()
+                    .HasForeignKey(e => e.CreadoPorIdUsuario)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                // Índices
+                entity.HasIndex(e => e.Titulo);
+                entity.HasIndex(e => e.AreaDeEnfoque);
+                entity.HasIndex(e => e.FechaDelEvento);
+                entity.HasIndex(e => e.CreadoPorIdUsuario);
+                entity.HasIndex(e => e.CreadoEn);
+                entity.HasIndex(e => e.EstaActivo);
+            });
+
+            // Configuración para AsignacionDeActividad
+            modelBuilder.Entity<AsignacionDeActividad>(entity =>
+            {
+                entity.ToTable("AsignacionesDeActividad");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.AsignadoEn).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.EstaActivo).HasDefaultValue(true);
+
+                // Relación con Actividad
+                entity.HasOne(e => e.Actividad)
+                    .WithMany(a => a.AsignacionesDeActividad)
+                    .HasForeignKey(e => e.ActividadId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                // Relación con Usuario (voluntario)
+                entity.HasOne(e => e.Usuario)
+                    .WithMany()
+                    .HasForeignKey(e => e.UsuarioId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                // Índices
+                entity.HasIndex(e => e.ActividadId);
+                entity.HasIndex(e => e.UsuarioId);
+                entity.HasIndex(e => e.AsignadoEn);
+
+                // Restricción única: un voluntario no puede estar asignado dos veces a la misma actividad
+                entity.HasIndex(e => new { e.ActividadId, e.UsuarioId }).IsUnique();
+            });
         }
 
         private static string HashPassword(string password)

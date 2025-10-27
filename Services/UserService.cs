@@ -93,7 +93,9 @@ namespace ApiPG.Services
                 NombreDeUsuario = createUserDto.NombreDeUsuario,
                 HashDeContrasena = HashPassword(createUserDto.Contrasena),
                 IdRol = createUserDto.RolId,
-                FechaDeNacimiento = createUserDto.FechaDeNacimiento,
+                FechaDeNacimiento = createUserDto.FechaDeNacimiento.HasValue 
+                    ? DateTime.SpecifyKind(createUserDto.FechaDeNacimiento.Value, DateTimeKind.Utc)
+                    : null,
                 CreadoEn = DateTime.UtcNow,
                 EstaActivo = true
             };
@@ -165,7 +167,7 @@ namespace ApiPG.Services
                 if (edad < 0 || edad > 120)
                     throw new ArgumentException("La fecha de nacimiento no es válida");
                     
-                user.FechaDeNacimiento = updateUserDto.FechaDeNacimiento;
+                user.FechaDeNacimiento = DateTime.SpecifyKind(updateUserDto.FechaDeNacimiento.Value, DateTimeKind.Utc);
             }
 
             user.ActualizadoEn = DateTime.UtcNow;
