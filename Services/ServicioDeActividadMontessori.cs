@@ -145,6 +145,65 @@ namespace ApiPG.Services
             return actividades.Select(MapToDto);
         }
 
+        public async Task<IEnumerable<ActividadMontessoriDto>> ObtenerActividadesPorNivelAsync(int nivelId)
+        {
+            // Obtener el nivel con sus participantes
+            var nivel = await _context.Niveles
+                .Include(n => n.ParticipantesDelNivel)
+                    .ThenInclude(np => np.Usuario)
+                .FirstOrDefaultAsync(n => n.Id == nivelId && n.EstaActivo);
+
+            if (nivel == null)
+                throw new KeyNotFoundException("Nivel no encontrado");
+
+            // Obtener la edad mínima y máxima de los participantes del nivel
+            var participantesActivos = nivel.ParticipantesDelNivel
+                .Where(np => np.EstaActivo && np.Usuario != null && np.Usuario.FechaDeNacimiento.HasValue)
+                .ToList();
+
+            if (!participantesActivos.Any())
+            {
+                // Si no hay participantes con edad, devolver actividades para el rango del nivel
+                var actividades = await _context.ActividadesMontessori
+                    .Include(a => a.CreadoPor)
+                    .Include(a => a.Logros)
+                        .ThenInclude(l => l.Usuario)
+                    .Where(a => a.EstaActivo 
+                             && a.EdadMinima <= nivel.EdadMaxima 
+                             && a.EdadMaxima >= nivel.EdadMinima)
+                    .OrderByDescending(a => a.CreadoEn)
+                    .ToListAsync();
+
+                return actividades.Select(MapToDto);
+            }
+
+            // Calcular edades de participantes
+            var hoy = DateTime.Today;
+            var edades = participantesActivos.Select(p =>
+            {
+                var edad = hoy.Year - p.Usuario!.FechaDeNacimiento!.Value.Year;
+                if (p.Usuario.FechaDeNacimiento.Value.Date > hoy.AddYears(-edad))
+                    edad--;
+                return (decimal)edad;
+            }).ToList();
+
+            var edadMinima = edades.Min();
+            var edadMaxima = edades.Max();
+
+            // Obtener actividades que se ajusten al rango de edades del nivel
+            var actividadesFiltradas = await _context.ActividadesMontessori
+                .Include(a => a.CreadoPor)
+                .Include(a => a.Logros)
+                    .ThenInclude(l => l.Usuario)
+                .Where(a => a.EstaActivo 
+                         && ((a.EdadMinima <= edadMaxima && a.EdadMaxima >= edadMinima) // Actividad se solapa con rango del nivel
+                            || (a.EdadMinima >= edadMinima && a.EdadMaxima <= edadMaxima))) // Actividad está dentro del rango
+                .OrderByDescending(a => a.CreadoEn)
+                .ToListAsync();
+
+            return actividadesFiltradas.Select(MapToDto);
+        }
+
         public async Task<ActividadMontessoriDto> ActualizarActividadAsync(int id, ActualizarActividadMontessoriDto dto, int voluntarioId)
         {
             var actividad = await _context.ActividadesMontessori

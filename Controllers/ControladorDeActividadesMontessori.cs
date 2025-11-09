@@ -140,6 +140,28 @@ namespace ApiPG.Controllers
         }
 
         /// <summary>
+        /// Obtener actividades Montessori para un nivel según las edades de sus participantes
+        /// </summary>
+        [HttpGet("nivel/{nivelId}")]
+        public async Task<ActionResult<IEnumerable<ActividadMontessoriDto>>> ObtenerPorNivel(int nivelId)
+        {
+            try
+            {
+                var actividades = await _servicio.ObtenerActividadesPorNivelAsync(nivelId);
+                return Ok(actividades);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { mensaje = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener actividades para nivel {NivelId}", nivelId);
+                return StatusCode(500, new { mensaje = "Error al obtener las actividades" });
+            }
+        }
+
+        /// <summary>
         /// Actualizar una actividad Montessori
         /// </summary>
         [HttpPut("{id}")]

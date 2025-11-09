@@ -84,6 +84,11 @@
             Obtener actividades Montessori para un participante según su edad
             </summary>
         </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.ObtenerPorNivel(System.Int32)">
+            <summary>
+            Obtener actividades Montessori para un nivel según las edades de sus participantes
+            </summary>
+        </member>
         <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.ActualizarActividad(System.Int32,ApiPG.DTOs.ActualizarActividadMontessoriDto)">
             <summary>
             Actualizar una actividad Montessori

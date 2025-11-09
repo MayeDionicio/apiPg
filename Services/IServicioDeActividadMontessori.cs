@@ -11,6 +11,7 @@ namespace ApiPG.Services
         Task<IEnumerable<ActividadMontessoriDto>> ObtenerActividadesPorVoluntarioAsync(int voluntarioId);
         Task<IEnumerable<ActividadMontessoriDto>> ObtenerActividadesPorAreaAsync(string area);
         Task<IEnumerable<ActividadMontessoriDto>> ObtenerActividadesParaParticipanteAsync(int participanteId);
+        Task<IEnumerable<ActividadMontessoriDto>> ObtenerActividadesPorNivelAsync(int nivelId);
         Task<ActividadMontessoriDto> ActualizarActividadAsync(int id, ActualizarActividadMontessoriDto dto, int voluntarioId);
         Task<bool> EliminarActividadAsync(int id, int voluntarioId);
         Task<EstadisticasActividadesMontessoriDto> ObtenerEstadisticasAsync(int? voluntarioId = null);
