@@ -54,6 +54,76 @@
             Obtener estadísticas de actividades del coordinador actual
             </summary>
         </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.CrearActividad(ApiPG.DTOs.CrearActividadMontessoriDto)">
+            <summary>
+            Crear una nueva actividad Montessori
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.ObtenerTodas">
+            <summary>
+            Obtener todas las actividades Montessori
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.ObtenerPorId(System.Int32)">
+            <summary>
+            Obtener una actividad Montessori por ID
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.ObtenerPorArea(System.String)">
+            <summary>
+            Obtener actividades Montessori por área pedagógica
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.ObtenerPorVoluntario(System.Int32)">
+            <summary>
+            Obtener actividades Montessori creadas por un voluntario
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.ObtenerParaParticipante(System.Int32)">
+            <summary>
+            Obtener actividades Montessori para un participante según su edad
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.ActualizarActividad(System.Int32,ApiPG.DTOs.ActualizarActividadMontessoriDto)">
+            <summary>
+            Actualizar una actividad Montessori
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.EliminarActividad(System.Int32)">
+            <summary>
+            Eliminar una actividad Montessori (soft delete)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.ObtenerEstadisticas(System.Nullable{System.Int32})">
+            <summary>
+            Obtener estadísticas de actividades Montessori
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.CrearLogro(ApiPG.DTOs.CrearLogroMontessoriDto)">
+            <summary>
+            Crear un nuevo logro Montessori
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.MarcarLogroObtenido(System.Int32)">
+            <summary>
+            Marcar un logro como obtenido
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.ObtenerLogrosPorActividad(System.Int32)">
+            <summary>
+            Obtener logros de una actividad
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.ObtenerLogrosPorUsuario(System.Int32)">
+            <summary>
+            Obtener logros de un usuario
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessori.EliminarLogro(System.Int32)">
+            <summary>
+            Eliminar un logro
+            </summary>
+        </member>
         <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessoriPersonalizadas.CrearActividad(ApiPG.DTOs.CrearActividadPersonalizadaDto)">
             <summary>
             Crea una nueva actividad Montessori personalizada para un estudiante
