@@ -76,8 +76,8 @@ namespace ApiPG.Data
                     new Rol { Id = 1, Nombre = "Administrator", Descripcion = "Full system access", CreadoEn = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc) },
                     // 'User' renombrado a 'Participante'
                     new Rol { Id = 2, Nombre = "Participante", Descripcion = "Acceso de participante / beneficiario", CreadoEn = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc) },
-                    new Rol { Id = 3, Nombre = "Viewer", Descripcion = "Read-only access", CreadoEn = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc) },
-                    new Rol { Id = 4, Nombre = "Manager", Descripcion = "Management access", CreadoEn = new DateTime(2024, 1, 15, 0, 0, 0, DateTimeKind.Utc) },
+                    new Rol { Id = 3, Nombre = "Facilitador", Descripcion = "Ver reportes y estadísticas", CreadoEn = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc) },
+                    new Rol { Id = 4, Nombre = "Voluntario", Descripcion = "Instructor de nivel", CreadoEn = new DateTime(2024, 1, 15, 0, 0, 0, DateTimeKind.Utc) },
                     // Nuevo rol: Coordinador
                     new Rol { Id = 5, Nombre = "Coordinador", Descripcion = "Coordinación y supervisión", CreadoEn = new DateTime(2024, 2, 1, 0, 0, 0, DateTimeKind.Utc) }
                 );
@@ -115,48 +115,16 @@ namespace ApiPG.Data
                     new Usuario
                     {
                         Id = 1,
-                        PrimerNombre = "Admin",
-                        Apellido = "System",
-                        CorreoElectronico = "admin@apipg.com",
+                        PrimerNombre = "Lorena",
+                        Apellido = "Bran",
+                        CorreoElectronico = "lebatz312@gmail.com",
                         NombreDeUsuario = "admin",
                         HashDeContrasena = HashPassword("admin123"),
                         IdRol = 1,
                         CreadoEn = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
-                    },
-                    new Usuario
-                    {
-                        Id = 2,
-                        PrimerNombre = "Juan",
-                        Apellido = "Pérez",
-                        CorreoElectronico = "juan.perez@email.com",
-                        NombreDeUsuario = "jperez",
-                        HashDeContrasena = HashPassword("user123"),
-                        IdRol = 2,
-                        CreadoEn = new DateTime(2024, 1, 15, 0, 0, 0, DateTimeKind.Utc)
-                    },
-                    new Usuario
-                    {
-                        Id = 3,
-                        PrimerNombre = "María",
-                        Apellido = "García",
-                        CorreoElectronico = "maria.garcia@email.com",
-                        NombreDeUsuario = "mgarcia",
-                        HashDeContrasena = HashPassword("user123"),
-                        IdRol = 3,
-                        CreadoEn = new DateTime(2024, 1, 20, 0, 0, 0, DateTimeKind.Utc)
-                    },
-                    new Usuario
-                    {
-                        Id = 4,
-                        PrimerNombre = "Carlos",
-                        Apellido = "Coordinador",
-                        CorreoElectronico = "coordinador@apipg.com",
-                        NombreDeUsuario = "coordinador",
-                        HashDeContrasena = HashPassword("coord123"),
-                        IdRol = 5,
-                        CreadoEn = new DateTime(2024, 1, 25, 0, 0, 0, DateTimeKind.Utc)
                     }
                 );
+
             });
 
             // Configuración para Nivel
