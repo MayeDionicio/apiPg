@@ -16,6 +16,20 @@ namespace ApiPG.Services
 
         public async Task<ReporteAsistenciaDto?> AddAsync(CrearAsistenciaDto dto)
         {
+            // Validar que el nivel exista
+            var nivelExiste = await _db.Niveles.AnyAsync(n => n.Id == dto.NivelId && n.EstaActivo);
+            if (!nivelExiste)
+            {
+                throw new ArgumentException($"El nivel con Id {dto.NivelId} no existe o no está activo");
+            }
+
+            // Validar que el usuario exista
+            var usuarioExiste = await _db.Usuarios.AnyAsync(u => u.Id == dto.UsuarioId && u.EstaActivo);
+            if (!usuarioExiste)
+            {
+                throw new ArgumentException($"El usuario con Id {dto.UsuarioId} no existe o no está activo");
+            }
+
             // Normalize date to date component (UTC)
             var dateOnly = dto.Fecha.Date;
 

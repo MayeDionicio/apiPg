@@ -16,10 +16,16 @@ namespace ApiPG.Services
 
         public async Task<NivelDto> CreateAsync(CrearNivelDto dto)
         {
+            // Validar rango de edades
+            if (dto.EdadMinima < 0 || dto.EdadMaxima > 12 || dto.EdadMinima > dto.EdadMaxima)
+                throw new ArgumentException("El rango de edad debe estar entre 0 y 12 años, y la edad mínima debe ser menor que la máxima");
+
             var level = new Nivel
             {
                 Nombre = dto.Nombre,
                 Descripcion = dto.Descripcion,
+                EdadMinima = dto.EdadMinima,
+                EdadMaxima = dto.EdadMaxima,
                 IdVoluntario = dto.VoluntarioId,
                 CreadoEn = DateTime.UtcNow,
                 EstaActivo = true
@@ -44,6 +50,8 @@ namespace ApiPG.Services
                 Id = l.Id,
                 Nombre = l.Nombre,
                 Descripcion = l.Descripcion,
+                EdadMinima = l.EdadMinima,
+                EdadMaxima = l.EdadMaxima,
                 VoluntarioId = l.IdVoluntario,
                 NombreVoluntario = l.Voluntario != null ? $"{l.Voluntario.PrimerNombre} {l.Voluntario.Apellido}" : null,
                 CreadoEn = l.CreadoEn,
@@ -72,6 +80,8 @@ namespace ApiPG.Services
                 Id = l.Id,
                 Nombre = l.Nombre,
                 Descripcion = l.Descripcion,
+                EdadMinima = l.EdadMinima,
+                EdadMaxima = l.EdadMaxima,
                 VoluntarioId = l.IdVoluntario,
                 NombreVoluntario = l.Voluntario != null ? $"{l.Voluntario.PrimerNombre} {l.Voluntario.Apellido}" : null,
                 CreadoEn = l.CreadoEn,
@@ -93,6 +103,19 @@ namespace ApiPG.Services
                 l.IdVoluntario = dto.VoluntarioId;
             }
             if (!string.IsNullOrWhiteSpace(dto.Descripcion)) l.Descripcion = dto.Descripcion;
+            
+            // Actualizar rango de edades con validación
+            if (dto.EdadMinima.HasValue || dto.EdadMaxima.HasValue)
+            {
+                var edadMin = dto.EdadMinima ?? l.EdadMinima;
+                var edadMax = dto.EdadMaxima ?? l.EdadMaxima;
+                
+                if (edadMin < 0 || edadMax > 12 || edadMin > edadMax)
+                    throw new ArgumentException("El rango de edad debe estar entre 0 y 12 años, y la edad mínima debe ser menor que la máxima");
+                
+                if (dto.EdadMinima.HasValue) l.EdadMinima = dto.EdadMinima.Value;
+                if (dto.EdadMaxima.HasValue) l.EdadMaxima = dto.EdadMaxima.Value;
+            }
 
             await _db.SaveChangesAsync();
             return await GetByIdInternalAsync(id);
@@ -183,12 +206,60 @@ namespace ApiPG.Services
                 Id = l.Id,
                 Nombre = l.Nombre,
                 Descripcion = l.Descripcion,
+                EdadMinima = l.EdadMinima,
+                EdadMaxima = l.EdadMaxima,
                 VoluntarioId = l.IdVoluntario,
                 NombreVoluntario = l.Voluntario != null ? $"{l.Voluntario.PrimerNombre} {l.Voluntario.Apellido}" : null,
                 CreadoEn = l.CreadoEn,
                 EstaActivo = l.EstaActivo,
                 CantidadParticipantes = l.ParticipantesDelNivel.Count(lp => lp.EstaActivo)
             });
+        }
+
+        public async Task<IEnumerable<UsuarioDto>> GetParticipantesElegiblesParaNivelAsync(int nivelId)
+        {
+            // Obtener el nivel para conocer el rango de edad
+            var nivel = await _db.Niveles.FindAsync(nivelId);
+            if (nivel == null) 
+                throw new ArgumentException($"Nivel con ID {nivelId} no encontrado");
+
+            // Obtener todos los participantes activos con fecha de nacimiento
+            var participantes = await _db.Usuarios
+                .Where(u => u.IdRol == 2 && u.EstaActivo && u.FechaDeNacimiento.HasValue)
+                .Include(u => u.Rol)
+                .ToListAsync();
+
+            // Filtrar por edad
+            var hoy = DateTime.Today;
+            var participantesElegibles = participantes.Where(p =>
+            {
+                var fechaNac = p.FechaDeNacimiento!.Value;
+                // Calcular edad
+                var edad = hoy.Year - fechaNac.Year;
+                if (fechaNac.Date > hoy.AddYears(-edad)) edad--;
+
+                decimal edadDecimal = edad;
+                return edadDecimal >= nivel.EdadMinima && edadDecimal <= nivel.EdadMaxima;
+            })
+            .Select(p => new UsuarioDto
+            {
+                Id = p.Id,
+                PrimerNombre = p.PrimerNombre,
+                Apellido = p.Apellido,
+                NombreCompleto = p.NombreCompleto,
+                FechaDeNacimiento = p.FechaDeNacimiento,
+                Email = p.CorreoElectronico,
+                NombreDeUsuario = p.NombreDeUsuario,
+                RolId = p.IdRol,
+                NombreRol = p.Rol?.Nombre ?? "",
+                EstaActivo = p.EstaActivo,
+                CreadoEn = p.CreadoEn,
+                ActualizadoEn = p.ActualizadoEn,
+                Edad = hoy.Year - p.FechaDeNacimiento!.Value.Year - (p.FechaDeNacimiento.Value.Date > hoy.AddYears(-(hoy.Year - p.FechaDeNacimiento.Value.Year)) ? 1 : 0)
+            })
+            .ToList();
+
+            return participantesElegibles;
         }
     }
 }

@@ -16,5 +16,6 @@ namespace ApiPG.Services
         Task<bool> ChangeTutorAsync(int levelId, int? tutorId);
         Task<IEnumerable<ParticipanteDeNivelDto>> GetParticipantsAsync(int levelId);
         Task<IEnumerable<NivelDto>> GetLevelsByTutorAsync(int tutorId);
+        Task<IEnumerable<UsuarioDto>> GetParticipantesElegiblesParaNivelAsync(int nivelId);
     }
 }

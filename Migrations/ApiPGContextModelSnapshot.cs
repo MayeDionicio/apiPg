@@ -87,6 +87,294 @@ namespace ApiPG.Migrations
                     b.ToTable("Actividades", (string)null);
                 });
 
+            modelBuilder.Entity("ApiPG.Models.ActividadMontessori", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ActualizadoEn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("AdaptacionesVariaciones")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("AreaPedagogica")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("AspectosAutonomia")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("ChecklistMontessori")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("ControlDelError")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateTime>("CreadoEn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("CreadoPorIdUsuario")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DuracionMinutos")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("EdadMaxima")
+                        .HasColumnType("decimal(3,1)");
+
+                    b.Property<decimal>("EdadMinima")
+                        .HasColumnType("decimal(3,1)");
+
+                    b.Property<bool>("EstaActivo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("EvidenciaUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime>("FechaActividad")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<TimeSpan?>("HoraActividad")
+                        .HasColumnType("interval");
+
+                    b.Property<string>("IndicadoresDeLogro")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("LimitesYNormas")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("MaterialesNecesarios")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("MontajeAmbiente")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("NivelDificultad")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<string>("ObjetivoEspecifico")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("ObservacionesAdicionales")
+                        .HasMaxLength(3000)
+                        .HasColumnType("character varying(3000)");
+
+                    b.Property<string>("Prerequisitos")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("PresentacionPasoAPaso")
+                        .IsRequired()
+                        .HasMaxLength(5000)
+                        .HasColumnType("character varying(5000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AreaPedagogica");
+
+                    b.HasIndex("CreadoPorIdUsuario");
+
+                    b.HasIndex("EstaActivo");
+
+                    b.HasIndex("FechaActividad");
+
+                    b.HasIndex("Nombre");
+
+                    b.ToTable("ActividadesMontessori", (string)null);
+                });
+
+            modelBuilder.Entity("ApiPG.Models.ActividadMontessoriPersonalizada", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ActualizadoEn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("AdaptacionesEspeciales")
+                        .HasColumnType("text");
+
+                    b.Property<string>("AreaPedagogica")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("AsignadoPorIdUsuario")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreadoEn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("DificultadesEncontradas")
+                        .HasColumnType("text");
+
+                    b.Property<int>("DuracionMinutosEstimada")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("DuracionMinutosReal")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("EnviarRecordatorio")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("EsRecurrente")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("EstaActivo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasDefaultValue("Pendiente");
+
+                    b.Property<string>("EvidenciaUrlFoto")
+                        .HasColumnType("text");
+
+                    b.Property<string>("EvidenciaUrlVideo")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("FechaAsignacion")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("FechaCompletada")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("FechaFinRecurrencia")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("FechaInicio")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("FechaRecordatorio")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FrecuenciaRecurrencia")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<TimeSpan?>("HoraActividad")
+                        .HasColumnType("interval");
+
+                    b.Property<int?>("IdActividadMontessoriBase")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IdEstudiante")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("IdNivel")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("LogrosAlcanzados")
+                        .HasColumnType("text");
+
+                    b.Property<string>("MaterialesNecesarios")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("NivelDesempeno")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("NotasAdicionales")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ObjetivoPersonalizado")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ObservacionesProfesor")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PresentacionPersonalizada")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Prioridad")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasDefaultValue("Normal");
+
+                    b.Property<int?>("ProgresosPorcentaje")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("RecordatorioEnviado")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("RequiereRefuerzo")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("SugerenciasParaSeguimiento")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AsignadoPorIdUsuario");
+
+                    b.HasIndex("Estado");
+
+                    b.HasIndex("FechaAsignacion");
+
+                    b.HasIndex("FechaCompletada");
+
+                    b.HasIndex("IdActividadMontessoriBase");
+
+                    b.HasIndex("IdEstudiante");
+
+                    b.HasIndex("IdNivel");
+
+                    b.HasIndex("Prioridad");
+
+                    b.HasIndex("IdEstudiante", "Estado");
+
+                    b.ToTable("ActividadesMontessoriPersonalizadas", (string)null);
+                });
+
             modelBuilder.Entity("ApiPG.Models.AsignacionDeActividad", b =>
                 {
                     b.Property<int>("Id")
@@ -394,6 +682,217 @@ namespace ApiPG.Migrations
                     b.ToTable("Devocionales", (string)null);
                 });
 
+            modelBuilder.Entity("ApiPG.Models.LogroFacilitador", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ActualizadoEn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("CantidadActividadesRequeridas")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("CantidadEstudiantesRequeridos")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Categoria")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("CreadoEn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("CreadoPorIdUsuario")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CriteriosObtencion")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<int?>("DiasConsecutivosRequeridos")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("EstaActivo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Icono")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int>("PuntosValor")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("TipoLogro")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasDefaultValue("Manual");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Categoria");
+
+                    b.HasIndex("CreadoPorIdUsuario");
+
+                    b.HasIndex("EstaActivo");
+
+                    b.HasIndex("TipoLogro");
+
+                    b.ToTable("LogrosFacilitador", (string)null);
+                });
+
+            modelBuilder.Entity("ApiPG.Models.LogroMontessori", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ActividadMontessoriId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("ActualizadoEn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreadoEn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<bool>("EsObtenido")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("EstaActivo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime?>("FechaObtencion")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Icono")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActividadMontessoriId");
+
+                    b.HasIndex("EsObtenido");
+
+                    b.HasIndex("FechaObtencion");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("LogrosMontessori", (string)null);
+                });
+
+            modelBuilder.Entity("ApiPG.Models.LogroObtenidoFacilitador", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ComentarioCoordinador")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime>("CreadoEn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<bool>("EsVisible")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime>("FechaObtencion")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("IdActividadMontessoriRelacionada")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("IdActividadPersonalizadaRelacionada")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("IdActividadRelacionada")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IdFacilitador")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IdLogro")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Justificacion")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<int>("OtorgadoPorIdUsuario")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FechaObtencion");
+
+                    b.HasIndex("IdActividadMontessoriRelacionada");
+
+                    b.HasIndex("IdActividadPersonalizadaRelacionada");
+
+                    b.HasIndex("IdActividadRelacionada");
+
+                    b.HasIndex("IdFacilitador");
+
+                    b.HasIndex("IdLogro");
+
+                    b.HasIndex("OtorgadoPorIdUsuario");
+
+                    b.HasIndex("IdFacilitador", "IdLogro")
+                        .IsUnique()
+                        .HasDatabaseName("IX_LogrosObtenidos_Facilitador_Logro_Unique");
+
+                    b.ToTable("LogrosObtenidosFacilitador", (string)null);
+                });
+
             modelBuilder.Entity("ApiPG.Models.Nivel", b =>
                 {
                     b.Property<int>("Id")
@@ -411,6 +910,12 @@ namespace ApiPG.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
+                    b.Property<decimal>("EdadMaxima")
+                        .HasColumnType("decimal(3,1)");
+
+                    b.Property<decimal>("EdadMinima")
+                        .HasColumnType("decimal(3,1)");
+
                     b.Property<bool>("EstaActivo")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
@@ -425,6 +930,10 @@ namespace ApiPG.Migrations
                         .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EdadMaxima");
+
+                    b.HasIndex("EdadMinima");
 
                     b.HasIndex("IdVoluntario");
 
@@ -454,6 +963,118 @@ namespace ApiPG.Migrations
                     b.HasIndex("IdUsuario");
 
                     b.ToTable("NivelesDeParticipantes", (string)null);
+                });
+
+            modelBuilder.Entity("ApiPG.Models.PerfilUsuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ActualizadoEn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Alergias")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Biografia")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("Ciudad")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("CondicionesMedicas")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("ContactoEmergenciaNombre")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("ContactoEmergenciaRelacion")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("ContactoEmergenciaTelefono")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime>("CreadoEn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("Direccion")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<bool>("EstaActivo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Facebook")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("FotoPerfil")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Instagram")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Intereses")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Medicamentos")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("NombreMadre")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("NombrePadre")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("NombreTutor")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Pais")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Telefono")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Twitter")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Ciudad");
+
+                    b.HasIndex("IdUsuario")
+                        .IsUnique();
+
+                    b.HasIndex("Telefono");
+
+                    b.ToTable("PerfilesUsuario", (string)null);
                 });
 
             modelBuilder.Entity("ApiPG.Models.Recurso", b =>
@@ -765,6 +1386,41 @@ namespace ApiPG.Migrations
                     b.ToTable("Tareas", (string)null);
                 });
 
+            modelBuilder.Entity("ApiPG.Models.TokenRecuperacion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreadoEn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("FechaExpiracion")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<bool>("Usado")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("TokensRecuperacion");
+                });
+
             modelBuilder.Entity("ApiPG.Models.Usuario", b =>
                 {
                     b.Property<int>("Id")
@@ -780,6 +1436,10 @@ namespace ApiPG.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<string>("CodigoParticipante")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("CorreoElectronico")
                         .IsRequired()
@@ -890,6 +1550,50 @@ namespace ApiPG.Migrations
                     b.Navigation("CreadoPor");
                 });
 
+            modelBuilder.Entity("ApiPG.Models.ActividadMontessori", b =>
+                {
+                    b.HasOne("ApiPG.Models.Usuario", "CreadoPor")
+                        .WithMany()
+                        .HasForeignKey("CreadoPorIdUsuario")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CreadoPor");
+                });
+
+            modelBuilder.Entity("ApiPG.Models.ActividadMontessoriPersonalizada", b =>
+                {
+                    b.HasOne("ApiPG.Models.Usuario", "AsignadoPor")
+                        .WithMany()
+                        .HasForeignKey("AsignadoPorIdUsuario")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ApiPG.Models.ActividadMontessori", "ActividadBase")
+                        .WithMany()
+                        .HasForeignKey("IdActividadMontessoriBase")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ApiPG.Models.Usuario", "Estudiante")
+                        .WithMany()
+                        .HasForeignKey("IdEstudiante")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApiPG.Models.Nivel", "Nivel")
+                        .WithMany()
+                        .HasForeignKey("IdNivel")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("ActividadBase");
+
+                    b.Navigation("AsignadoPor");
+
+                    b.Navigation("Estudiante");
+
+                    b.Navigation("Nivel");
+                });
+
             modelBuilder.Entity("ApiPG.Models.AsignacionDeActividad", b =>
                 {
                     b.HasOne("ApiPG.Models.Actividad", "Actividad")
@@ -998,6 +1702,84 @@ namespace ApiPG.Migrations
                     b.Navigation("VoluntarioAsignadoUser");
                 });
 
+            modelBuilder.Entity("ApiPG.Models.LogroFacilitador", b =>
+                {
+                    b.HasOne("ApiPG.Models.Usuario", "CreadoPor")
+                        .WithMany()
+                        .HasForeignKey("CreadoPorIdUsuario")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CreadoPor");
+                });
+
+            modelBuilder.Entity("ApiPG.Models.LogroMontessori", b =>
+                {
+                    b.HasOne("ApiPG.Models.ActividadMontessori", "ActividadMontessori")
+                        .WithMany("Logros")
+                        .HasForeignKey("ActividadMontessoriId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApiPG.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ActividadMontessori");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("ApiPG.Models.LogroObtenidoFacilitador", b =>
+                {
+                    b.HasOne("ApiPG.Models.ActividadMontessori", "ActividadMontessoriRelacionada")
+                        .WithMany()
+                        .HasForeignKey("IdActividadMontessoriRelacionada")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ApiPG.Models.ActividadMontessoriPersonalizada", "ActividadPersonalizadaRelacionada")
+                        .WithMany()
+                        .HasForeignKey("IdActividadPersonalizadaRelacionada")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ApiPG.Models.Actividad", "ActividadRelacionada")
+                        .WithMany()
+                        .HasForeignKey("IdActividadRelacionada")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ApiPG.Models.Usuario", "Facilitador")
+                        .WithMany()
+                        .HasForeignKey("IdFacilitador")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApiPG.Models.LogroFacilitador", "Logro")
+                        .WithMany("LogrosObtenidos")
+                        .HasForeignKey("IdLogro")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApiPG.Models.Usuario", "OtorgadoPor")
+                        .WithMany()
+                        .HasForeignKey("OtorgadoPorIdUsuario")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ActividadMontessoriRelacionada");
+
+                    b.Navigation("ActividadPersonalizadaRelacionada");
+
+                    b.Navigation("ActividadRelacionada");
+
+                    b.Navigation("Facilitador");
+
+                    b.Navigation("Logro");
+
+                    b.Navigation("OtorgadoPor");
+                });
+
             modelBuilder.Entity("ApiPG.Models.Nivel", b =>
                 {
                     b.HasOne("ApiPG.Models.Usuario", "Voluntario")
@@ -1023,6 +1805,17 @@ namespace ApiPG.Migrations
                         .IsRequired();
 
                     b.Navigation("Nivel");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("ApiPG.Models.PerfilUsuario", b =>
+                {
+                    b.HasOne("ApiPG.Models.Usuario", "Usuario")
+                        .WithOne()
+                        .HasForeignKey("ApiPG.Models.PerfilUsuario", "IdUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuario");
                 });
@@ -1064,6 +1857,17 @@ namespace ApiPG.Migrations
                     b.Navigation("CreadoPor");
                 });
 
+            modelBuilder.Entity("ApiPG.Models.TokenRecuperacion", b =>
+                {
+                    b.HasOne("ApiPG.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("ApiPG.Models.Usuario", b =>
                 {
                     b.HasOne("ApiPG.Models.Rol", "Rol")
@@ -1080,9 +1884,19 @@ namespace ApiPG.Migrations
                     b.Navigation("AsignacionesDeActividad");
                 });
 
+            modelBuilder.Entity("ApiPG.Models.ActividadMontessori", b =>
+                {
+                    b.Navigation("Logros");
+                });
+
             modelBuilder.Entity("ApiPG.Models.AsignacionDeRecurso", b =>
                 {
                     b.Navigation("RegistrosDeUso");
+                });
+
+            modelBuilder.Entity("ApiPG.Models.LogroFacilitador", b =>
+                {
+                    b.Navigation("LogrosObtenidos");
                 });
 
             modelBuilder.Entity("ApiPG.Models.Nivel", b =>

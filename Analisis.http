@@ -1,0 +1,207 @@
+### Variables
+@baseUrl = http://localhost:5000
+@token = TU_TOKEN_AQUI
+
+### 1. Obtener todas las métricas generales del dashboard
+# Devuelve: Crecimiento de usuarios, Actividades completadas, Tiempo de uso
+GET {{baseUrl}}/api/analisis/metricas-generales
+Authorization: Bearer {{token}}
+
+### 2. Obtener solo crecimiento de usuarios
+# Parámetros opcionales: ?meses=6 (últimos 6 meses de datos)
+GET {{baseUrl}}/api/analisis/crecimiento-usuarios?meses=6
+Authorization: Bearer {{token}}
+
+### 3. Obtener solo actividades completadas
+GET {{baseUrl}}/api/analisis/actividades-completadas
+Authorization: Bearer {{token}}
+
+### 4. Obtener solo tiempo de uso
+GET {{baseUrl}}/api/analisis/tiempo-uso
+Authorization: Bearer {{token}}
+
+### 5. Obtener estadísticas detalladas completas
+# Incluye: usuarios, niveles, actividades, tareas, asistencia por rol
+GET {{baseUrl}}/api/analisis/estadisticas-detalladas
+Authorization: Bearer {{token}}
+
+### EJEMPLOS DE RESPUESTAS ESPERADAS
+
+### Ejemplo de respuesta de métricas generales:
+# GET /api/analisis/metricas-generales
+# {
+#   "crecimientoUsuarios": {
+#     "nuevosUsuariosEsteMes": 156,
+#     "tasaRetencion": 91.0,
+#     "usuariosTotales": 450,
+#     "usuariosActivosEsteMes": 410,
+#     "crecimientoPorMes": [
+#       {
+#         "mes": 5,
+#         "anio": 2025,
+#         "nombreMes": "may 2025",
+#         "cantidadNuevos": 45,
+#         "cantidadTotal": 294
+#       },
+#       {
+#         "mes": 6,
+#         "anio": 2025,
+#         "nombreMes": "jun 2025",
+#         "cantidadNuevos": 67,
+#         "cantidadTotal": 361
+#       }
+#     ]
+#   },
+#   "actividadesCompletadas": {
+#     "actividadesTotales": 347,
+#     "actividadesCompletadas": 271,
+#     "porcentajeCompletacion": 78.1,
+#     "tareasCompletadas": 145,
+#     "tareasTotales": 200,
+#     "completacionPorMes": [...]
+#   },
+#   "tiempoDeUso": {
+#     "promedioHorasDiarias": 4.2,
+#     "porcentajeUsuariosActivos": 87.0,
+#     "usuariosActivosHoy": 392,
+#     "usuariosTotales": 450,
+#     "sesionesTotales": 1250,
+#     "tiempoTotalHoras": 5250.0
+#   }
+# }
+
+### INTEGRACIÓN CON FRONTEND (Angular/React)
+
+### Código Angular para consumir las métricas:
+# // dashboard.service.ts
+# import { HttpClient } from '@angular/common/http';
+# 
+# @Injectable({ providedIn: 'root' })
+# export class DashboardService {
+#   private baseUrl = 'http://localhost:5000/api/analisis';
+# 
+#   constructor(private http: HttpClient) {}
+# 
+#   obtenerMetricasGenerales() {
+#     return this.http.get<MetricasGenerales>(`${this.baseUrl}/metricas-generales`);
+#   }
+# 
+#   obtenerCrecimientoUsuarios(meses: number = 6) {
+#     return this.http.get<CrecimientoUsuarios>(
+#       `${this.baseUrl}/crecimiento-usuarios?meses=${meses}`
+#     );
+#   }
+# 
+#   obtenerActividadesCompletadas() {
+#     return this.http.get<ActividadesCompletadas>(
+#       `${this.baseUrl}/actividades-completadas`
+#     );
+#   }
+# 
+#   obtenerTiempoDeUso() {
+#     return this.http.get<TiempoDeUso>(`${this.baseUrl}/tiempo-uso`);
+#   }
+# 
+#   obtenerEstadisticasDetalladas() {
+#     return this.http.get<EstadisticasDetalladas>(
+#       `${this.baseUrl}/estadisticas-detalladas`
+#     );
+#   }
+# }
+
+### Código TypeScript para el componente del dashboard:
+# // dashboard.component.ts
+# export class DashboardComponent implements OnInit {
+#   metricas: MetricasGenerales | null = null;
+#   loading = true;
+# 
+#   constructor(private dashboardService: DashboardService) {}
+# 
+#   ngOnInit() {
+#     this.cargarMetricas();
+#   }
+# 
+#   cargarMetricas() {
+#     this.dashboardService.obtenerMetricasGenerales().subscribe({
+#       next: (data) => {
+#         this.metricas = data;
+#         this.loading = false;
+#       },
+#       error: (error) => {
+#         console.error('Error al cargar métricas:', error);
+#         this.loading = false;
+#       }
+#     });
+#   }
+# }
+
+### Template HTML para mostrar las métricas:
+# <!-- dashboard.component.html -->
+# <div class="dashboard-container" *ngIf="metricas">
+#   
+#   <!-- Card: Crecimiento de Usuarios -->
+#   <div class="metric-card">
+#     <h3>📊 Crecimiento de Usuarios</h3>
+#     <div class="metric-value">
+#       +{{ metricas.crecimientoUsuarios.nuevosUsuariosEsteMes }}
+#     </div>
+#     <div class="metric-label">Nuevos usuarios este mes</div>
+#     <div class="metric-secondary">
+#       {{ metricas.crecimientoUsuarios.tasaRetencion }}%
+#       <span>Tasa de retención</span>
+#     </div>
+#   </div>
+# 
+#   <!-- Card: Actividades Completadas -->
+#   <div class="metric-card">
+#     <h3>🎯 Actividades Completadas</h3>
+#     <div class="metric-value">
+#       {{ metricas.actividadesCompletadas.actividadesCompletadas }}
+#     </div>
+#     <div class="metric-label">Actividades totales</div>
+#     <div class="metric-secondary">
+#       {{ metricas.actividadesCompletadas.porcentajeCompletacion }}%
+#       <span>Completación promedio</span>
+#     </div>
+#   </div>
+# 
+#   <!-- Card: Tiempo de Uso -->
+#   <div class="metric-card">
+#     <h3>⏱️ Tiempo de Uso</h3>
+#     <div class="metric-value">
+#       {{ metricas.tiempoDeUso.promedioHorasDiarias }}h
+#     </div>
+#     <div class="metric-label">Promedio diario</div>
+#     <div class="metric-secondary">
+#       {{ metricas.tiempoDeUso.porcentajeUsuariosActivos }}%
+#       <span>Usuarios activos</span>
+#     </div>
+#   </div>
+# 
+# </div>
+
+### NOTAS IMPORTANTES
+
+# 1. AUTENTICACIÓN REQUERIDA
+#    Todos los endpoints requieren token JWT válido
+#    Agregar header: Authorization: Bearer {token}
+
+# 2. PERMISOS
+#    Estos endpoints típicamente son solo para:
+#    - Coordinadores (rol admin)
+#    - Usuarios con permisos de análisis
+
+# 3. RENDIMIENTO
+#    Las métricas se calculan en tiempo real
+#    Para grandes volúmenes de datos, considerar:
+#    - Caché (Redis)
+#    - Tablas agregadas
+#    - Jobs programados
+
+# 4. PERSONALIZACIÓN
+#    Puedes filtrar por rango de fechas agregando parámetros:
+#    ?fechaInicio=2025-01-01&fechaFin=2025-12-31
+
+# 5. DATOS DE PRUEBA
+#    Si tu base de datos está vacía, las métricas mostrarán ceros
+#    Considera agregar seed data o usar los valores de ejemplo

@@ -29,6 +29,10 @@ namespace ApiPG.Models
         public int IdRol { get; set; }
         public Rol Rol { get; set; } = null!;
         
+        // Código único del participante (opcional, solo para participantes)
+        [StringLength(50)]
+        public string? CodigoParticipante { get; set; }
+        
         // Fecha de nacimiento (solo para participantes)
         public DateTime? FechaDeNacimiento { get; set; }
         

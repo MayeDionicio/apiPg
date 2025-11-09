@@ -93,6 +93,7 @@ namespace ApiPG.Services
                 NombreDeUsuario = createUserDto.NombreDeUsuario,
                 HashDeContrasena = HashPassword(createUserDto.Contrasena),
                 IdRol = createUserDto.RolId,
+                CodigoParticipante = createUserDto.CodigoParticipante,
                 FechaDeNacimiento = createUserDto.FechaDeNacimiento.HasValue 
                     ? DateTime.SpecifyKind(createUserDto.FechaDeNacimiento.Value, DateTimeKind.Utc)
                     : null,
@@ -152,6 +153,10 @@ namespace ApiPG.Services
             
             if (updateUserDto.EstaActivo.HasValue)
                 user.EstaActivo = updateUserDto.EstaActivo.Value;
+
+            // Actualizar código del participante si se proporciona
+            if (updateUserDto.CodigoParticipante != null)
+                user.CodigoParticipante = updateUserDto.CodigoParticipante;
 
             // Actualizar fecha de nacimiento si se proporciona
             if (updateUserDto.FechaDeNacimiento.HasValue)
@@ -214,6 +219,7 @@ namespace ApiPG.Services
                 CreadoEn = user.CreadoEn,
                 ActualizadoEn = user.ActualizadoEn,
                 EstaActivo = user.EstaActivo,
+                CodigoParticipante = user.CodigoParticipante,
                 FechaDeNacimiento = user.FechaDeNacimiento,
                 Edad = user.Edad
             };

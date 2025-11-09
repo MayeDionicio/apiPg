@@ -54,6 +54,81 @@
             Obtener estadísticas de actividades del coordinador actual
             </summary>
         </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessoriPersonalizadas.CrearActividad(ApiPG.DTOs.CrearActividadPersonalizadaDto)">
+            <summary>
+            Crea una nueva actividad Montessori personalizada para un estudiante
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessoriPersonalizadas.ObtenerPorId(System.Int32)">
+            <summary>
+            Obtiene una actividad personalizada por ID
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessoriPersonalizadas.ObtenerPorEstudiante(System.Int32,System.Boolean)">
+            <summary>
+            Obtiene todas las actividades de un estudiante específico
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessoriPersonalizadas.BuscarConFiltros(ApiPG.DTOs.FiltrosActividadPersonalizadaDto)">
+            <summary>
+            Obtiene actividades con filtros personalizados
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessoriPersonalizadas.ActualizarActividad(System.Int32,ApiPG.DTOs.ActualizarActividadPersonalizadaDto)">
+            <summary>
+            Actualiza información general de una actividad personalizada
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessoriPersonalizadas.ActualizarProgreso(System.Int32,ApiPG.DTOs.ActualizarProgresoActividadDto)">
+            <summary>
+            Actualiza el progreso y evaluación de una actividad
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessoriPersonalizadas.EliminarActividad(System.Int32)">
+            <summary>
+            Elimina (desactiva) una actividad personalizada
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessoriPersonalizadas.ObtenerEstadisticas(System.Int32)">
+            <summary>
+            Obtiene estadísticas de actividades de un estudiante
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessoriPersonalizadas.ObtenerPendientes">
+            <summary>
+            Obtiene todas las actividades pendientes o en progreso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeActividadesMontessoriPersonalizadas.ObtenerConRecordatorios">
+            <summary>
+            Obtiene actividades que requieren envío de recordatorio
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeAnalisis.ObtenerMetricasGenerales">
+            <summary>
+            Obtener métricas generales del dashboard
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeAnalisis.ObtenerCrecimientoUsuarios(System.Int32)">
+            <summary>
+            Obtener datos de crecimiento de usuarios
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeAnalisis.ObtenerActividadesCompletadas">
+            <summary>
+            Obtener estadísticas de actividades completadas
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeAnalisis.ObtenerTiempoDeUso">
+            <summary>
+            Obtener estadísticas de tiempo de uso
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeAnalisis.ObtenerEstadisticasDetalladas">
+            <summary>
+            Obtener estadísticas detalladas del sistema
+            </summary>
+        </member>
         <member name="M:ApiPG.Controllers.AsignacionesRecursosController.GetAssignments">
             <summary>
             Obtener todas las asignaciones de recursos
@@ -294,6 +369,66 @@
             Buscar devocionales
             </summary>
         </member>
+        <member name="M:ApiPG.Controllers.ControladorDeLogrosFacilitador.CrearLogro(ApiPG.DTOs.CrearLogroFacilitadorDto)">
+            <summary>
+            Crea un nuevo logro (Solo Coordinadores)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeLogrosFacilitador.ObtenerLogroPorId(System.Int32)">
+            <summary>
+            Obtiene un logro por ID
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeLogrosFacilitador.BuscarLogros(ApiPG.DTOs.FiltrosLogrosDto)">
+            <summary>
+            Obtiene todos los logros con filtros opcionales
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeLogrosFacilitador.ActualizarLogro(System.Int32,ApiPG.DTOs.ActualizarLogroFacilitadorDto)">
+            <summary>
+            Actualiza un logro (Solo Coordinadores)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeLogrosFacilitador.EliminarLogro(System.Int32)">
+            <summary>
+            Elimina un logro (Solo Coordinadores)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeLogrosFacilitador.OtorgarLogro(ApiPG.DTOs.OtorgarLogroDto)">
+            <summary>
+            Otorga un logro a un facilitador (Solo Coordinadores)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeLogrosFacilitador.RevocarLogro(System.Int32)">
+            <summary>
+            Revoca un logro obtenido (Solo Coordinadores)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeLogrosFacilitador.BuscarLogrosObtenidos(ApiPG.DTOs.FiltrosLogrosObtenidosDto)">
+            <summary>
+            Obtiene logros obtenidos con filtros
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeLogrosFacilitador.ObtenerPerfilFacilitador(System.Int32)">
+            <summary>
+            Obtiene el perfil de logros de un facilitador
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeLogrosFacilitador.ObtenerMiPerfil">
+            <summary>
+            Obtiene el perfil del facilitador autenticado
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeLogrosFacilitador.ObtenerRanking(System.Int32)">
+            <summary>
+            Obtiene el ranking de facilitadores
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeLogrosFacilitador.ObtenerEstadisticas">
+            <summary>
+            Obtiene estadísticas generales de logros
+            </summary>
+        </member>
         <member name="M:ApiPG.Controllers.NivelesController.GetLevels">
             <summary>
             Obtener todos los niveles
@@ -342,6 +477,62 @@
         <member name="M:ApiPG.Controllers.NivelesController.GetLevelsByTutor(System.Int32)">
             <summary>
             Obtener niveles asignados a un voluntario específico
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.NivelesController.GetEligibleParticipants(System.Int32)">
+            <summary>
+            Obtener participantes elegibles para un nivel (filtrados por edad)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.PerfilesController.ObtenerMiPerfil">
+            <summary>
+            Obtener mi perfil (usuario autenticado)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.PerfilesController.ObtenerPerfilPorUsuarioId(System.Int32)">
+            <summary>
+            Obtener perfil de un usuario por ID (solo coordinadores)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.PerfilesController.CrearPerfil(ApiPG.DTOs.CrearPerfilDto)">
+            <summary>
+            Crear mi perfil
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.PerfilesController.ActualizarPerfil(ApiPG.DTOs.ActualizarPerfilDto)">
+            <summary>
+            Actualizar mi perfil
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.PerfilesController.SubirFotoPerfil(ApiPG.DTOs.SubirFotoPerfilDto)">
+            <summary>
+            Subir foto de perfil
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.PerfilesController.EliminarFotoPerfil">
+            <summary>
+            Eliminar foto de perfil
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeRecuperacion.SolicitarRecuperacion(ApiPG.DTOs.SolicitarRecuperacionDto)">
+            <summary>
+            Solicita un token de recuperación de contraseña
+            Envía un correo electrónico con el token (en desarrollo retorna el token)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeRecuperacion.ValidarToken(ApiPG.DTOs.ValidarTokenDto)">
+            <summary>
+            Valida si un token de recuperación es válido y no ha expirado
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeRecuperacion.RestablecerContrasena(ApiPG.DTOs.RestablecerContrasenaDto)">
+            <summary>
+            Restablece la contraseña usando un token válido
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeRecuperacion.LimpiarTokensExpirados">
+            <summary>
+            Limpia tokens expirados (debe ser llamado periódicamente por un job)
             </summary>
         </member>
         <member name="M:ApiPG.Controllers.RecursosController.GetResources(System.Boolean)">
@@ -472,6 +663,59 @@
         <member name="M:ApiPG.Controllers.RegistroUsoRecursosController.ReportIncident(ApiPG.Controllers.ReportIncidentDto)">
             <summary>
             Reportar incidente rápido
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeReportes.ObtenerReporteGeneral(ApiPG.DTOs.FiltrosReporteDto)">
+            <summary>
+            Genera un reporte general completo con todas las estadísticas del sistema
+            Disponible para Facilitadores, Coordinadores y Administradores
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeReportes.ObtenerResumenUsuarios">
+            <summary>
+            Obtiene el resumen de usuarios (voluntarios, participantes, coordinadores)
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeReportes.ObtenerResumenActividades">
+            <summary>
+            Obtiene el resumen de actividades regulares y Montessori
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeReportes.ObtenerResumenNiveles">
+            <summary>
+            Obtiene el resumen de niveles con sus participantes
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeReportes.ObtenerResumenAsistencia(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Obtiene el resumen de asistencia con filtros opcionales de fecha
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeReportes.ObtenerResumenTareas">
+            <summary>
+            Obtiene el resumen de tareas por estado y voluntario
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeReportesVoluntario.ObtenerMiReporte(ApiPG.DTOs.FiltrosReporteVoluntarioDto)">
+            <summary>
+            Obtiene el reporte completo del voluntario con su nivel y estadísticas de asistencia
+            Solo accesible por el voluntario autenticado
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeReportesVoluntario.ObtenerEstadisticasAsistencia">
+            <summary>
+            Obtiene solo las estadísticas de asistencia del nivel del voluntario
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeReportesVoluntario.ObtenerMisParticipantes">
+            <summary>
+            Obtiene la lista de participantes del nivel con sus estadísticas de asistencia
+            </summary>
+        </member>
+        <member name="M:ApiPG.Controllers.ControladorDeReportesVoluntario.ObtenerAsistenciasDetalladas(ApiPG.DTOs.FiltrosReporteVoluntarioDto)">
+            <summary>
+            Obtiene todas las asistencias registradas en el nivel del voluntario
+            Permite filtrar por fecha y participante específico
             </summary>
         </member>
         <member name="M:ApiPG.Controllers.RolesController.GetRoles">
@@ -632,6 +876,27 @@
             <param name="username">Nombre de usuario</param>
             <param name="email">Email</param>
             <returns>Resultado de la verificación</returns>
+        </member>
+        <member name="T:ApiPG.DTOs.MetricasGeneralesDto">
+            <summary>
+            DTOs para métricas y análisis del dashboard
+            </summary>
+        </member>
+        <member name="T:ApiPG.DTOs.SolicitarRecuperacionDto">
+            <summary>
+            DTOs para el proceso de recuperación de contraseña
+            </summary>
+        </member>
+        <member name="T:ApiPG.DTOs.ReporteGeneralDto">
+            <summary>
+            DTOs para reportes generales del sistema
+            </summary>
+        </member>
+        <member name="T:ApiPG.DTOs.ReporteVoluntarioDto">
+            <summary>
+            DTOs para reportes específicos de voluntarios
+            Los voluntarios solo ven información de su nivel asignado
+            </summary>
         </member>
         <member name="T:ApiPG.Migrations.InitialCreate">
             <inheritdoc />
@@ -800,6 +1065,106 @@
         </member>
         <member name="M:ApiPG.Migrations.AgregarSistemaDeActividades.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AgregarActividadesMontessoriYLogros">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarActividadesMontessoriYLogros.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarActividadesMontessoriYLogros.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarActividadesMontessoriYLogros.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AgregarRangoDeEdadANiveles">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarRangoDeEdadANiveles.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarRangoDeEdadANiveles.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarRangoDeEdadANiveles.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AgregarPerfilesUsuario">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarPerfilesUsuario.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarPerfilesUsuario.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarPerfilesUsuario.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AgregarCodigoParticipante">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarCodigoParticipante.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarCodigoParticipante.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarCodigoParticipante.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AgregarTablaTokenRecuperacion">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarTablaTokenRecuperacion.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarTablaTokenRecuperacion.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarTablaTokenRecuperacion.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AgregarActividadesMontessoriPersonalizadas">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarActividadesMontessoriPersonalizadas.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarActividadesMontessoriPersonalizadas.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarActividadesMontessoriPersonalizadas.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Migrations.AgregarLogrosParaFacilitadores">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarLogrosParaFacilitadores.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarLogrosParaFacilitadores.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ApiPG.Migrations.AgregarLogrosParaFacilitadores.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ApiPG.Models.ActividadMontessoriPersonalizada">
+            <summary>
+            Actividad Montessori personalizada para un estudiante específico
+            </summary>
+        </member>
+        <member name="T:ApiPG.Models.LogroFacilitador">
+            <summary>
+            Define un logro que puede obtener un facilitador
+            Creado por coordinadores
+            </summary>
+        </member>
+        <member name="T:ApiPG.Models.LogroObtenidoFacilitador">
+            <summary>
+            Representa un logro obtenido por un facilitador
+            </summary>
         </member>
     </members>
 </doc>

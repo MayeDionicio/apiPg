@@ -1,0 +1,147 @@
+### Variables
+@baseUrl = http://localhost:5000
+@token = TU_TOKEN_AQUI
+
+### 1. Crear un nuevo nivel con rango de edad
+POST {{baseUrl}}/api/niveles
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Nivel 3 - Preescolares",
+  "descripcion": "Nivel para niños de edad preescolar",
+  "edadMinima": 3.0,
+  "edadMaxima": 5.0,
+  "voluntarioId": 2
+}
+
+### 2. Obtener todos los niveles (incluye rangos de edad)
+GET {{baseUrl}}/api/niveles
+Authorization: Bearer {{token}}
+
+### 3. Obtener un nivel específico por ID (incluye rango de edad)
+GET {{baseUrl}}/api/niveles/1
+Authorization: Bearer {{token}}
+
+### 4. Actualizar un nivel (cambiar rango de edad)
+PUT {{baseUrl}}/api/niveles/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Nivel 3 - Preescolares Actualizado",
+  "descripcion": "Nivel actualizado para edad preescolar",
+  "edadMinima": 3.5,
+  "edadMaxima": 6.0,
+  "estaActivo": true
+}
+
+### 5. Obtener participantes elegibles para un nivel (filtrados por edad)
+# Este endpoint devuelve solo los participantes cuya edad está dentro del rango del nivel
+GET {{baseUrl}}/api/niveles/1/participantes-elegibles
+Authorization: Bearer {{token}}
+
+### 6. Obtener participantes actualmente asignados a un nivel
+GET {{baseUrl}}/api/niveles/1/participantes
+Authorization: Bearer {{token}}
+
+### 7. Asignar un participante a un nivel
+# Nota: El participante debe tener una edad dentro del rango del nivel
+POST {{baseUrl}}/api/niveles/1/participantes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "usuarioId": 3
+}
+
+### 8. Remover un participante de un nivel
+DELETE {{baseUrl}}/api/niveles/1/participantes/3
+Authorization: Bearer {{token}}
+
+### 9. Obtener niveles de un voluntario específico
+GET {{baseUrl}}/api/niveles/por-voluntario/2
+Authorization: Bearer {{token}}
+
+### 10. Eliminar (soft delete) un nivel
+DELETE {{baseUrl}}/api/niveles/1
+Authorization: Bearer {{token}}
+
+### EJEMPLOS DE CASOS DE USO
+
+### Caso 1: Crear nivel para bebés (0-2 años)
+POST {{baseUrl}}/api/niveles
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Nivel 1 - Bebés",
+  "descripcion": "Nivel para niños de 0 a 2 años",
+  "edadMinima": 0.0,
+  "edadMaxima": 2.0,
+  "voluntarioId": 2
+}
+
+### Caso 2: Crear nivel para niños pequeños (2-4 años)
+POST {{baseUrl}}/api/niveles
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Nivel 2 - Infantes",
+  "descripcion": "Nivel para niños de 2 a 4 años",
+  "edadMinima": 2.0,
+  "edadMaxima": 4.0,
+  "voluntarioId": 2
+}
+
+### Caso 3: Crear nivel para escolares (6-10 años)
+POST {{baseUrl}}/api/niveles
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Nivel 4 - Escolares",
+  "descripcion": "Nivel para niños de edad escolar primaria",
+  "edadMinima": 6.0,
+  "edadMaxima": 10.0,
+  "voluntarioId": 2
+}
+
+### Caso 4: Crear nivel para preadolescentes (10-12 años)
+POST {{baseUrl}}/api/niveles
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Nivel 5 - Preadolescentes",
+  "descripcion": "Nivel para niños de edad preadolescente",
+  "edadMinima": 10.0,
+  "edadMaxima": 12.0,
+  "voluntarioId": 2
+}
+
+### NOTAS DE IMPLEMENTACIÓN
+# 
+# 1. El rango de edad es REQUERIDO al crear un nivel:
+#    - edadMinima y edadMaxima deben estar entre 0.0 y 12.0
+#    - edadMinima debe ser menor que edadMaxima
+#
+# 2. El endpoint /participantes-elegibles filtra automáticamente:
+#    - Solo participantes activos (EstaActivo = true)
+#    - Solo usuarios con rol Participante (RolId = 2)
+#    - Solo participantes con FechaDeNacimiento registrada
+#    - Solo participantes cuya edad está dentro del rango [EdadMinima, EdadMaxima]
+#
+# 3. La edad se calcula así:
+#    edad = año_actual - año_nacimiento
+#    Si el cumpleaños no ha ocurrido este año, se resta 1
+#
+# 4. Los rangos de edad admiten decimales (ejemplo: 3.5 años = 3 años y 6 meses)
+#
+# 5. Flujo recomendado para asignar participantes:
+#    a) Crear nivel con rango de edad
+#    b) Llamar GET /niveles/{id}/participantes-elegibles
+#    c) Mostrar lista filtrada al voluntario
+#    d) Voluntario selecciona participantes a asignar
+#    e) POST /niveles/{id}/participantes para cada asignación

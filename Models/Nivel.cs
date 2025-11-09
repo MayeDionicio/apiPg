@@ -13,6 +13,10 @@ namespace ApiPG.Models
         [StringLength(500)]
         public string? Descripcion { get; set; }
 
+        // Rango de edad para el nivel
+        public decimal EdadMinima { get; set; }
+        public decimal EdadMaxima { get; set; }
+
         // Tutor del nivel: un voluntario (User)
         public int? IdVoluntario { get; set; }
         public Usuario? Voluntario { get; set; }

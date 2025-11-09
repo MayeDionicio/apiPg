@@ -108,6 +108,33 @@ builder.Services.AddScoped<IServicioDeTarea, ServicioDeTarea>();
 // Registrar servicio de actividades
 builder.Services.AddScoped<IServicioDeActividad, ServicioDeActividad>();
 
+// Registrar servicio de actividades Montessori
+builder.Services.AddScoped<IServicioDeActividadMontessori, ServicioDeActividadMontessori>();
+
+// Registrar servicio de actividades Montessori personalizadas
+builder.Services.AddScoped<IServicioDeActividadMontessoriPersonalizada, ServicioDeActividadMontessoriPersonalizada>();
+
+// Registrar servicio de logros para facilitadores
+builder.Services.AddScoped<IServicioDeLogrosFacilitador, ServicioDeLogrosFacilitador>();
+
+// Registrar servicio de análisis y métricas
+builder.Services.AddScoped<IServicioDeAnalisis, ServicioDeAnalisis>();
+
+// Registrar servicio de perfiles
+builder.Services.AddScoped<IServicioDePerfil, ServicioDePerfil>();
+
+// Registrar servicio de reportes
+builder.Services.AddScoped<IServicioDeReportes, ServicioDeReportes>();
+
+// Registrar servicio de reportes para voluntarios
+builder.Services.AddScoped<IServicioDeReportesVoluntario, ServicioDeReportesVoluntario>();
+
+// Registrar servicio de email
+builder.Services.AddScoped<IServicioDeEmail, ServicioDeEmail>();
+
+// Registrar servicio de recuperación de contraseña
+builder.Services.AddScoped<IServicioDeRecuperacion, ServicioDeRecuperacion>();
+
 // Configurar CORS
 builder.Services.AddCors(options =>
 {
@@ -145,6 +172,9 @@ if (app.Environment.IsDevelopment())
 
 // IMPORTANTE: CORS debe ir ANTES de otros middlewares
 app.UseCors("AllowAll");
+
+// Servir archivos estáticos (fotos de perfil)
+app.UseStaticFiles();
 
 // Middleware personalizado para manejo de errores
 app.UseMiddleware<ErrorHandlingMiddleware>();

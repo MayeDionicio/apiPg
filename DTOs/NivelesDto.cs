@@ -8,6 +8,12 @@ namespace ApiPG.DTOs
         [StringLength(100)]
         public string Nombre { get; set; } = string.Empty;
 
+        [Required]
+        public decimal EdadMinima { get; set; }
+
+        [Required]
+        public decimal EdadMaxima { get; set; }
+
         // TutorId opcional al crear
         public int? VoluntarioId { get; set; }
         
@@ -19,6 +25,10 @@ namespace ApiPG.DTOs
     {
         [StringLength(100)]
         public string? Nombre { get; set; }
+
+        public decimal? EdadMinima { get; set; }
+        
+        public decimal? EdadMaxima { get; set; }
 
         // Cambiar tutor
         public int? VoluntarioId { get; set; }
@@ -34,6 +44,8 @@ namespace ApiPG.DTOs
         public int Id { get; set; }
         public string Nombre { get; set; } = string.Empty;
         public string? Descripcion { get; set; }
+        public decimal EdadMinima { get; set; }
+        public decimal EdadMaxima { get; set; }
         public int? VoluntarioId { get; set; }
         public string? NombreVoluntario { get; set; }
         public DateTime CreadoEn { get; set; }

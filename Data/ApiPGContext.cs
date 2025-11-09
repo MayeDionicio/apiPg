@@ -11,6 +11,7 @@ namespace ApiPG.Data
 
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Rol> Roles { get; set; }
+        public DbSet<PerfilUsuario> PerfilesUsuario { get; set; }
         public DbSet<Nivel> Niveles { get; set; }
         public DbSet<NivelDeParticipante> NivelesDeParticipantes { get; set; }
         public DbSet<Asistencia> Asistencias { get; set; }
@@ -22,6 +23,12 @@ namespace ApiPG.Data
         public DbSet<AsignacionDeTarea> AsignacionesDeTarea { get; set; }
         public DbSet<Actividad> Actividades { get; set; }
         public DbSet<AsignacionDeActividad> AsignacionesDeActividad { get; set; }
+        public DbSet<ActividadMontessori> ActividadesMontessori { get; set; }
+        public DbSet<LogroMontessori> LogrosMontessori { get; set; }
+        public DbSet<ActividadMontessoriPersonalizada> ActividadesMontessoriPersonalizadas { get; set; }
+        public DbSet<LogroFacilitador> LogrosFacilitador { get; set; }
+        public DbSet<LogroObtenidoFacilitador> LogrosObtenidosFacilitador { get; set; }
+        public DbSet<TokenRecuperacion> TokensRecuperacion { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -74,6 +81,31 @@ namespace ApiPG.Data
                     // Nuevo rol: Coordinador
                     new Rol { Id = 5, Nombre = "Coordinador", Descripcion = "Coordinación y supervisión", CreadoEn = new DateTime(2024, 2, 1, 0, 0, 0, DateTimeKind.Utc) }
                 );
+            });
+
+            // Configuración de PerfilUsuario
+            modelBuilder.Entity<PerfilUsuario>(entity =>
+            {
+                entity.ToTable("PerfilesUsuario");
+                entity.HasKey(e => e.Id);
+                
+                // Relación uno a uno con Usuario
+                entity.HasOne(e => e.Usuario)
+                    .WithOne()
+                    .HasForeignKey<PerfilUsuario>(e => e.IdUsuario)
+                    .OnDelete(DeleteBehavior.Cascade);
+                
+                // Índices
+                entity.HasIndex(e => e.IdUsuario).IsUnique();
+                entity.HasIndex(e => e.Telefono);
+                entity.HasIndex(e => e.Ciudad);
+                
+                // Valores por defecto
+                entity.Property(e => e.CreadoEn)
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                
+                entity.Property(e => e.EstaActivo)
+                    .HasDefaultValue(true);
             });
 
             // Datos semilla para usuarios
@@ -134,6 +166,8 @@ namespace ApiPG.Data
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Nombre).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.Descripcion).HasMaxLength(500);
+                entity.Property(e => e.EdadMinima).IsRequired().HasColumnType("decimal(3,1)");
+                entity.Property(e => e.EdadMaxima).IsRequired().HasColumnType("decimal(3,1)");
                 entity.Property(e => e.CreadoEn).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.Property(e => e.EstaActivo).HasDefaultValue(true);
 
@@ -142,6 +176,10 @@ namespace ApiPG.Data
                     .WithMany()
                     .HasForeignKey(e => e.IdVoluntario)
                     .OnDelete(DeleteBehavior.Restrict);
+
+                // Índices
+                entity.HasIndex(e => e.EdadMinima);
+                entity.HasIndex(e => e.EdadMaxima);
             });
 
             // Configuración para NivelDeParticipante (many-to-many)
@@ -444,6 +482,213 @@ namespace ApiPG.Data
 
                 // Restricción única: un voluntario no puede estar asignado dos veces a la misma actividad
                 entity.HasIndex(e => new { e.ActividadId, e.UsuarioId }).IsUnique();
+            });
+
+            // Configuración para ActividadMontessori
+            modelBuilder.Entity<ActividadMontessori>(entity =>
+            {
+                entity.ToTable("ActividadesMontessori");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Nombre).IsRequired().HasMaxLength(300);
+                entity.Property(e => e.AreaPedagogica).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.FechaActividad).IsRequired();
+                entity.Property(e => e.EdadMinima).IsRequired().HasColumnType("decimal(3,1)");
+                entity.Property(e => e.EdadMaxima).IsRequired().HasColumnType("decimal(3,1)");
+                entity.Property(e => e.DuracionMinutos).IsRequired();
+                entity.Property(e => e.ObjetivoEspecifico).IsRequired().HasMaxLength(1000);
+                entity.Property(e => e.MaterialesNecesarios).IsRequired().HasMaxLength(2000);
+                entity.Property(e => e.MontajeAmbiente).IsRequired().HasMaxLength(2000);
+                entity.Property(e => e.Prerequisitos).HasMaxLength(1000);
+                entity.Property(e => e.PresentacionPasoAPaso).IsRequired().HasMaxLength(5000);
+                entity.Property(e => e.ControlDelError).IsRequired().HasMaxLength(2000);
+                entity.Property(e => e.AspectosAutonomia).HasMaxLength(1000);
+                entity.Property(e => e.LimitesYNormas).HasMaxLength(1000);
+                entity.Property(e => e.IndicadoresDeLogro).IsRequired().HasMaxLength(2000);
+                entity.Property(e => e.AdaptacionesVariaciones).HasMaxLength(2000);
+                entity.Property(e => e.NivelDificultad).HasMaxLength(50);
+                entity.Property(e => e.EvidenciaUrl).HasMaxLength(500);
+                entity.Property(e => e.ObservacionesAdicionales).HasMaxLength(3000);
+                entity.Property(e => e.ChecklistMontessori).HasMaxLength(1000);
+                entity.Property(e => e.CreadoEn).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.EstaActivo).HasDefaultValue(true);
+
+                // Relación con Usuario (voluntario creador)
+                entity.HasOne(e => e.CreadoPor)
+                    .WithMany()
+                    .HasForeignKey(e => e.CreadoPorIdUsuario)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                // Índices
+                entity.HasIndex(e => e.Nombre);
+                entity.HasIndex(e => e.AreaPedagogica);
+                entity.HasIndex(e => e.FechaActividad);
+                entity.HasIndex(e => e.CreadoPorIdUsuario);
+                entity.HasIndex(e => e.EstaActivo);
+            });
+
+            // Configuración para LogroMontessori
+            modelBuilder.Entity<LogroMontessori>(entity =>
+            {
+                entity.ToTable("LogrosMontessori");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Nombre).IsRequired().HasMaxLength(200);
+                entity.Property(e => e.Descripcion).IsRequired().HasMaxLength(500);
+                entity.Property(e => e.Icono).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.EsObtenido).HasDefaultValue(false);
+                entity.Property(e => e.CreadoEn).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.EstaActivo).HasDefaultValue(true);
+
+                // Relación con ActividadMontessori
+                entity.HasOne(e => e.ActividadMontessori)
+                    .WithMany(a => a.Logros)
+                    .HasForeignKey(e => e.ActividadMontessoriId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                // Relación con Usuario
+                entity.HasOne(e => e.Usuario)
+                    .WithMany()
+                    .HasForeignKey(e => e.UsuarioId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                // Índices
+                entity.HasIndex(e => e.ActividadMontessoriId);
+                entity.HasIndex(e => e.UsuarioId);
+                entity.HasIndex(e => e.EsObtenido);
+                entity.HasIndex(e => e.FechaObtencion);
+            });
+
+            // Configuración para ActividadMontessoriPersonalizada
+            modelBuilder.Entity<ActividadMontessoriPersonalizada>(entity =>
+            {
+                entity.ToTable("ActividadesMontessoriPersonalizadas");
+                entity.HasKey(e => e.Id);
+                
+                entity.Property(e => e.Nombre).IsRequired().HasMaxLength(200);
+                entity.Property(e => e.AreaPedagogica).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Estado).IsRequired().HasMaxLength(50).HasDefaultValue("Pendiente");
+                entity.Property(e => e.Prioridad).HasMaxLength(20).HasDefaultValue("Normal");
+                entity.Property(e => e.FechaAsignacion).IsRequired();
+                entity.Property(e => e.CreadoEn).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.EstaActivo).HasDefaultValue(true);
+                
+                // Relación con ActividadMontessori base (opcional)
+                entity.HasOne(e => e.ActividadBase)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdActividadMontessoriBase)
+                    .OnDelete(DeleteBehavior.SetNull);
+                
+                // Relación con Usuario (Estudiante)
+                entity.HasOne(e => e.Estudiante)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdEstudiante)
+                    .OnDelete(DeleteBehavior.Cascade);
+                
+                // Relación con Nivel
+                entity.HasOne(e => e.Nivel)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdNivel)
+                    .OnDelete(DeleteBehavior.SetNull);
+                
+                // Relación con Usuario (Asignado por)
+                entity.HasOne(e => e.AsignadoPor)
+                    .WithMany()
+                    .HasForeignKey(e => e.AsignadoPorIdUsuario)
+                    .OnDelete(DeleteBehavior.Restrict);
+                
+                // Índices
+                entity.HasIndex(e => e.IdEstudiante);
+                entity.HasIndex(e => e.Estado);
+                entity.HasIndex(e => e.FechaAsignacion);
+                entity.HasIndex(e => e.FechaCompletada);
+                entity.HasIndex(e => e.Prioridad);
+                entity.HasIndex(e => new { e.IdEstudiante, e.Estado });
+            });
+
+            // Configuración para LogroFacilitador
+            modelBuilder.Entity<LogroFacilitador>(entity =>
+            {
+                entity.ToTable("LogrosFacilitador");
+                entity.HasKey(e => e.Id);
+                
+                entity.Property(e => e.Nombre).IsRequired().HasMaxLength(200);
+                entity.Property(e => e.Descripcion).IsRequired().HasMaxLength(1000);
+                entity.Property(e => e.Categoria).HasMaxLength(100);
+                entity.Property(e => e.Icono).HasMaxLength(50);
+                entity.Property(e => e.PuntosValor).IsRequired();
+                entity.Property(e => e.TipoLogro).HasMaxLength(50).HasDefaultValue("Manual");
+                entity.Property(e => e.CreadoEn).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.EstaActivo).HasDefaultValue(true);
+                
+                // Relación con Usuario (Creado por - Coordinador)
+                entity.HasOne(e => e.CreadoPor)
+                    .WithMany()
+                    .HasForeignKey(e => e.CreadoPorIdUsuario)
+                    .OnDelete(DeleteBehavior.Restrict);
+                
+                // Índices
+                entity.HasIndex(e => e.Categoria);
+                entity.HasIndex(e => e.TipoLogro);
+                entity.HasIndex(e => e.EstaActivo);
+            });
+
+            // Configuración para LogroObtenidoFacilitador
+            modelBuilder.Entity<LogroObtenidoFacilitador>(entity =>
+            {
+                entity.ToTable("LogrosObtenidosFacilitador");
+                entity.HasKey(e => e.Id);
+                
+                entity.Property(e => e.FechaObtencion).IsRequired();
+                entity.Property(e => e.Justificacion).HasMaxLength(1000);
+                entity.Property(e => e.ComentarioCoordinador).HasMaxLength(500);
+                entity.Property(e => e.EsVisible).HasDefaultValue(true);
+                entity.Property(e => e.CreadoEn).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                
+                // Relación con LogroFacilitador
+                entity.HasOne(e => e.Logro)
+                    .WithMany(l => l.LogrosObtenidos)
+                    .HasForeignKey(e => e.IdLogro)
+                    .OnDelete(DeleteBehavior.Cascade);
+                
+                // Relación con Usuario (Facilitador)
+                entity.HasOne(e => e.Facilitador)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdFacilitador)
+                    .OnDelete(DeleteBehavior.Cascade);
+                
+                // Relación con Usuario (Otorgado por - Coordinador)
+                entity.HasOne(e => e.OtorgadoPor)
+                    .WithMany()
+                    .HasForeignKey(e => e.OtorgadoPorIdUsuario)
+                    .OnDelete(DeleteBehavior.Restrict);
+                
+                // Relación con Actividad (opcional)
+                entity.HasOne(e => e.ActividadRelacionada)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdActividadRelacionada)
+                    .OnDelete(DeleteBehavior.SetNull);
+                
+                // Relación con ActividadMontessori (opcional)
+                entity.HasOne(e => e.ActividadMontessoriRelacionada)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdActividadMontessoriRelacionada)
+                    .OnDelete(DeleteBehavior.SetNull);
+                
+                // Relación con ActividadMontessoriPersonalizada (opcional)
+                entity.HasOne(e => e.ActividadPersonalizadaRelacionada)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdActividadPersonalizadaRelacionada)
+                    .OnDelete(DeleteBehavior.SetNull);
+                
+                // Índices
+                entity.HasIndex(e => e.IdFacilitador);
+                entity.HasIndex(e => e.IdLogro);
+                entity.HasIndex(e => e.FechaObtencion);
+                entity.HasIndex(e => new { e.IdFacilitador, e.IdLogro });
+                
+                // Restricción: Un facilitador no puede obtener el mismo logro dos veces
+                entity.HasIndex(e => new { e.IdFacilitador, e.IdLogro })
+                    .IsUnique()
+                    .HasDatabaseName("IX_LogrosObtenidos_Facilitador_Logro_Unique");
             });
         }
 

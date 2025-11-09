@@ -243,6 +243,27 @@ namespace ApiPG.Controllers
                 return StatusCode(500, new { message = "Error al obtener niveles del voluntario", error = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Obtener participantes elegibles para un nivel (filtrados por edad)
+        /// </summary>
+        [HttpGet("{nivelId}/participantes-elegibles")]
+        public async Task<ActionResult<IEnumerable<UsuarioDto>>> GetEligibleParticipants(int nivelId)
+        {
+            try
+            {
+                var participantes = await _levelService.GetParticipantesElegiblesParaNivelAsync(nivelId);
+                return Ok(participantes);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error al obtener participantes elegibles", error = ex.Message });
+            }
+        }
     }
 
     // DTO adicional para asignación de tutor

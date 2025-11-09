@@ -1,0 +1,285 @@
+@baseUrl = http://localhost:5273/api
+@tokenCoordinador = tu_token_coordinador_aqui
+@tokenFacilitador = tu_token_facilitador_aqui
+
+### ==========================================
+### GESTIÓN DE LOGROS (Solo Coordinadores)
+### ==========================================
+
+### 1. Crear un logro
+POST {{baseUrl}}/ControladorDeLogrosFacilitador/logros
+Authorization: Bearer {{tokenCoordinador}}
+Content-Type: application/json
+
+{
+  "nombre": "🌟 Maestro de la Excelencia",
+  "descripcion": "Otorgado a facilitadores que demuestran excelencia constante en sus actividades educativas",
+  "categoria": "Excelencia",
+  "icono": "⭐",
+  "puntosValor": 100,
+  "criteriosObtencion": "Completar 20 actividades con evaluación 'Excelente' de los estudiantes",
+  "tipoLogro": "Manual",
+  "cantidadActividadesRequeridas": 20
+}
+
+### 2. Crear logro de innovación
+POST {{baseUrl}}/ControladorDeLogrosFacilitador/logros
+Authorization: Bearer {{tokenCoordinador}}
+Content-Type: application/json
+
+{
+  "nombre": "💡 Innovador Montessori",
+  "descripcion": "Reconocimiento a facilitadores que crean actividades personalizadas innovadoras",
+  "categoria": "Innovación",
+  "icono": "💡",
+  "puntosValor": 150,
+  "criteriosObtencion": "Crear y completar 10 actividades Montessori personalizadas",
+  "tipoLogro": "Manual",
+  "cantidadActividadesRequeridas": 10
+}
+
+### 3. Crear logro de compromiso
+POST {{baseUrl}}/ControladorDeLogrosFacilitador/logros
+Authorization: Bearer {{tokenCoordinador}}
+Content-Type: application/json
+
+{
+  "nombre": "🔥 Compromiso Inquebrantable",
+  "descripcion": "Para facilitadores que mantienen actividad constante",
+  "categoria": "Compromiso",
+  "icono": "🔥",
+  "puntosValor": 200,
+  "criteriosObtencion": "Trabajar con estudiantes durante 30 días consecutivos",
+  "tipoLogro": "Manual",
+  "diasConsecutivosRequeridos": 30
+}
+
+### 4. Crear logro de impacto
+POST {{baseUrl}}/ControladorDeLogrosFacilitador/logros
+Authorization: Bearer {{tokenCoordinador}}
+Content-Type: application/json
+
+{
+  "nombre": "🎯 Alto Impacto Educativo",
+  "descripcion": "Reconocimiento al impacto positivo en múltiples estudiantes",
+  "categoria": "Impacto",
+  "icono": "🎯",
+  "puntosValor": 180,
+  "criteriosObtencion": "Trabajar exitosamente con 15 o más estudiantes diferentes",
+  "tipoLogro": "Manual",
+  "cantidadEstudiantesRequeridos": 15
+}
+
+### 5. Obtener un logro por ID
+GET {{baseUrl}}/ControladorDeLogrosFacilitador/logros/1
+Authorization: Bearer {{tokenFacilitador}}
+
+### 6. Buscar todos los logros
+POST {{baseUrl}}/ControladorDeLogrosFacilitador/logros/buscar
+Authorization: Bearer {{tokenFacilitador}}
+Content-Type: application/json
+
+{
+  "soloActivos": true
+}
+
+### 7. Buscar logros por categoría
+POST {{baseUrl}}/ControladorDeLogrosFacilitador/logros/buscar
+Authorization: Bearer {{tokenFacilitador}}
+Content-Type: application/json
+
+{
+  "categoria": "Excelencia",
+  "soloActivos": true
+}
+
+### 8. Actualizar un logro
+PUT {{baseUrl}}/ControladorDeLogrosFacilitador/logros/1
+Authorization: Bearer {{tokenCoordinador}}
+Content-Type: application/json
+
+{
+  "descripcion": "Descripción actualizada del logro",
+  "puntosValor": 120
+}
+
+### 9. Eliminar un logro
+DELETE {{baseUrl}}/ControladorDeLogrosFacilitador/logros/1
+Authorization: Bearer {{tokenCoordinador}}
+
+### ==========================================
+### OTORGAR LOGROS (Solo Coordinadores)
+### ==========================================
+
+### 10. Otorgar logro a un facilitador
+POST {{baseUrl}}/ControladorDeLogrosFacilitador/otorgar
+Authorization: Bearer {{tokenCoordinador}}
+Content-Type: application/json
+
+{
+  "idLogro": 1,
+  "idFacilitador": 4,
+  "justificacion": "El facilitador ha demostrado excelencia excepcional en sus últimas 20 actividades. Los estudiantes han mostrado avances significativos bajo su guía.",
+  "comentarioCoordinador": "¡Felicitaciones por tu dedicación y profesionalismo!"
+}
+
+### 11. Otorgar logro relacionado con una actividad Montessori
+POST {{baseUrl}}/ControladorDeLogrosFacilitador/otorgar
+Authorization: Bearer {{tokenCoordinador}}
+Content-Type: application/json
+
+{
+  "idLogro": 2,
+  "idFacilitador": 4,
+  "idActividadMontessoriRelacionada": 5,
+  "justificacion": "Creó una actividad Montessori innovadora que fue muy bien recibida por los estudiantes",
+  "comentarioCoordinador": "Tu creatividad es inspiradora"
+}
+
+### 12. Otorgar logro relacionado con actividad personalizada
+POST {{baseUrl}}/ControladorDeLogrosFacilitador/otorgar
+Authorization: Bearer {{tokenCoordinador}}
+Content-Type: application/json
+
+{
+  "idLogro": 2,
+  "idFacilitador": 5,
+  "idActividadPersonalizadaRelacionada": 3,
+  "justificacion": "Adaptó brillantemente la actividad a las necesidades específicas del estudiante",
+  "comentarioCoordinador": "Excelente trabajo personalizando el aprendizaje"
+}
+
+### 13. Revocar un logro
+DELETE {{baseUrl}}/ControladorDeLogrosFacilitador/revocar/1
+Authorization: Bearer {{tokenCoordinador}}
+
+### ==========================================
+### CONSULTAR LOGROS OBTENIDOS
+### ==========================================
+
+### 14. Buscar logros obtenidos de un facilitador específico
+POST {{baseUrl}}/ControladorDeLogrosFacilitador/obtenidos/buscar
+Authorization: Bearer {{tokenFacilitador}}
+Content-Type: application/json
+
+{
+  "idFacilitador": 4
+}
+
+### 15. Buscar logros obtenidos por categoría
+POST {{baseUrl}}/ControladorDeLogrosFacilitador/obtenidos/buscar
+Authorization: Bearer {{tokenCoordinador}}
+Content-Type: application/json
+
+{
+  "categoria": "Excelencia",
+  "fechaDesde": "2025-11-01"
+}
+
+### 16. Buscar logros otorgados por un coordinador específico
+POST {{baseUrl}}/ControladorDeLogrosFacilitador/obtenidos/buscar
+Authorization: Bearer {{tokenCoordinador}}
+Content-Type: application/json
+
+{
+  "otorgadoPorIdUsuario": 6
+}
+
+### ==========================================
+### PERFILES Y RANKING
+### ==========================================
+
+### 17. Ver mi perfil de logros (Facilitador autenticado)
+GET {{baseUrl}}/ControladorDeLogrosFacilitador/mi-perfil
+Authorization: Bearer {{tokenFacilitador}}
+
+### 18. Ver perfil de otro facilitador
+GET {{baseUrl}}/ControladorDeLogrosFacilitador/facilitador/4/perfil
+Authorization: Bearer {{tokenCoordinador}}
+
+### 19. Ver ranking general (Top 10)
+GET {{baseUrl}}/ControladorDeLogrosFacilitador/ranking?top=10
+Authorization: Bearer {{tokenFacilitador}}
+
+### 20. Ver ranking completo (Top 50)
+GET {{baseUrl}}/ControladorDeLogrosFacilitador/ranking?top=50
+Authorization: Bearer {{tokenCoordinador}}
+
+### ==========================================
+### ESTADÍSTICAS
+### ==========================================
+
+### 21. Obtener estadísticas generales del sistema de logros
+GET {{baseUrl}}/ControladorDeLogrosFacilitador/estadisticas
+Authorization: Bearer {{tokenCoordinador}}
+
+### ==========================================
+### CASOS DE ERROR PARA PROBAR
+### ==========================================
+
+### Error: Facilitador intenta crear logro (debe fallar)
+POST {{baseUrl}}/ControladorDeLogrosFacilitador/logros
+Authorization: Bearer {{tokenFacilitador}}
+Content-Type: application/json
+
+{
+  "nombre": "Logro de prueba",
+  "descripcion": "Esto debe fallar",
+  "puntosValor": 50
+}
+
+### Error: Otorgar logro que ya tiene (debe fallar)
+POST {{baseUrl}}/ControladorDeLogrosFacilitador/otorgar
+Authorization: Bearer {{tokenCoordinador}}
+Content-Type: application/json
+
+{
+  "idLogro": 1,
+  "idFacilitador": 4
+}
+
+### Error: Otorgar logro a usuario que no es facilitador (debe fallar)
+POST {{baseUrl}}/ControladorDeLogrosFacilitador/otorgar
+Authorization: Bearer {{tokenCoordinador}}
+Content-Type: application/json
+
+{
+  "idLogro": 1,
+  "idFacilitador": 1
+}
+
+### ==========================================
+### EJEMPLOS DE RESPUESTAS ESPERADAS
+### ==========================================
+
+# Respuesta de Perfil de Facilitador:
+# {
+#   "idFacilitador": 4,
+#   "nombreFacilitador": "Juan Pérez",
+#   "emailFacilitador": "juan@ejemplo.com",
+#   "totalLogrosObtenidos": 5,
+#   "totalPuntosAcumulados": 750,
+#   "logrosObtenidos": [...],
+#   "logrosPorCategoria": {
+#     "Excelencia": 2,
+#     "Innovación": 2,
+#     "Compromiso": 1
+#   },
+#   "primerLogroObtenido": "2025-10-15T10:00:00Z",
+#   "ultimoLogroObtenido": "2025-11-08T14:30:00Z",
+#   "rankingPosicion": 3,
+#   "totalFacilitadores": 15
+# }
+
+# Respuesta de Ranking:
+# [
+#   {
+#     "posicion": 1,
+#     "idFacilitador": 4,
+#     "nombreFacilitador": "Juan Pérez",
+#     "totalLogros": 8,
+#     "totalPuntos": 1200,
+#     "ultimoLogroFecha": "2025-11-08T14:30:00Z"
+#   },
+#   {...}
+# ]

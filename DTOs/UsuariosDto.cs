@@ -28,6 +28,10 @@ namespace ApiPG.DTOs
         [Required]
         public int RolId { get; set; }
         
+        // Código del participante (opcional, solo para participantes - RolId = 2)
+        [StringLength(50)]
+        public string? CodigoParticipante { get; set; }
+        
         // Fecha de nacimiento (requerida solo para participantes - RolId = 2)
         public DateTime? FechaDeNacimiento { get; set; }
     }
@@ -54,6 +58,10 @@ namespace ApiPG.DTOs
         
         public bool? EstaActivo { get; set; }
         
+        // Código del participante (opcional para actualización)
+        [StringLength(50)]
+        public string? CodigoParticipante { get; set; }
+        
         // Fecha de nacimiento (opcional para actualización)
         public DateTime? FechaDeNacimiento { get; set; }
     }
@@ -71,6 +79,7 @@ namespace ApiPG.DTOs
         public DateTime CreadoEn { get; set; }
         public DateTime? ActualizadoEn { get; set; }
         public bool EstaActivo { get; set; }
+        public string? CodigoParticipante { get; set; }
         public DateTime? FechaDeNacimiento { get; set; }
         public int? Edad { get; set; }
     }

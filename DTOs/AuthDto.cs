@@ -46,6 +46,10 @@ namespace ApiPG.DTOs
         [Required]
         public int RolId { get; set; } = 2; // Default to User role
         
+        // Código del participante (opcional, solo para participantes)
+        [StringLength(50)]
+        public string? CodigoParticipante { get; set; }
+        
         // Fecha de nacimiento (requerida si es participante)
         public DateTime? FechaDeNacimiento { get; set; }
     }

@@ -1,0 +1,197 @@
+### Variables
+@baseUrl = http://localhost:5000
+@token = TU_TOKEN_AQUI
+
+### 1. Obtener mi perfil (crea automáticamente si no existe)
+GET {{baseUrl}}/api/perfiles/mi-perfil
+Authorization: Bearer {{token}}
+
+### 2. Crear perfil completo
+POST {{baseUrl}}/api/perfiles
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "telefono": "+503 7890-1234",
+  "direccion": "Colonia Escalón, Calle Principal #123",
+  "ciudad": "San Salvador",
+  "pais": "El Salvador",
+  "contactoEmergenciaNombre": "María Pérez",
+  "contactoEmergenciaTelefono": "+503 7890-5678",
+  "contactoEmergenciaRelacion": "Madre",
+  "nombrePadre": "José Pérez",
+  "nombreMadre": "María González",
+  "alergias": "Ninguna conocida",
+  "condicionesMedicas": "Ninguna",
+  "biografia": "Soy un estudiante entusiasta del método Montessori.",
+  "intereses": "Lectura, arte, música"
+}
+
+### 3. Actualizar perfil (solo campos que quieras cambiar)
+PUT {{baseUrl}}/api/perfiles
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "telefono": "+503 7890-9999",
+  "ciudad": "Santa Tecla",
+  "biografia": "Biografía actualizada",
+  "intereses": "Deportes, ciencia, tecnología"
+}
+
+### 4. Subir foto de perfil (Base64)
+POST {{baseUrl}}/api/perfiles/foto
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "fotoBase64": "/9j/4AAQSkZJRgABAQEAYABgAAD...",
+  "nombreArchivo": "mi-foto.jpg"
+}
+
+### 5. Obtener perfil de otro usuario (por ID) - Solo coordinadores
+GET {{baseUrl}}/api/perfiles/usuario/3
+Authorization: Bearer {{token}}
+
+### 6. Eliminar foto de perfil
+DELETE {{baseUrl}}/api/perfiles/foto
+Authorization: Bearer {{token}}
+
+### EJEMPLOS DE RESPUESTAS
+
+### Ejemplo 1: Obtener mi perfil
+# GET /api/perfiles/mi-perfil
+# Respuesta:
+# {
+#   "id": 1,
+#   "idUsuario": 5,
+#   "nombreCompleto": "Juan Pérez",
+#   "email": "juan.perez@email.com",
+#   "nombreRol": "Participante",
+#   "fechaDeNacimiento": "2018-05-15T00:00:00Z",
+#   "edad": 7,
+#   "fotoPerfil": "/uploads/perfiles/perfil_5_638123456789.jpg",
+#   "telefono": "+503 7890-1234",
+#   "direccion": "Colonia Escalón, Calle Principal #123",
+#   "ciudad": "San Salvador",
+#   "pais": "El Salvador",
+#   "contactoEmergenciaNombre": "María Pérez",
+#   "contactoEmergenciaTelefono": "+503 7890-5678",
+#   "contactoEmergenciaRelacion": "Madre",
+#   "nombrePadre": "José Pérez",
+#   "nombreMadre": "María González",
+#   "nombreTutor": null,
+#   "alergias": "Ninguna conocida",
+#   "condicionesMedicas": "Ninguna",
+#   "medicamentos": null,
+#   "biografia": "Soy un estudiante entusiasta del método Montessori.",
+#   "intereses": "Lectura, arte, música",
+#   "facebook": null,
+#   "instagram": null,
+#   "twitter": null,
+#   "creadoEn": "2025-11-02T10:30:00Z",
+#   "actualizadoEn": "2025-11-02T15:45:00Z"
+# }
+
+### CÓMO CONVERTIR IMAGEN A BASE64
+
+### JavaScript (Frontend):
+# const file = document.getElementById('inputFile').files[0];
+# const reader = new FileReader();
+# reader.onloadend = function() {
+#   const base64 = reader.result.split(',')[1]; // Quitar "data:image/jpeg;base64,"
+#   
+#   fetch('http://localhost:5000/api/perfiles/foto', {
+#     method: 'POST',
+#     headers: {
+#       'Authorization': `Bearer ${token}`,
+#       'Content-Type': 'application/json'
+#     },
+#     body: JSON.stringify({
+#       fotoBase64: base64,
+#       nombreArchivo: file.name
+#     })
+#   });
+# };
+# reader.readAsDataURL(file);
+
+### PowerShell (para pruebas):
+# $bytes = [System.IO.File]::ReadAllBytes("C:\ruta\foto.jpg")
+# $base64 = [System.Convert]::ToBase64String($bytes)
+# Write-Output $base64
+
+### Angular (FormData):
+# // En tu componente
+# onFileSelected(event: any) {
+#   const file = event.target.files[0];
+#   const reader = new FileReader();
+#   
+#   reader.onload = () => {
+#     const base64 = reader.result as string;
+#     const base64Data = base64.split(',')[1];
+#     
+#     this.perfilService.subirFoto({
+#       fotoBase64: base64Data,
+#       nombreArchivo: file.name
+#     }).subscribe(response => {
+#       console.log('Foto subida:', response.urlFoto);
+#       // Actualizar UI con la nueva foto
+#       this.fotoPerfil = response.urlFoto;
+#     });
+#   };
+#   
+#   reader.readAsDataURL(file);
+# }
+
+### CARACTERÍSTICAS DEL SISTEMA DE PERFILES
+
+# ✅ Creación automática: Si un usuario no tiene perfil, se crea automáticamente al consultarlo
+# ✅ Foto de perfil: Sube imágenes en Base64, se guardan en /uploads/perfiles/
+# ✅ Información completa: Datos personales, médicos, contactos de emergencia
+# ✅ Actualización parcial: Solo envía los campos que quieres cambiar
+# ✅ Eliminación de foto: Elimina la foto del servidor y la referencia en BD
+# ✅ Seguridad: Solo el usuario puede ver/editar su propio perfil (excepto coordinadores)
+
+### ESTRUCTURA DE CARPETAS NECESARIA
+
+# Tu proyecto necesita esta estructura para las fotos:
+# ApiPG/
+# ├── wwwroot/
+# │   └── uploads/
+# │       └── perfiles/
+# │           ├── perfil_5_638123456789.jpg
+# │           ├── perfil_7_638123456790.jpg
+# │           └── ...
+
+### ACCESO A LAS FOTOS
+
+# Las fotos se sirven como archivos estáticos:
+# GET http://localhost:5000/uploads/perfiles/perfil_5_638123456789.jpg
+# (No requiere autenticación, son públicas)
+
+### NOTAS IMPORTANTES
+
+# 1. Tamaño de archivo:
+#    - Máximo recomendado: 5MB
+#    - Formatos: .jpg, .jpeg, .png, .gif
+#    - El tamaño se limita en ASP.NET Core por defecto a 30MB
+
+# 2. Seguridad:
+#    - Las fotos son públicas (no requieren token)
+#    - Solo el usuario puede subir/eliminar su propia foto
+#    - Coordinadores pueden ver perfiles de otros usuarios
+
+# 3. Performance:
+#    - Las fotos se almacenan en disco (wwwroot/uploads/perfiles/)
+#    - Para producción, considera usar Azure Blob Storage o AWS S3
+#    - Implementa compresión de imágenes en el frontend
+
+# 4. Campos opcionales:
+#    - Todos los campos excepto idUsuario son opcionales
+#    - Información médica es importante para participantes menores
+#    - Redes sociales son opcionales
+
+# 5. Validaciones:
+#    - Teléfono: formato E.164 (+503 1234-5678)
+#    - Email: ya existe en Usuario
+#    - Base64: debe ser una imagen válida

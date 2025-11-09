@@ -87,6 +87,7 @@ namespace ApiPG.Services
                 NombreDeUsuario = registerDto.NombreDeUsuario,
                 HashDeContrasena = HashPassword(registerDto.Contrasena),
                 IdRol = registerDto.RolId,
+                CodigoParticipante = registerDto.CodigoParticipante,
                 FechaDeNacimiento = registerDto.FechaDeNacimiento,
                 CreadoEn = DateTime.UtcNow,
                 EstaActivo = true
@@ -135,6 +136,7 @@ namespace ApiPG.Services
                 NombreDeUsuario = user.NombreDeUsuario,
                 RolId = user.IdRol,
                 NombreRol = user.Rol?.Nombre ?? "Unknown",
+                CodigoParticipante = user.CodigoParticipante,
                 FechaDeNacimiento = user.FechaDeNacimiento,
                 Edad = user.Edad,
                 CreadoEn = user.CreadoEn,

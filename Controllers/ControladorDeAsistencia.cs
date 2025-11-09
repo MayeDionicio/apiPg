@@ -22,7 +22,8 @@ namespace ApiPG.Controllers
         {
             var added = await _service.AddAsync(dto);
             if (added == null) return BadRequest();
-            return CreatedAtAction(nameof(GetByLevelAndDate), new { nivelId = added.NivelId, fecha = added.Fecha.ToString("yyyy-MM-dd") }, added);
+            // Retornar simplemente Ok con el objeto creado en lugar de CreatedAtAction
+            return Ok(added);
         }
 
         [HttpGet("nivel/{nivelId}")]

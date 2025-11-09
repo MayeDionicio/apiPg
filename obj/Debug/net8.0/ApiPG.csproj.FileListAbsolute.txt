@@ -298,6 +298,7 @@ C:\Users\Pahola Dionicio\Desktop\apiPg-main\obj\Debug\net8.0\ref\ApiPG.dll
 C:\Users\mayer\Desktop\ApiPg\apiPg\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\mayer\Desktop\ApiPg\apiPg\bin\Debug\net8.0\appsettings.json
 C:\Users\mayer\Desktop\ApiPg\apiPg\bin\Debug\net8.0\test-step1.json
+C:\Users\mayer\Desktop\ApiPg\apiPg\bin\Debug\net8.0\ApiPG.staticwebassets.runtime.json
 C:\Users\mayer\Desktop\ApiPg\apiPg\bin\Debug\net8.0\ApiPG.staticwebassets.endpoints.json
 C:\Users\mayer\Desktop\ApiPg\apiPg\bin\Debug\net8.0\ApiPG.exe
 C:\Users\mayer\Desktop\ApiPg\apiPg\bin\Debug\net8.0\ApiPG.deps.json

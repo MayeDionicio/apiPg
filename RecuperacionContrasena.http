@@ -1,0 +1,92 @@
+@baseUrl = http://localhost:5273/api
+@token = tu_token_aqui
+
+### 1. Solicitar recuperación de contraseña
+# Nota: En producción esto enviaría un email, en desarrollo retorna el token
+POST {{baseUrl}}/ControladorDeRecuperacion/solicitar
+Content-Type: application/json
+
+{
+  "email": "maesgal36@gmail.com"
+}
+
+### 2. Validar token de recuperación
+# Usa el token que recibiste en la solicitud anterior
+POST {{baseUrl}}/ControladorDeRecuperacion/validar-token
+Content-Type: application/json
+
+{
+  "token": "PEGA_AQUI_EL_TOKEN_GENERADO"
+}
+
+### 3. Restablecer contraseña
+# Usa el mismo token para restablecer la contraseña
+POST {{baseUrl}}/ControladorDeRecuperacion/restablecer
+Content-Type: application/json
+
+{
+  "token": "PEGA_AQUI_EL_TOKEN_GENERADO",
+  "nuevaContrasena": "NuevaPass123!",
+  "confirmarContrasena": "NuevaPass123!"
+}
+
+### 4. Probar login con nueva contraseña
+POST {{baseUrl}}/ControladorDeAutenticacion/login
+Content-Type: application/json
+
+{
+  "email": "maesgal36@gmail.com",
+  "contrasena": "NuevaPass123!"
+}
+
+### 5. Intentar usar el mismo token otra vez (debe fallar)
+POST {{baseUrl}}/ControladorDeRecuperacion/restablecer
+Content-Type: application/json
+
+{
+  "token": "PEGA_AQUI_EL_TOKEN_GENERADO",
+  "nuevaContrasena": "OtraPass456!",
+  "confirmarContrasena": "OtraPass456!"
+}
+
+### 6. Limpiar tokens expirados (endpoint de mantenimiento)
+POST {{baseUrl}}/ControladorDeRecuperacion/limpiar-tokens
+Content-Type: application/json
+
+### Casos de error para probar:
+
+### Error: Email no existe
+POST {{baseUrl}}/ControladorDeRecuperacion/solicitar
+Content-Type: application/json
+
+{
+  "email": "noeexiste@example.com"
+}
+
+### Error: Token inválido
+POST {{baseUrl}}/ControladorDeRecuperacion/validar-token
+Content-Type: application/json
+
+{
+  "token": "TOKEN_INVALIDO_12345678901234567890"
+}
+
+### Error: Contraseñas no coinciden
+POST {{baseUrl}}/ControladorDeRecuperacion/restablecer
+Content-Type: application/json
+
+{
+  "token": "PEGA_AQUI_EL_TOKEN_GENERADO",
+  "nuevaContrasena": "Pass123!",
+  "confirmarContrasena": "Pass456!"
+}
+
+### Error: Token expirado (esperar 24 horas o cambiar FechaExpiracion en la BD para probar)
+POST {{baseUrl}}/ControladorDeRecuperacion/restablecer
+Content-Type: application/json
+
+{
+  "token": "TOKEN_EXPIRADO_1234567890123456789012",
+  "nuevaContrasena": "Pass123!",
+  "confirmarContrasena": "Pass123!"
+}

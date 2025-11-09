@@ -1,0 +1,164 @@
+### Reportes Voluntario - Reportes específicos para voluntarios
+### Los voluntarios solo ven información de su nivel asignado
+### Requiere autenticación con token JWT de un usuario voluntario
+
+@baseUrl = http://localhost:5000/api/reportesvoluntario
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+###
+# Obtener mi reporte completo (nivel, asistencia, participantes)
+# El voluntario verá solo la información de su nivel asignado
+GET {{baseUrl}}/mi-reporte
+Authorization: Bearer {{token}}
+
+###
+# Obtener mi reporte completo con filtros de fecha
+GET {{baseUrl}}/mi-reporte?fechaInicio=2025-11-01&fechaFin=2025-11-30
+Authorization: Bearer {{token}}
+
+###
+# Obtener solo estadísticas de asistencia de mi nivel
+# Incluye: hoy, esta semana, este mes, últimos 7 días
+GET {{baseUrl}}/estadisticas-asistencia
+Authorization: Bearer {{token}}
+
+###
+# Obtener lista de mis participantes con sus estadísticas
+# Cada participante incluye: asistencias totales, presencias, ausencias, porcentaje
+GET {{baseUrl}}/mis-participantes
+Authorization: Bearer {{token}}
+
+###
+# Obtener todas las asistencias registradas en mi nivel
+GET {{baseUrl}}/asistencias-detalladas
+Authorization: Bearer {{token}}
+
+###
+# Obtener asistencias filtradas por fecha
+GET {{baseUrl}}/asistencias-detalladas?fechaInicio=2025-11-01&fechaFin=2025-11-07
+Authorization: Bearer {{token}}
+
+###
+# Obtener asistencias de un participante específico
+GET {{baseUrl}}/asistencias-detalladas?idParticipante=5
+Authorization: Bearer {{token}}
+
+###
+# Obtener asistencias con múltiples filtros
+GET {{baseUrl}}/asistencias-detalladas?fechaInicio=2025-11-01&fechaFin=2025-11-07&idParticipante=5
+Authorization: Bearer {{token}}
+
+###
+# EJEMPLO DE RESPUESTA - Mi Reporte Completo
+# {
+#   "miNivel": {
+#     "idNivel": 2,
+#     "nombreNivel": "Nivel 2 (4-5 años)",
+#     "descripcion": "Nivel para niños de 4 a 5 años",
+#     "edadMinima": 4.0,
+#     "edadMaxima": 5.0,
+#     "totalParticipantes": 12,
+#     "participantesActivos": 11
+#   },
+#   "asistencia": {
+#     "totalRegistrosHoy": 10,
+#     "presentesHoy": 9,
+#     "ausentesHoy": 1,
+#     "porcentajeAsistenciaHoy": 90.0,
+#     "totalRegistrosEstaSemana": 48,
+#     "presentesEstaSemana": 43,
+#     "porcentajeAsistenciaEstaSemana": 89.6,
+#     "totalRegistrosEsteMes": 198,
+#     "presentesEsteMes": 175,
+#     "porcentajeAsistenciaEsteMes": 88.4,
+#     "ultimosDias": [
+#       {
+#         "fecha": "2025-11-04",
+#         "totalRegistros": 10,
+#         "presentes": 9,
+#         "ausentes": 1,
+#         "porcentajeAsistencia": 90.0
+#       },
+#       {
+#         "fecha": "2025-11-03",
+#         "totalRegistros": 11,
+#         "presentes": 10,
+#         "ausentes": 1,
+#         "porcentajeAsistencia": 90.9
+#       }
+#     ]
+#   },
+#   "participantes": [
+#     {
+#       "idUsuario": 5,
+#       "nombreCompleto": "Ana María López",
+#       "edad": 4,
+#       "estaActivo": true,
+#       "totalAsistencias": 18,
+#       "totalPresencias": 16,
+#       "totalAusencias": 2,
+#       "porcentajeAsistencia": 88.9,
+#       "ultimaAsistencia": "2025-11-04"
+#     },
+#     {
+#       "idUsuario": 7,
+#       "nombreCompleto": "Carlos Pérez",
+#       "edad": 5,
+#       "estaActivo": true,
+#       "totalAsistencias": 18,
+#       "totalPresencias": 17,
+#       "totalAusencias": 1,
+#       "porcentajeAsistencia": 94.4,
+#       "ultimaAsistencia": "2025-11-04"
+#     }
+#   ],
+#   "fechaGeneracion": "2025-11-04T15:30:00Z"
+# }
+
+###
+# EJEMPLO DE RESPUESTA - Mis Participantes
+# [
+#   {
+#     "idUsuario": 5,
+#     "nombreCompleto": "Ana María López",
+#     "edad": 4,
+#     "estaActivo": true,
+#     "totalAsistencias": 18,
+#     "totalPresencias": 16,
+#     "totalAusencias": 2,
+#     "porcentajeAsistencia": 88.9,
+#     "ultimaAsistencia": "2025-11-04T00:00:00Z"
+#   }
+# ]
+
+###
+# EJEMPLO DE RESPUESTA - Asistencias Detalladas
+# [
+#   {
+#     "idAsistencia": 123,
+#     "idParticipante": 5,
+#     "nombreParticipante": "Ana María López",
+#     "fecha": "2025-11-04T00:00:00Z",
+#     "presente": true,
+#     "observaciones": "Llegó puntual",
+#     "creadoEn": "2025-11-04T08:15:00Z"
+#   },
+#   {
+#     "idAsistencia": 122,
+#     "idParticipante": 7,
+#     "nombreParticipante": "Carlos Pérez",
+#     "fecha": "2025-11-04T00:00:00Z",
+#     "presente": false,
+#     "observaciones": "Enfermo",
+#     "creadoEn": "2025-11-04T08:15:00Z"
+#   }
+# ]
+
+###
+# NOTAS IMPORTANTES:
+# 1. Estos endpoints NO requieren validación de rol específico
+# 2. Cualquier usuario autenticado puede acceder
+# 3. El sistema automáticamente busca el nivel donde el usuario es voluntario
+# 4. Si el usuario no es voluntario de ningún nivel, retorna 404
+# 5. Los voluntarios SOLO ven datos de SU nivel, no de otros niveles
+# 6. Perfecta seguridad: cada voluntario solo ve sus propios datos

@@ -1,0 +1,227 @@
+### Actividades Montessori API - Ejemplos
+
+@baseUrl = http://localhost:5273/api/actividades-montessori
+@token = TU_TOKEN_JWT_AQUI
+
+### 1. Crear una actividad Montessori completa
+POST {{baseUrl}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Trasvasar agua con jarritas",
+  "areaPedagogica": "Vida Práctica",
+  "fechaActividad": "2025-11-10",
+  "horaActividad": "10:00:00",
+  "edadMinima": 3,
+  "edadMaxima": 6,
+  "duracionMinutos": 15,
+  "objetivoEspecifico": "Desarrollar la coordinación ojo-mano y el control del movimiento al verter líquidos, fortaleciendo la concentración y precisión.",
+  "materialesNecesarios": "2 jarritas pequeñas de vidrio, 1 bandeja de madera, 1 esponja natural, paño de tela absorbente",
+  "montajeAmbiente": "Material colocado en una bandeja al nivel del niño. Estante accesible, espacio despejado para trabajar.",
+  "prerequisitos": "Control de agarre, caminar con bandeja, abrir/cerrar recipientes",
+  "presentacionPasoAPaso": "1) Invitar al niño con una mirada y gesto.\n2) Llevar la bandeja con ambas manos.\n3) Verter lentamente del jarro A al B sin hablar.\n4) Observar si hay derrames y limpiar.\n5) Repetir la secuencia.\n6) Invitar al niño a intentarlo.",
+  "controlDelError": "El derrame es visible de inmediato. El niño puede secar con la esponja. Si sobra líquido en el jarro A, puede repetir hasta lograr el nivel deseado.",
+  "aspectosAutonomia": [
+    "Elige el material libremente",
+    "Trabaja a su propio ritmo",
+    "Repite cuantas veces desee",
+    "Devuelve el material al lugar"
+  ],
+  "limitesYNormas": "Usar en la mesa designada; una actividad a la vez; devolver al estante limpio y ordenado",
+  "indicadoresDeLogro": "Vierte sin derramar; limpia de forma autónoma; mantiene la atención; repite la actividad",
+  "adaptacionesVariaciones": "Usar agua coloreada, jarritas de diferentes tamaños, añadir elementos aromáticos",
+  "nivelDificultad": "Inicial",
+  "evidenciaUrl": "https://ejemplo.com/foto-actividad.jpg",
+  "observacionesAdicionales": "El niño mostró gran concentración durante 20 minutos. Repitió 5 veces.",
+  "checklistMontessori": [
+    "Fomenta independencia",
+    "Respeta ritmo individual",
+    "Tiene control del error visible",
+    "Materiales ordenados y accesibles"
+  ]
+}
+
+###
+
+### 2. Obtener todas las actividades Montessori
+GET {{baseUrl}}
+Authorization: Bearer {{token}}
+
+###
+
+### 3. Obtener actividad por ID
+GET {{baseUrl}}/1
+Authorization: Bearer {{token}}
+
+###
+
+### 4. Obtener mis actividades
+GET {{baseUrl}}/mis-actividades
+Authorization: Bearer {{token}}
+
+###
+
+### 5. Obtener actividades por área pedagógica
+GET {{baseUrl}}/por-area/Vida%20Práctica
+Authorization: Bearer {{token}}
+
+###
+
+### 6. Obtener actividades para mi nivel (Participantes)
+# Este endpoint calcula la edad del participante y retorna solo actividades
+# donde su edad esté dentro del rango EdadMinima - EdadMaxima
+GET {{baseUrl}}/para-mi-nivel
+Authorization: Bearer {{token}}
+
+###
+
+### 7. Actualizar una actividad
+PUT {{baseUrl}}/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Trasvasar agua con jarritas - ACTUALIZADO",
+  "duracionMinutos": 20,
+  "observacionesAdicionales": "Los niños mostraron mayor interés con agua coloreada"
+}
+
+###
+
+### 8. Eliminar una actividad
+DELETE {{baseUrl}}/1
+Authorization: Bearer {{token}}
+
+###
+
+### 9. Obtener estadísticas generales
+GET {{baseUrl}}/estadisticas
+Authorization: Bearer {{token}}
+
+###
+
+### 10. Obtener mis estadísticas
+GET {{baseUrl}}/mis-estadisticas
+Authorization: Bearer {{token}}
+
+###
+
+###
+
+### 11. Crear un logro para una actividad
+POST {{baseUrl}}/logros
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Lector Estrella",
+  "descripcion": "Completaste 10 lecturas esta semana",
+  "icono": "⭐",
+  "actividadMontessoriId": 1,
+  "usuarioId": 2
+}
+
+###
+
+### 12. Marcar logro como obtenido
+PATCH {{baseUrl}}/logros/1/obtener
+Authorization: Bearer {{token}}
+
+###
+
+### 12. Obtener logros de una actividad
+GET {{baseUrl}}/1/logros
+Authorization: Bearer {{token}}
+
+###
+
+### 13. Obtener mis logros
+GET {{baseUrl}}/logros/mis-logros
+Authorization: Bearer {{token}}
+
+###
+
+### 14. Obtener logros de un usuario específico
+GET {{baseUrl}}/logros/usuario/2
+Authorization: Bearer {{token}}
+
+###
+
+### 15. Eliminar un logro
+DELETE {{baseUrl}}/logros/1
+Authorization: Bearer {{token}}
+
+###
+
+### ============ EJEMPLOS ADICIONALES ============
+
+### Actividad de Matemáticas
+POST {{baseUrl}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Contar con perlas doradas",
+  "areaPedagogica": "Matemáticas",
+  "fechaActividad": "2025-11-12",
+  "horaActividad": "11:00:00",
+  "edadMinima": 4,
+  "edadMaxima": 7,
+  "duracionMinutos": 25,
+  "objetivoEspecifico": "Introducir el concepto de cantidad del 1 al 10 mediante material concreto.",
+  "materialesNecesarios": "Perlas doradas del 1 al 10, bandeja, tapete de trabajo",
+  "montajeAmbiente": "Tapete extendido en el suelo, perlas ordenadas en la bandeja de menor a mayor",
+  "presentacionPasoAPaso": "1) Invitar al niño\n2) Presentar la perla 1\n3) Contar juntos\n4) Continuar hasta el 10\n5) Dejar que explore",
+  "controlDelError": "Las cantidades son visibles, cada perla tiene su número escrito",
+  "aspectosAutonomia": ["Elige trabajar solo o en grupo", "Trabaja a su propio ritmo"],
+  "indicadoresDeLogro": "Cuenta correctamente; asocia cantidad con número; muestra interés",
+  "nivelDificultad": "Medio"
+}
+
+###
+
+### Logro: Matemático Junior
+POST {{baseUrl}}/logros
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Matemático Junior",
+  "descripcion": "Resolviste 20 problemas de matemáticas",
+  "icono": "🔢",
+  "actividadMontessoriId": 2,
+  "usuarioId": 2
+}
+
+###
+
+### Logro: Artista Creativo (En progreso)
+POST {{baseUrl}}/logros
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Artista Creativo",
+  "descripcion": "Completa 5 proyectos de arte",
+  "icono": "🎨",
+  "actividadMontessoriId": 3,
+  "usuarioId": 2
+}
+
+###
+
+### Logro: Científico Curioso (En progreso)
+POST {{baseUrl}}/logros
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Científico Curioso",
+  "descripcion": "Completa 10 experimentos",
+  "icono": "🔬",
+  "actividadMontessoriId": 4,
+  "usuarioId": 2
+}
+
+###

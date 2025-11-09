@@ -1,0 +1,177 @@
+### Reportes - Sistema de Reportes Generales para Facilitadores
+### Solo facilitadores (IdRol = 3) pueden acceder a estos endpoints
+
+@baseUrl = http://localhost:5000/api/reportes
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+###
+# Obtener reporte general completo
+# Incluye todos los resúmenes: usuarios, actividades, niveles, asistencia, tareas
+GET {{baseUrl}}/general
+Authorization: Bearer {{token}}
+
+###
+# Obtener reporte general con filtros de fecha
+GET {{baseUrl}}/general?fechaInicio=2025-01-01&fechaFin=2025-01-31
+Authorization: Bearer {{token}}
+
+###
+# Obtener resumen de usuarios
+# Total de coordinadores, voluntarios, participantes
+# Desglose por rol con activos/inactivos
+GET {{baseUrl}}/usuarios
+Authorization: Bearer {{token}}
+
+###
+# Obtener resumen de actividades
+# Actividades regulares y Montessori
+# Logros obtenidos
+# Desglose por área pedagógica
+GET {{baseUrl}}/actividades
+Authorization: Bearer {{token}}
+
+###
+# Obtener resumen de niveles
+# Niveles con sus participantes asignados
+# Promedio de participantes por nivel
+GET {{baseUrl}}/niveles
+Authorization: Bearer {{token}}
+
+###
+# Obtener resumen de asistencia
+# Registros de hoy, este mes, este año
+# Porcentaje de asistencia promedio
+# Últimos 7 días de asistencia
+GET {{baseUrl}}/asistencia
+Authorization: Bearer {{token}}
+
+###
+# Obtener resumen de asistencia con filtros de fecha
+GET {{baseUrl}}/asistencia?fechaInicio=2025-01-01&fechaFin=2025-01-31
+Authorization: Bearer {{token}}
+
+###
+# Obtener resumen de tareas
+# Tareas por estado (Pendiente, EnProceso, Completada, Aprobada, Rechazada)
+# Porcentaje de completadas
+# Tareas por voluntario con su rendimiento
+GET {{baseUrl}}/tareas
+Authorization: Bearer {{token}}
+
+###
+# EJEMPLO DE RESPUESTA - Reporte General
+# {
+#   "usuarios": {
+#     "totalUsuarios": 150,
+#     "totalCoordinadores": 5,
+#     "totalVoluntarios": 45,
+#     "totalParticipantes": 100,
+#     "usuariosActivos": 140,
+#     "usuariosInactivos": 10,
+#     "desglosePorRol": [
+#       {
+#         "nombreRol": "Coordinador",
+#         "cantidad": 5,
+#         "activos": 5,
+#         "inactivos": 0,
+#         "porcentajeActivos": 100.0
+#       },
+#       {
+#         "nombreRol": "Voluntario",
+#         "cantidad": 45,
+#         "activos": 42,
+#         "inactivos": 3,
+#         "porcentajeActivos": 93.3
+#       },
+#       {
+#         "nombreRol": "Participante",
+#         "cantidad": 100,
+#         "activos": 93,
+#         "inactivos": 7,
+#         "porcentajeActivos": 93.0
+#       }
+#     ]
+#   },
+#   "actividades": {
+#     "totalActividades": 78,
+#     "actividadesRegulares": 30,
+#     "actividadesMontessori": 48,
+#     "actividadesActivas": 70,
+#     "actividadesInactivas": 8,
+#     "logrosMontessoriObtenidos": 235,
+#     "logrosMontessoriTotales": 480,
+#     "porcentajeLogrosObtenidos": 49.0,
+#     "actividadesPorArea": [
+#       {
+#         "areaPedagogica": "Vida Práctica",
+#         "cantidad": 15
+#       },
+#       {
+#         "areaPedagogica": "Sensorial",
+#         "cantidad": 12
+#       },
+#       {
+#         "areaPedagogica": "Matemáticas",
+#         "cantidad": 10
+#       },
+#       {
+#         "areaPedagogica": "Lenguaje",
+#         "cantidad": 8
+#       },
+#       {
+#         "areaPedagogica": "Cultura",
+#         "cantidad": 3
+#       }
+#     ]
+#   },
+#   "niveles": {
+#     "totalNiveles": 8,
+#     "nivelesActivos": 7,
+#     "totalParticipantesAsignados": 95,
+#     "promedioParticipantesPorNivel": 13.6,
+#     "desglosePorNivel": [
+#       {
+#         "idNivel": 1,
+#         "nombreNivel": "Nivel 1 (3-4 años)",
+#         "nombreVoluntario": "Juan Pérez",
+#         "edadMinima": 3.0,
+#         "edadMaxima": 4.0,
+#         "cantidadParticipantes": 12
+#       }
+#     ]
+#   },
+#   "asistencia": {
+#     "totalRegistrosHoy": 45,
+#     "totalRegistrosEsteMes": 892,
+#     "totalRegistrosEsteAnio": 3456,
+#     "porcentajeAsistenciaPromedio": 87.5,
+#     "asistenciaUltimos7Dias": [
+#       {
+#         "fecha": "2025-01-20",
+#         "cantidadPresentes": 42,
+#         "cantidadAusentes": 3,
+#         "cantidadTardanzas": 2,
+#         "total": 47
+#       }
+#     ]
+#   },
+#   "tareas": {
+#     "totalTareas": 56,
+#     "tareasPendientes": 12,
+#     "tareasEnProceso": 18,
+#     "tareasCompletadas": 15,
+#     "tareasAprobadas": 10,
+#     "tareasRechazadas": 1,
+#     "porcentajeCompletadas": 44.6,
+#     "tareasPorVoluntario": [
+#       {
+#         "idVoluntario": 3,
+#         "nombreVoluntario": "María García",
+#         "tareasAsignadas": 8,
+#         "tareasCompletadas": 7,
+#         "porcentajeCompletadas": 87.5
+#       }
+#     ]
+#   },
+#   "fechaGeneracion": "2025-01-26T14:30:00Z"
+# }

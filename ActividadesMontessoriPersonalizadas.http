@@ -1,0 +1,169 @@
+@baseUrl = http://localhost:5273/api
+@token = tu_token_aqui
+
+### 1. Crear una actividad Montessori personalizada para un estudiante
+POST {{baseUrl}}/ControladorDeActividadesMontessoriPersonalizadas
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "idEstudiante": 2,
+  "idNivel": 1,
+  "nombre": "Práctica de Torre Rosa - Personalizada",
+  "areaPedagogica": "Matemáticas - Geometría",
+  "fechaInicio": "2025-11-09T09:00:00",
+  "horaActividad": "09:00:00",
+  "duracionMinutosEstimada": 30,
+  "objetivoPersonalizado": "Desarrollar percepción visual y motricidad fina al apilar bloques de diferentes tamaños",
+  "materialesNecesarios": "Torre Rosa Montessori (10 cubos), tapete de trabajo",
+  "presentacionPersonalizada": "1. Invitar al niño a trabajar\n2. Llevar los cubos uno por uno\n3. Apilar del más grande al más pequeño\n4. Permitir exploración libre",
+  "adaptacionesEspeciales": "Reducir a 5 cubos inicialmente por su edad. Permitir más tiempo para la actividad.",
+  "prioridad": "Alta",
+  "enviarRecordatorio": true,
+  "fechaRecordatorio": "2025-11-09T08:30:00",
+  "notasAdicionales": "El estudiante mostró interés en actividades de apilamiento en sesiones anteriores"
+}
+
+### 2. Obtener actividad por ID
+GET {{baseUrl}}/ControladorDeActividadesMontessoriPersonalizadas/1
+Authorization: Bearer {{token}}
+
+### 3. Obtener todas las actividades de un estudiante
+GET {{baseUrl}}/ControladorDeActividadesMontessoriPersonalizadas/estudiante/2?soloActivas=true
+Authorization: Bearer {{token}}
+
+### 4. Buscar actividades con filtros
+POST {{baseUrl}}/ControladorDeActividadesMontessoriPersonalizadas/buscar
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "idEstudiante": 2,
+  "estado": "Pendiente",
+  "prioridad": "Alta",
+  "soloActivas": true,
+  "pagina": 1,
+  "registrosPorPagina": 10
+}
+
+### 5. Actualizar información de la actividad
+PUT {{baseUrl}}/ControladorDeActividadesMontessoriPersonalizadas/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Torre Rosa - Práctica Avanzada",
+  "duracionMinutosEstimada": 45,
+  "prioridad": "Normal",
+  "notasAdicionales": "Actualizado: El estudiante puede manejar los 10 cubos ahora"
+}
+
+### 6. Actualizar progreso de la actividad (iniciar)
+PUT {{baseUrl}}/ControladorDeActividadesMontessoriPersonalizadas/1/progreso
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "estado": "EnProgreso",
+  "progresosPorcentaje": 30,
+  "observacionesProfesor": "El estudiante comenzó con entusiasmo. Logró apilar 5 cubos correctamente."
+}
+
+### 7. Completar actividad con evaluación
+PUT {{baseUrl}}/ControladorDeActividadesMontessoriPersonalizadas/1/progreso
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "estado": "Completada",
+  "progresosPorcentaje": 100,
+  "fechaCompletada": "2025-11-09T10:00:00",
+  "duracionMinutosReal": 35,
+  "observacionesProfesor": "Excelente trabajo. El estudiante completó la actividad con concentración y orden.",
+  "logrosAlcanzados": [
+    "Apiló los 10 cubos correctamente",
+    "Mostró concentración durante toda la actividad",
+    "Guardó el material ordenadamente",
+    "Demostró control de movimientos finos"
+  ],
+  "dificultadesEncontradas": "Al principio tuvo dificultad con los cubos más pequeños",
+  "sugerenciasParaSeguimiento": "Continuar con actividades de motricidad fina. Considerar introducir Escalera Marrón.",
+  "nivelDesempeno": "Excelente",
+  "requiereRefuerzo": false,
+  "evidenciaUrlFoto": "https://ejemplo.com/fotos/torre-rosa-estudiante2.jpg"
+}
+
+### 8. Obtener estadísticas de un estudiante
+GET {{baseUrl}}/ControladorDeActividadesMontessoriPersonalizadas/estudiante/2/estadisticas
+Authorization: Bearer {{token}}
+
+### 9. Obtener todas las actividades pendientes
+GET {{baseUrl}}/ControladorDeActividadesMontessoriPersonalizadas/pendientes
+Authorization: Bearer {{token}}
+
+### 10. Obtener actividades con recordatorios pendientes
+GET {{baseUrl}}/ControladorDeActividadesMontessoriPersonalizadas/recordatorios
+Authorization: Bearer {{token}}
+
+### 11. Eliminar (desactivar) una actividad
+DELETE {{baseUrl}}/ControladorDeActividadesMontessoriPersonalizadas/1
+Authorization: Bearer {{token}}
+
+### 12. Crear actividad personalizada basada en una actividad Montessori existente
+POST {{baseUrl}}/ControladorDeActividadesMontessoriPersonalizadas
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "idActividadMontessoriBase": 1,
+  "idEstudiante": 3,
+  "idNivel": 1,
+  "nombre": "Actividad de Vida Práctica - Verter Líquidos",
+  "areaPedagogica": "Vida Práctica",
+  "duracionMinutosEstimada": 20,
+  "objetivoPersonalizado": "Mejorar coordinación ojo-mano al verter agua entre dos jarras",
+  "adaptacionesEspeciales": "Usar jarras más pequeñas y colorear el agua para mejor visualización",
+  "prioridad": "Normal",
+  "esRecurrente": true,
+  "frecuenciaRecurrencia": "Semanal",
+  "fechaFinRecurrencia": "2025-12-31T00:00:00"
+}
+
+### 13. Buscar por área pedagógica
+POST {{baseUrl}}/ControladorDeActividadesMontessoriPersonalizadas/buscar
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "areaPedagogica": "Matemáticas - Geometría",
+  "estado": "Completada",
+  "pagina": 1,
+  "registrosPorPagina": 20
+}
+
+### 14. Buscar actividades que requieren refuerzo
+POST {{baseUrl}}/ControladorDeActividadesMontessoriPersonalizadas/buscar
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "requiereRefuerzo": true,
+  "soloActivas": true
+}
+
+### 15. Marcar actividad como que requiere refuerzo
+PUT {{baseUrl}}/ControladorDeActividadesMontessoriPersonalizadas/2/progreso
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "estado": "Completada",
+  "progresosPorcentaje": 100,
+  "fechaCompletada": "2025-11-09T11:30:00",
+  "duracionMinutosReal": 40,
+  "observacionesProfesor": "El estudiante tuvo dificultades significativas con la actividad",
+  "dificultadesEncontradas": "No logró mantener concentración, apiló bloques sin orden",
+  "sugerenciasParaSeguimiento": "Repetir actividad con supervisión más cercana. Considerar actividades preparatorias más simples.",
+  "nivelDesempeno": "NecesitaApoyo",
+  "requiereRefuerzo": true
+}
